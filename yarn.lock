@@ -1394,7 +1394,7 @@
 
 "@mui/icons-material@^5.2.5":
   version "5.2.5"
-  resolved "https://registry.npmjs.org/@mui/icons-material/-/icons-material-5.2.5.tgz"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.2.5.tgz#c6575430b565c023232147934c45775630a53f02"
   integrity sha512-uQiUz+l0xy+2jExyKyU19MkMAR2F7bQFcsQ5hdqAtsB14Jw2zlmIAD55mV6f0NxKCut7Rx6cA3ZpfzlzAfoK8Q==
   dependencies:
     "@babel/runtime" "^7.16.3"

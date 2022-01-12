@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.deleteIcons {
+  background-color:mediumspringgreen;
+}
+
+.deleteIcons:hover {
+  cursor: pointer;
+}
+
+.storyTitlesList:hover {
+  cursor: pointer;
+}

@@ -1,6 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import { Link } from 'react-router-dom'
-
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
@@ -23,11 +21,10 @@ const useStyles = makeStyles({
     spacer: {
         height: 15,
     },
-    });
+});
 
-    const Login = () => {
+const SignUp = () => {
     //create variable name to access styles
-    //?? do I need this? I think I can do them directly
     const classes = useStyles();
 
     //destructure context for only the states and functions needed
@@ -38,15 +35,12 @@ const useStyles = makeStyles({
         password,
         setPassword,
         handleLogIn,
-        setIsSignedIn
     } = useContext(Context);
-
 
     return (
         <div>
-        {/* Dynamicaly render content based on isSignedIn state from context  */}
-        {!isSignedIn && (
-            <div className={classes.login}>
+
+            <form className={classes.login}>
             <TextField
                 className={classes.textField}
                 id="userName_field"
@@ -65,18 +59,26 @@ const useStyles = makeStyles({
                 placeholder="Password"
                 type="password"
             />
+            <TextField
+                className={classes.textField}
+                id="password_field"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                variant="outlined"
+                placeholder="Password"
+                type="password"
+            />
             <div className={classes.spacer}></div>
             <Button 
                 variant="contained" 
-                onClick={(e) => handleLogIn(e)}
+                // onClick={() => handleLogIn()}
+                onClick={console.log("I wanna sign up!")}
             >
-                Log In
+                Sign Up
             </Button>
-            <Link to={`/signUp`}>Sign Up!</Link>
-            </div> 
-        )} 
+            </form> 
         </div>
     );
 };
 
-export default Login
+export default SignUp

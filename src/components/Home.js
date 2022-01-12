@@ -18,7 +18,9 @@ const Home = () => {
     return (
         <div>
             {/* Dynamically Render home page from isSignedIn state from context */}
-            {!isSignedIn ? <Login /> : <UserStories />}
+            {/* This will need to change to something like (`/details/${listing.id}`)}>
+            adding the path parameter for a specific user */}
+            {<Login /> }
         </div>
     )
 }

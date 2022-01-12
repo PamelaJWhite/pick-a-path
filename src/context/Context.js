@@ -22,59 +22,141 @@ export const Provider = ({ children }) => {
     // const [needsThing, setNeedsThing] = useState(false);
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [storyData,setStoryData] =useState("");
+    const [myStoryTitles, setMyStoryTitles] = useState("")
     // const [name, setName] = useState("");
     // const [from, setFrom] = useState("");
     // const [thing, setThing] = useState("");
-    const [foaas, setFoaas] = useState(null);
+    // const [foaas, setFoaas] = useState(null);
 
     //variable for api url
     // const baseUrl = "https://www.foaas.com/awesome/Nick";
 
-    //variable for MY api url
-    const url = "https://pjw1.herokuapp.com/stories/read"
+   //url for all story titles
+    // const url = "https://pjw1.herokuapp.com/stories/read"
+
+    //variable for MY base api url
+    const url = "https://pjw1.herokuapp.com"
+
+    let userId = "15"
+    let storyId;
 
     //Function to handle when user clicks login button
-    //User name and Password only needs to be present to pass log i
-    const handleLogIn = () => {
-        if (userName && password) {
-        setIsSignedIn(true);
-        // setRandomNumber(Math.floor(Math.random() * 4) + 1);
-        } else {
-        alert("Please enter any username and password");
-        }
+    //User name and Password only needs to be present to pass log in
+    const handleLogIn = (e) => {
+        e.preventDefault()
+        //make request to backend /login
+        //to get current user
+        // fetch("https://pjw1.herokuapp.com/login")
+        console.log("username and password in handleLogin: ", userName, password)
+            if (userName && password) {
+            window.location.assign(`/userStories`)
+            setIsSignedIn(true);
+            } else {
+            alert("Please enter any username and password");
+            }
     };
 
-    const handleCall = async () => {
-        await axios.get(url).
+    const getAllStoryTitles = async () => {
+
+        await axios.get(url + `/stories/read`).
         then((res)=> {
-            console.log("res.data in handleCall():", res.data)
-            setFoaas(res.data);
+            console.log("res.data in getAllStoryTitles():", res.data)
+            setStoryData(res.data);
         })
     }
-    // if (urlParams) {
-    //     await axios.get(baseUrl + urlParams).then((response) => {
-    //         // console.log(response.data);
-    //         //Sets state with data the comes back from api call
-    //         setFoaas(response.data);
-    //     });
-    //     }
-    // };
+
+    const getMyStoryTitles = async () => {
+
+        await axios.get(url + `/myStories/list/${userId}`).
+        then((res)=> {
+            console.log("res.data in getMyStoryTitles():", res.data)
+            setMyStoryTitles(res.data);
+        })
+    }
+
+    const postToMyStoryTitlesList = async (storyId) => {
+
+        await axios.post(url + `/stories/${storyId}/myStories/${userId}`, ).
+        then((res)=> {
+            getMyStoryTitles()
+        })
+    }
+
+    const deleteTitle = async (userStoryId) => {
+        await axios.delete(url + `/myStories/delete/${userStoryId}`).
+        then((res)=> {
+            console.log("what's res in deleteTitle? ", res)
+            getMyStoryTitles()
+        })
+    }
+
+    // /stories/:story_id/myStories/:user_id
+
+    const checkAuth = () => {
+        // const cookies = cookie.parse(document.cookie)
+        // console.log("cookies in checkAuth: ", cookies)
+        // return cookies.loggedIn === 'true' ? true : false
+        return isSignedIn === "true" ? true: false
+    }
 
     //Function to handle Log Out reset states
-    // const handleLogOut = () => {
-    //     setIsSignedIn(false);
-    //     setUserName("");
-    //     setPassword("");
-    //     setRandomNumber(null);
-    //     setName("");
-    //     setThing("");
-    //     setFrom("");
-    //     setNeedsThing(false);
-    //     setNeedsName(false);
-    //     setNeedsFrom(false);
-    //     setFoaas(null);
-    // };
+    const handleLogOut = () => {
+        setIsSignedIn(false);
+        setUserName("");
+        setPassword("");
+        // setRandomNumber(null);
+        // setName("");
+        // setThing("");
+        // setFrom("");
+        // setNeedsThing(false);
+        // setNeedsName(false);
+        // setNeedsFrom(false);
+        setStoryData(null);
+        window.location.assign('/')
 
+    };
+
+    //List of exported states and functions
+    //These only need to be export if they are used on other components
+    const value = {
+        isSignedIn,
+        setIsSignedIn,
+        userName,
+        setUserName,
+        password,
+        setPassword,
+        handleLogIn,
+        getAllStoryTitles,
+        storyData,
+        setStoryData,
+        getMyStoryTitles,
+        myStoryTitles,
+        postToMyStoryTitlesList,
+        deleteTitle,
+        handleLogOut,
+        checkAuth
+        // needsName,
+        // setNeedsName,
+        // needsFrom,
+        // setNeedsFrom,
+        // needsThing,
+        // setNeedsThing,
+        // name,
+        // setName,
+        // from,
+        // setFrom,
+        // thing,
+        // setThing,
+        // foaas,
+        // setFoaas,
+        // handleFOAAS,
+        // setRandomNumber,
+    };
+
+    //Return statement that will wrap any child elements with the exported context states and functions
+    return <Context.Provider value={value}>{children}</Context.Provider>;
+    };
 
 
     //Function to set appropriate states to collect inputs for different api endpoints
@@ -136,36 +218,3 @@ export const Provider = ({ children }) => {
     //     }
     // }, [randomNumber]);
 
-    //List of exported states and functions
-    //These only need to be export if they are used on other components
-    const value = {
-        isSignedIn,
-        setIsSignedIn,
-        userName,
-        setUserName,
-        password,
-        setPassword,
-        handleLogIn,
-        handleCall,
-        // handleLogOut,
-        // needsName,
-        // setNeedsName,
-        // needsFrom,
-        // setNeedsFrom,
-        // needsThing,
-        // setNeedsThing,
-        // name,
-        // setName,
-        // from,
-        // setFrom,
-        // thing,
-        // setThing,
-        foaas,
-        // setFoaas,
-        // handleFOAAS,
-        // setRandomNumber,
-    };
-
-    //Return statement that will wrap any child elements with the exported context states and functions
-    return <Context.Provider value={value}>{children}</Context.Provider>;
-    };
