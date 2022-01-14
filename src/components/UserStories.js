@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext} from "react";
+import {Link} from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import { makeStyles } from "@mui/styles";
@@ -10,6 +11,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 //import context
 import { Context } from "../context/Context";
+import { getDividerUtilityClass } from "@mui/material";
 
 //create styles for this component
 const useStyles = makeStyles({
@@ -34,7 +36,7 @@ const useStyles = makeStyles({
 
 const UserStories = () => {
     //create variable name to access styles
-    const classes = useStyles();
+    // const classes = useStyles();
 
     //destructure context for only the states and functions needed
     const {
@@ -44,10 +46,15 @@ const UserStories = () => {
         myStoryTitles,
         postToMyStoryTitlesList,
         deleteTitle,
+        userStoryId,
+        setUserStoryId,
+        readFirstStorySection,
         isSignedIn, 
         setIsSignedIn
     } = useContext(Context);
 
+    //!this can't stay in here
+    //it's here bc I couldn't
     setIsSignedIn(true)
 
     //when I had this getAllStoryTitles function here,
@@ -71,7 +78,7 @@ const UserStories = () => {
     >
         <Paper elevation={2}>
             {storyData && (
-        <div className={classes.foaasResponse}>
+        <div>
             <div variant="h3" component="div" sx={{ paddingBottom: 5 }}>
                 {storyData.map((element, idx)=>(
                     <ul>
@@ -84,7 +91,6 @@ const UserStories = () => {
                             }
                         }>
                             {element.title}
-                            boo
                             </li>
                     </ul>
                 ))}
@@ -95,12 +101,30 @@ const UserStories = () => {
         <Paper elevation={2}>
             {myStoryTitles && (
 
-                <div className={classes.foaasResponse}>
-                    <p variant="h3" component="div" sx={{ paddingBottom: 5 }}>
+                <div>
+                    <div variant="h3" component="div" sx={{ paddingBottom: 5 }}>
                         {myStoryTitles.map((element, idx)=>(
                             <ul>
-                                <li className="storyTitlesList">
-                                    {element.title}
+                                <li 
+                                    className="storyTitlesList" 
+                                    style={{backgroundColor:"purple"}}
+                                >
+                                    <Link 
+                                        onMouseDown={(e) =>{
+                                            console.log("element.user_story_id", element.user_story_id)
+                                            setUserStoryId(element.user_story_id)
+                                        }}
+                                        onClick={(e) => {
+                                            
+                                            console.log("userStoryId onClick: ", userStoryId)
+                                            readFirstStorySection(userStoryId)
+
+                                        }}
+                                        to={"/readingPage"}
+                                    >
+                                        {element.title}
+                                        
+                                    </Link>
                                     <Grid container sx={{ color: 'text.primary' }}>
                                         <Grid item xs={8}>
                                             <DeleteForeverIcon 
@@ -116,7 +140,7 @@ const UserStories = () => {
                                     </li>
                             </ul>
                         ))}
-                    </p>
+                    </div>
                 </div>
             )}
         </Paper>

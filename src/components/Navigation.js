@@ -17,7 +17,7 @@ export default function ButtonAppBar() {
     handleLogOut
 } = useContext(Context);
 
-  console.log("isSignedIn: ", isSignedIn)
+  // console.log("isSignedIn: ", isSignedIn)
 
   return (
     <Box sx={{ flexGrow: 1 }}>

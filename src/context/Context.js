@@ -16,18 +16,19 @@ export const Provider = ({ children }) => {
     
     //Various states that are being exported
     const [isSignedIn, setIsSignedIn] = useState(false);
-    // const [randomNumber, setRandomNumber] = useState(null);
-    // const [needsName, setNeedsName] = useState(false);
-    // const [needsFrom, setNeedsFrom] = useState(false);
-    // const [needsThing, setNeedsThing] = useState(false);
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [storyData,setStoryData] =useState("");
     const [myStoryTitles, setMyStoryTitles] = useState("")
-    // const [name, setName] = useState("");
-    // const [from, setFrom] = useState("");
-    // const [thing, setThing] = useState("");
-    // const [foaas, setFoaas] = useState(null);
+    const [userStoryId, setUserStoryId] = useState("")
+    const [storySection, setStorySection] = useState("")
+    const [choicesTime, setChoicesTime] =useState(false)
+    const [storySectionId, setStorySectionId] = useState("")
+    const [options, setOptions] = useState([])
+    const [optionId, setOptionId] = useState("")
+    const [resultingStorySection, setResultingStorySection] = useState("")
+
+    
 
     //variable for api url
     // const baseUrl = "https://www.foaas.com/awesome/Nick";
@@ -48,7 +49,7 @@ export const Provider = ({ children }) => {
         //make request to backend /login
         //to get current user
         // fetch("https://pjw1.herokuapp.com/login")
-        console.log("username and password in handleLogin: ", userName, password)
+        // console.log("username and password in handleLogin: ", userName, password)
             if (userName && password) {
             window.location.assign(`/userStories`)
             setIsSignedIn(true);
@@ -61,7 +62,7 @@ export const Provider = ({ children }) => {
 
         await axios.get(url + `/stories/read`).
         then((res)=> {
-            console.log("res.data in getAllStoryTitles():", res.data)
+            // console.log("res.data in getAllStoryTitles():", res.data)
             setStoryData(res.data);
         })
     }
@@ -91,6 +92,41 @@ export const Provider = ({ children }) => {
         })
     }
 
+    const readFirstStorySection = async (userStoryId)=> {
+        await axios.post(url + `/myStories/readFirst/${userStoryId}`).
+        then((res) => {
+            console.log("res.data in readFirstStorySection", res.data)
+            setStorySection(res.data.story_section_content)
+            setStorySectionId(res.data.story_section_id)
+        })
+
+    }
+
+    const readNextSection = async (userStoryId)=> {
+        await axios.post(url + `/myStories/read/${userStoryId}/:resulting_story_section_id`).
+        then((res) => {
+            console.log("res.data in readFirstStorySection", res.data)
+            setStorySection(res.data.story_section_content)
+            setStorySectionId(res.data.story_section_id)
+        })
+
+    }
+
+    const seeOptions = async (storySectionId) => {
+        await axios.post(url + `/myStories/options/${storySectionId}`).
+        then((res) => {
+            let optionArray = []
+            res.data.map((element, index)=> {
+                optionArray.push(element)
+                console.log("optionArray in map: ", optionArray)
+            })
+            //set the array of option content text to Options
+            //so we can view them later
+            setOptions(optionArray)
+            //
+        })
+    }  
+
     // /stories/:story_id/myStories/:user_id
 
     const checkAuth = () => {
@@ -105,13 +141,6 @@ export const Provider = ({ children }) => {
         setIsSignedIn(false);
         setUserName("");
         setPassword("");
-        // setRandomNumber(null);
-        // setName("");
-        // setThing("");
-        // setFrom("");
-        // setNeedsThing(false);
-        // setNeedsName(false);
-        // setNeedsFrom(false);
         setStoryData(null);
         window.location.assign('/')
 
@@ -134,24 +163,23 @@ export const Provider = ({ children }) => {
         myStoryTitles,
         postToMyStoryTitlesList,
         deleteTitle,
+        userStoryId,
+        setUserStoryId,
+        readFirstStorySection,
+        readNextSection,
+        storySection, 
+        setStorySection,
+        choicesTime, 
+        setChoicesTime,
+        storySectionId,
+        seeOptions,
+        options,
+        optionId, 
+        setOptionId,
+        resultingStorySection, 
+        setResultingStorySection,
         handleLogOut,
         checkAuth
-        // needsName,
-        // setNeedsName,
-        // needsFrom,
-        // setNeedsFrom,
-        // needsThing,
-        // setNeedsThing,
-        // name,
-        // setName,
-        // from,
-        // setFrom,
-        // thing,
-        // setThing,
-        // foaas,
-        // setFoaas,
-        // handleFOAAS,
-        // setRandomNumber,
     };
 
     //Return statement that will wrap any child elements with the exported context states and functions
@@ -218,3 +246,38 @@ export const Provider = ({ children }) => {
     //     }
     // }, [randomNumber]);
 
+    // const [randomNumber, setRandomNumber] = useState(null);
+    // const [needsName, setNeedsName] = useState(false);
+    // const [needsFrom, setNeedsFrom] = useState(false);
+    // const [needsThing, setNeedsThing] = useState(false);
+
+// const [name, setName] = useState("");
+    // const [from, setFrom] = useState("");
+    // const [thing, setThing] = useState("");
+    // const [foaas, setFoaas] = useState(null);
+
+
+    // setRandomNumber(null);
+        // setName("");
+        // setThing("");
+        // setFrom("");
+        // setNeedsThing(false);
+        // setNeedsName(false);
+        // setNeedsFrom(false);
+
+        // needsName,
+        // setNeedsName,
+        // needsFrom,
+        // setNeedsFrom,
+        // needsThing,
+        // setNeedsThing,
+        // name,
+        // setName,
+        // from,
+        // setFrom,
+        // thing,
+        // setThing,
+        // foaas,
+        // setFoaas,
+        // handleFOAAS,
+        // setRandomNumber,

@@ -7,6 +7,7 @@ import Home from './components/Home'
 import Login from './components/Login'
 import UserStories from './components/UserStories'
 import SignUp from './components/SignUp'
+import ReadingPage from './components/ReadingPage'
 
 import { Context } from "./context/Context";
 
@@ -34,6 +35,9 @@ const Router = () => {
             <Route path='/userStories' element={<UserStories/>}/>
             {/* signUp allows new user to create account, and later login  */}
             <Route path='/signUp' element={<SignUp/>}/>
+            {/* readingPage will be any reading page, I hope
+            I think there will need to be a parameter or two in it */}
+            <Route path='/readingPage' element={<ReadingPage/>}/>
         </Routes>
     )
 }
