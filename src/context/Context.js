@@ -26,7 +26,7 @@ export const Provider = ({ children }) => {
     const [storySectionId, setStorySectionId] = useState("")
     const [options, setOptions] = useState([])
     const [optionId, setOptionId] = useState("")
-    const [resultingStorySection, setResultingStorySection] = useState("")
+    const [resultingStorySectionId, setResultingStorySectionId] = useState("")
 
     
 
@@ -102,12 +102,12 @@ export const Provider = ({ children }) => {
 
     }
 
-    const readNextSection = async (userStoryId)=> {
-        await axios.post(url + `/myStories/read/${userStoryId}/:resulting_story_section_id`).
+    const readNextSection = async (userStoryId, resultingStorySectionId)=> {
+        await axios.post(url + `/myStories/read/${userStoryId}/${resultingStorySectionId}`).
         then((res) => {
-            console.log("res.data in readFirstStorySection", res.data)
-            setStorySection(res.data.story_section_content)
-            setStorySectionId(res.data.story_section_id)
+            console.log("res.data in readNextSection(): ", res.data)
+            // setStorySection(res.data.story_section_content)
+            // setStorySectionId(res.data.story_section_id)
         })
 
     }
@@ -176,8 +176,8 @@ export const Provider = ({ children }) => {
         options,
         optionId, 
         setOptionId,
-        resultingStorySection, 
-        setResultingStorySection,
+        resultingStorySectionId, 
+        setResultingStorySectionId,
         handleLogOut,
         checkAuth
     };

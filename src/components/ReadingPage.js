@@ -16,7 +16,9 @@ const ReadingPage = () => {
         storySectionId,
         seeOptions,
         setOptionId,
-        setResultingStorySection,
+        optionId,
+        setResultingStorySectionId,
+        resultingStorySectionId,
         readNextSection,
         options
     } = useContext(Context);
@@ -60,10 +62,16 @@ console.log("made it to reading rainbow. userStoryId: ", userStoryId)
                     <Button
                         onMouseDown={(e) =>{
                             setOptionId(option.option_id)
-                            setResultingStorySection(option.resulting_story_section)
+                            setResultingStorySectionId(option.resulting_story_section_id)
                         }}
                         onClick={(e) => {
-                            readNextSection(userStoryId)
+
+                            //Actually, I think that passing userStoryId and resultingStorySEctionId is redundant
+                            //I think that the function in the Context file has access to them
+                            //but I'm tempted to leave it this way
+                            //just bc a) it makes it clear what the function needs
+                            //b) I feel more certain it will be right
+                            readNextSection(userStoryId, resultingStorySectionId)
                         }}
                     >
                         {option.option_content}
