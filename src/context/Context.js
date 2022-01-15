@@ -103,9 +103,10 @@ export const Provider = ({ children }) => {
     }
 
     const readNextSection = async (userStoryId, resultingStorySectionId)=> {
-        await axios.post(url + `/myStories/read/${userStoryId}/${resultingStorySectionId}`).
+        await axios.post(url + `/myStories/readNext/${userStoryId}/${resultingStorySectionId}`).
+        // await axios.post(url + `/myStories/readFirst/${userStoryId}`).
         then((res) => {
-            console.log("res.data in readNextSection(): ", res.data)
+            console.log("res.data in readNextSection(). This is the wrong data, because I changed the route to see if I could recreate the problem: ", res.data)
             // setStorySection(res.data.story_section_content)
             // setStorySectionId(res.data.story_section_id)
         })
