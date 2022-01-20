@@ -71,7 +71,7 @@ export const Provider = ({ children }) => {
 
         await axios.get(url + `/myStories/list/${userId}`).
         then((res)=> {
-            console.log("res.data in getMyStoryTitles():", res.data)
+            // console.log("res.data in getMyStoryTitles():", res.data)
             setMyStoryTitles(res.data);
         })
     }
@@ -102,16 +102,7 @@ export const Provider = ({ children }) => {
 
     }
 
-    const readNextSection = async (userStoryId, resultingStorySectionId)=> {
-        await axios.post(url + `/myStories/readNext/${userStoryId}/${resultingStorySectionId}`).
-        // await axios.post(url + `/myStories/readFirst/${userStoryId}`).
-        then((res) => {
-            console.log("res.data in readNextSection(). This is the wrong data, because I changed the route to see if I could recreate the problem: ", res.data)
-            // setStorySection(res.data.story_section_content)
-            // setStorySectionId(res.data.story_section_id)
-        })
-
-    }
+    
 
     const seeOptions = async (storySectionId) => {
         await axios.post(url + `/myStories/options/${storySectionId}`).
@@ -119,14 +110,63 @@ export const Provider = ({ children }) => {
             let optionArray = []
             res.data.map((element, index)=> {
                 optionArray.push(element)
-                console.log("optionArray in map: ", optionArray)
+                // console.log("optionArray in map: ", optionArray)
+
             })
             //set the array of option content text to Options
             //so we can view them later
+            console.log("optionArray in seeOptions to determine how to end story: ", optionArray)
             setOptions(optionArray)
+
             //
         })
-    }  
+    } 
+    
+    //saveOption and readNextSection probably should've been combined in the backend
+    const saveOption = async (userStoryId, storySectionId, optionId, resultingStorySectionId)=>  {
+        console.log("userStoryId: ", userStoryId)
+        console.log("optionId: ", optionId)
+        console.log("storySectionId: ", storySectionId)
+        //is this storySectionId correct? it should be; it was set when the first or next section was read
+        //where am i going to get the optionId from? i need to save them in seeOptions?
+        await axios.post(url + `/myStories/options/${userStoryId}/${storySectionId}/${optionId}`).
+        then((res) => {
+            console.log(res.data)
+        }).then(()=> {
+            readNextSection(userStoryId, resultingStorySectionId)
+        })
+
+    }
+    const readNextSection = async (userStoryId, resultingStorySectionId)=> {
+        await axios.post(url + `/myStories/readNext/${userStoryId}/${resultingStorySectionId}`).
+        // await axios.post(url + `/myStories/readFirst/${userStoryId}`).
+        then((res) => {
+            console.log("res.data in readNextSection().", res.data)
+            console.log("res.data.story_section_content: ", res.data.story_section_content)
+            console.log("res.data.story_section_id: ", res.data.story_section_id)
+            setStorySection(res.data.story_section_content)
+            setStorySectionId(res.data.story_section_id)
+        }).then(()=> {
+            console.log("storySectionId at end of readNextSection: ", storySectionId)
+            
+            seeOptions(storySectionId)
+        })
+    }
+
+    const readCompleteStory = async (userStoryId) =>{
+        console.log("in readCompleteStory")
+
+        await axios.get(url + `/myStories/completeStory/${userStoryId}`).
+        then((res) => {
+            let wholeStory = []
+            res.data.map((element, index)=> {
+                wholeStory.push(element.story_section_content)
+                wholeStory.push(element.option_content)
+            })
+            console.log("wholeStory: ", wholeStory)
+        })
+        
+    }
 
     // /stories/:story_id/myStories/:user_id
 
@@ -179,7 +219,9 @@ export const Provider = ({ children }) => {
         setOptionId,
         resultingStorySectionId, 
         setResultingStorySectionId,
+        readCompleteStory,
         handleLogOut,
+        saveOption,
         checkAuth
     };
 

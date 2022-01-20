@@ -86,7 +86,7 @@ const UserStories = () => {
                             className="storyTitlesList"
                             onClick={(e) => {
                             let storyId = element.story_id
-                            console.log("storyId and element.title: ", storyId, element.title)
+                            // console.log("storyId and element.title: ", storyId, element.title)
                             postToMyStoryTitlesList(storyId) 
                             }
                         }>
@@ -107,7 +107,7 @@ const UserStories = () => {
                             <ul>
                                 <li 
                                     className="storyTitlesList" 
-                                    style={{backgroundColor:"purple"}}
+                        
                                 >
                                     <Link 
                                         onMouseDown={(e) =>{
@@ -116,7 +116,7 @@ const UserStories = () => {
                                         }}
                                         onClick={(e) => {
                                             
-                                            console.log("userStoryId onClick: ", userStoryId)
+                                            console.log("userStoryId onClick myStoryTitles.map: ", userStoryId)
                                             readFirstStorySection(userStoryId)
 
                                         }}
@@ -131,7 +131,7 @@ const UserStories = () => {
                                                 className="deleteIcons"
                                                 onClick={(e) => {
                                                     let userStoryId = element.user_story_id
-                                                    console.log("deleteTitle element.user_story_id and element.title: ", element.user_story_id, element.title)
+                                                    // console.log("deleteTitle element.user_story_id and element.title: ", element.user_story_id, element.title)
                                                     deleteTitle(userStoryId)
                                                     }}
                                             />
@@ -153,7 +153,7 @@ const UserStories = () => {
                 variant="contained"
                 style={{backgroundColor:"pink"}}
                 onClick={() => {
-                    console.log("I'm clicked")
+                    // console.log("I'm clicked")
                     getAllStoryTitles()
                     getMyStoryTitles()
                     }

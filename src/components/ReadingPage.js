@@ -20,10 +20,12 @@ const ReadingPage = () => {
         setResultingStorySectionId,
         resultingStorySectionId,
         readNextSection,
-        options
+        options,
+        readCompleteStory,
+        saveOption
     } = useContext(Context);
     
-console.log("made it to reading rainbow. userStoryId: ", userStoryId)
+// console.log("made it to reading rainbow. userStoryId: ", userStoryId)
 
     return (
         <main>
@@ -50,7 +52,7 @@ console.log("made it to reading rainbow. userStoryId: ", userStoryId)
             {(!choicesTime)
                 ?<Button
                 onClick={(e)=>{
-                    console.log("button clicked")
+                    // console.log("button clicked")
                     setChoicesTime("true")
                     seeOptions(storySectionId)
                 }}
@@ -71,12 +73,21 @@ console.log("made it to reading rainbow. userStoryId: ", userStoryId)
                             //but I'm tempted to leave it this way
                             //just bc a) it makes it clear what the function needs
                             //b) I feel more certain it will be right
-                            readNextSection(userStoryId, resultingStorySectionId)
+                            setChoicesTime(false)
+                            saveOption(userStoryId, storySectionId, optionId, resultingStorySectionId)
                         }}
                     >
                         {option.option_content}
                     </Button>
                 )}
+                <Button
+                        onClick={(e) => {
+                            readCompleteStory(userStoryId)
+                        }}
+                    >
+                        See your complete story
+                    </Button>
+                    
             </div>
             }           
             
