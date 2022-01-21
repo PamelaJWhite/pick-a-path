@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import {Link} from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
@@ -80,13 +81,14 @@ const ReadingPage = () => {
                         {option.option_content}
                     </Button>
                 )}
-                <Button
+                <Link
                         onClick={(e) => {
                             readCompleteStory(userStoryId)
                         }}
+                        to="/wholeStory"
                     >
                         See your complete story
-                    </Button>
+                    </Link>
                     
             </div>
             }           

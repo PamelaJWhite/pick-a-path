@@ -1,5 +1,7 @@
 //Import React and hooks needed for context
 import React, { createContext, useState, useEffect } from "react";
+
+
 //Import axios for api call
 import axios from "axios";
 
@@ -27,20 +29,14 @@ export const Provider = ({ children }) => {
     const [options, setOptions] = useState([])
     const [optionId, setOptionId] = useState("")
     const [resultingStorySectionId, setResultingStorySectionId] = useState("")
-
-    
-
-    //variable for api url
-    // const baseUrl = "https://www.foaas.com/awesome/Nick";
-
-   //url for all story titles
-    // const url = "https://pjw1.herokuapp.com/stories/read"
+    const [wholeStory, setWholeStory] = useState([])
 
     //variable for MY base api url
     const url = "https://pjw1.herokuapp.com"
 
     let userId = "15"
     let storyId;
+    //----------------------LOG IN AND OUT-----------------
 
     //Function to handle when user clicks login button
     //User name and Password only needs to be present to pass log in
@@ -58,118 +54,6 @@ export const Provider = ({ children }) => {
             }
     };
 
-    const getAllStoryTitles = async () => {
-
-        await axios.get(url + `/stories/read`).
-        then((res)=> {
-            // console.log("res.data in getAllStoryTitles():", res.data)
-            setStoryData(res.data);
-        })
-    }
-
-    const getMyStoryTitles = async () => {
-
-        await axios.get(url + `/myStories/list/${userId}`).
-        then((res)=> {
-            // console.log("res.data in getMyStoryTitles():", res.data)
-            setMyStoryTitles(res.data);
-        })
-    }
-
-    const postToMyStoryTitlesList = async (storyId) => {
-
-        await axios.post(url + `/stories/${storyId}/myStories/${userId}`, ).
-        then((res)=> {
-            getMyStoryTitles()
-        })
-    }
-
-    const deleteTitle = async (userStoryId) => {
-        await axios.delete(url + `/myStories/delete/${userStoryId}`).
-        then((res)=> {
-            console.log("what's res in deleteTitle? ", res)
-            getMyStoryTitles()
-        })
-    }
-
-    const readFirstStorySection = async (userStoryId)=> {
-        await axios.post(url + `/myStories/readFirst/${userStoryId}`).
-        then((res) => {
-            console.log("res.data in readFirstStorySection", res.data)
-            setStorySection(res.data.story_section_content)
-            setStorySectionId(res.data.story_section_id)
-        })
-
-    }
-
-    
-
-    const seeOptions = async (storySectionId) => {
-        await axios.post(url + `/myStories/options/${storySectionId}`).
-        then((res) => {
-            let optionArray = []
-            res.data.map((element, index)=> {
-                optionArray.push(element)
-                // console.log("optionArray in map: ", optionArray)
-
-            })
-            //set the array of option content text to Options
-            //so we can view them later
-            console.log("optionArray in seeOptions to determine how to end story: ", optionArray)
-            setOptions(optionArray)
-
-            //
-        })
-    } 
-    
-    //saveOption and readNextSection probably should've been combined in the backend
-    const saveOption = async (userStoryId, storySectionId, optionId, resultingStorySectionId)=>  {
-        console.log("userStoryId: ", userStoryId)
-        console.log("optionId: ", optionId)
-        console.log("storySectionId: ", storySectionId)
-        //is this storySectionId correct? it should be; it was set when the first or next section was read
-        //where am i going to get the optionId from? i need to save them in seeOptions?
-        await axios.post(url + `/myStories/options/${userStoryId}/${storySectionId}/${optionId}`).
-        then((res) => {
-            console.log(res.data)
-        }).then(()=> {
-            readNextSection(userStoryId, resultingStorySectionId)
-        })
-
-    }
-    const readNextSection = async (userStoryId, resultingStorySectionId)=> {
-        await axios.post(url + `/myStories/readNext/${userStoryId}/${resultingStorySectionId}`).
-        // await axios.post(url + `/myStories/readFirst/${userStoryId}`).
-        then((res) => {
-            console.log("res.data in readNextSection().", res.data)
-            console.log("res.data.story_section_content: ", res.data.story_section_content)
-            console.log("res.data.story_section_id: ", res.data.story_section_id)
-            setStorySection(res.data.story_section_content)
-            setStorySectionId(res.data.story_section_id)
-        }).then(()=> {
-            console.log("storySectionId at end of readNextSection: ", storySectionId)
-            
-            seeOptions(storySectionId)
-        })
-    }
-
-    const readCompleteStory = async (userStoryId) =>{
-        console.log("in readCompleteStory")
-
-        await axios.get(url + `/myStories/completeStory/${userStoryId}`).
-        then((res) => {
-            let wholeStory = []
-            res.data.map((element, index)=> {
-                wholeStory.push(element.story_section_content)
-                wholeStory.push(element.option_content)
-            })
-            console.log("wholeStory: ", wholeStory)
-        })
-        
-    }
-
-    // /stories/:story_id/myStories/:user_id
-
     const checkAuth = () => {
         // const cookies = cookie.parse(document.cookie)
         // console.log("cookies in checkAuth: ", cookies)
@@ -186,6 +70,144 @@ export const Provider = ({ children }) => {
         window.location.assign('/')
 
     };
+
+    //------------------ ACCESS STORIES -----------------
+
+    //get all story titles from DB
+    const getAllStoryTitles = async () => {
+
+        await axios.get(url + `/stories/read`).
+        then((res)=> {
+            //set state for story data - which is titles, only
+            //!!change this variable name? it's misleading
+            setStoryData(res.data);
+        })
+    }
+
+    //get story titles associated with specific user
+    const getMyStoryTitles = async () => {
+
+        await axios.get(url + `/myStories/list/${userId}`).
+        then((res)=> {
+            //set state for this user's story titles
+            setMyStoryTitles(res.data);
+        })
+    }
+
+    //post a selected title to the DB for that user
+    const postToMyStoryTitlesList = async (storyId) => {
+        await axios.post(url + `/stories/${storyId}/myStories/${userId}`, ).
+        then((res)=> {
+            //retrieve titles again so this title
+            //displays on the list
+            getMyStoryTitles()
+        })
+    }
+    
+    //delete a title from the user's list of titles from the DB
+    //!! I'd like to change the backend to delete everything
+    //b/c right now there's a bunch of completed/ partially completed stories
+    //in the DB
+    //Would do this by user_story_id; delete from userStory table
+    const deleteTitle = async (userStoryId) => {
+        await axios.delete(url + `/myStories/delete/${userStoryId}`).
+        then((res)=> {
+            //retrieve titles again so this title
+            //displays on the list
+            getMyStoryTitles()
+        })
+    }
+
+    //grab the first story section connected to the title from the DB
+    const readFirstStorySection = async (userStoryId)=> {
+        await axios.post(url + `/myStories/readFirst/${userStoryId}`).
+        then((res) => {
+            //set the state for storySection and storySectionId
+            //to display them
+            
+            setStorySection(res.data.story_section_content)
+            setStorySectionId(res.data.story_section_id)
+        })
+
+    }
+
+    //grab the options related to the a story section
+    const seeOptions = async () => {
+        await axios.post(url + `/myStories/options/${storySectionId}`).
+        then((res) => {
+            //map over the data
+            //to create an array of options
+            //the option text, option id, and resulting story section id
+            //are included in this element
+            let optionArray = []
+            res.data.map((element, index)=> {
+                optionArray.push(element)
+            })
+            //set the array of option content text to Options
+            //so we can view them later
+            setOptions(optionArray)
+        })
+    } 
+    
+    //save an option to the DB
+    //storySectionId and optionId will be saved to the DB
+    //userStoryId and resultingStorySection will be used to read the next section
+    //!! Do these need to be parameters? Aren't they held in state so they can be accessed directly?
+    const saveOption = async (userStoryId, storySectionId, optionId, resultingStorySectionId)=>  {
+        await axios.post(url + `/myStories/options/${userStoryId}/${storySectionId}/${optionId}`).
+        then((res) => {
+            //call function to read the next section
+            readNextSection(userStoryId, resultingStorySectionId)
+        })
+    }
+
+    //similar to read first section
+    //reads subsequent session based on 
+    //resultingStorySectionId
+    //!!Again, do I even need to pass userStoryId and resultingStorySectionId?
+    //or should those have been/ are they saved in state?
+    const readNextSection =  async (userStoryId, resultingStorySection)=> {
+        await axios.post(url + `/myStories/readNext/${userStoryId}/${resultingStorySectionId}`).
+        then((res) => {
+            //reset the storySection and StorySectionId in state
+            console.log(res.data)
+            setStorySection(res.data.story_section_content)
+            setStorySectionId(res.data.story_section_id)
+        }).then(()=> {
+            //Call function to see options
+            console.log("storySectionId in readNextSectino(): ", storySectionId)
+            seeOptions(storySectionId)
+        })
+    }
+
+    //gather all the data from the DB for a specific instance of the story
+    //i.e., based on the userStoryId
+    const readCompleteStory = async (userStoryId) =>{
+        await axios.get(url + `/myStories/completeStory/${userStoryId}`).
+        then((res) => {
+            console.log("completeStory res.data: ", res.data)
+            //map over the data
+            //creates an element with the story section content and option content
+            //and adds that to the completeStory array
+            let completeStory = []
+            res.data.map((element, index)=> {
+                completeStory.push(element.story_section_content)
+                completeStory.push(element.option_content)
+                
+                //completeStory array is saved to state
+                //to be accessed elsewhere
+            })
+            setWholeStory(completeStory)
+        })
+    }
+    const resetStoryState = () => {
+        setWholeStory([])
+        setStorySectionId("")
+        setUserStoryId('')
+        setStorySection("")
+        setOptions('')
+        setOptionId('')
+    }
 
     //List of exported states and functions
     //These only need to be export if they are used on other components
@@ -220,8 +242,11 @@ export const Provider = ({ children }) => {
         resultingStorySectionId, 
         setResultingStorySectionId,
         readCompleteStory,
+        wholeStory,
+        setWholeStory,
         handleLogOut,
         saveOption,
+        resetStoryState,
         checkAuth
     };
 
@@ -230,6 +255,37 @@ export const Provider = ({ children }) => {
     };
 
 
+    //---Attempt to start where you left off---
+    //this code was in readCompleteStory()
+    //the problem is if you start a story, don't make any choices, and then hit home, it won't work on restart
+    //this DID work for when you had made a few choices, at least at one time
+    //if instead of "readFirstStorySEction", that button directed to "readCompleteStory"
+      // if (completeStory.length === 0){
+            //     console.log("completeStory.length is: ", completeStory.length)
+            //     readFirstStorySection(userStoryId)
+            // }
+            // else{
+            //     //grab the last element in the res.data optionArray
+            //     //it will be the most recent story section, et al.
+            //     console.log("completeStory.length is: ", completeStory.length)
+            //     let last = res.data.pop(-1)
+            //     console.log("last: ", last)
+            //     console.log("last.story_section_id:", last.story_section_id)
+            //     //let's try just going to the next story section
+            //     //nope, I'm going to have to set both of those, I think
+            //     console.log("userStoryId: ", userStoryId)
+            //     //set resulting story section id 
+            //     //to the last story section id of the res.data array
+            //     //to use in readNextSection()
+            //     setStorySectionId(last.story_section_id)
+            //     setResultingStorySectionId(last.story_section_id)
+            //     readNextSection()
+            // }
+
+
+
+
+            
     //Function to set appropriate states to collect inputs for different api endpoints
     // const handleRandomNumber = () => {
     //     switch (randomNumber) {
@@ -324,3 +380,10 @@ export const Provider = ({ children }) => {
         // setFoaas,
         // handleFOAAS,
         // setRandomNumber,
+
+
+    //variable for api url
+    // const baseUrl = "https://www.foaas.com/awesome/Nick";
+
+   //url for all story titles
+    // const url = "https://pjw1.herokuapp.com/stories/read"

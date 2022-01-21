@@ -8,6 +8,7 @@ import Login from './components/Login'
 import UserStories from './components/UserStories'
 import SignUp from './components/SignUp'
 import ReadingPage from './components/ReadingPage'
+import WholeStory from './components/WholeStory'
 
 import { Context } from "./context/Context";
 
@@ -38,6 +39,9 @@ const Router = () => {
             {/* readingPage will be any reading page, I hope
             I think there will need to be a parameter or two in it */}
             <Route path='/readingPage' element={<ReadingPage/>}/>
+            {/* page to see a whole story
+            maybe eventually a whole "I've learned" page */}
+            <Route path='/wholeStory' element={<WholeStory/>}/>
         </Routes>
     )
 }

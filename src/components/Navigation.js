@@ -1,11 +1,16 @@
 import * as React from 'react';
 import { useContext } from 'react';
+import {Link} from "react-router-dom";
+
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+
+
 // import MenuIcon from '@mui/icons-material/Menu';
 
 import { Context } from "../context/Context";
@@ -14,7 +19,9 @@ import { Context } from "../context/Context";
 export default function ButtonAppBar() {
   const {
     isSignedIn,
-    handleLogOut
+    handleLogOut,
+    setWholeStory,
+    resetStoryState
 } = useContext(Context);
 
   // console.log("isSignedIn: ", isSignedIn)
@@ -36,9 +43,22 @@ export default function ButtonAppBar() {
             Icon
           </Typography>
           {isSignedIn && (
-          <Button 
-            color="inherit"
-            onClick={()=>{handleLogOut()}}>Log Out</Button>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Button 
+                color="inherit"
+                onClick={()=>{resetStoryState()}}
+              > 
+                  <Link
+                    to="/userStories">
+                      Home
+                  </Link>
+              </Button>
+              <Button 
+                color="inherit"
+                onClick={()=>{handleLogOut()}}>
+                  Log Out
+              </Button>
+            </Typography>
           )}
         </Toolbar>
       </AppBar>

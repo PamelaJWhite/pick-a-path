@@ -34,7 +34,12 @@ const useStyles = makeStyles({
     },
 });
 
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+    window.history.go(1);
+    };
 const UserStories = () => {
+    
     //create variable name to access styles
     // const classes = useStyles();
 
@@ -49,6 +54,8 @@ const UserStories = () => {
         userStoryId,
         setUserStoryId,
         readFirstStorySection,
+        readCompleteStory,
+        wholeStory,
         isSignedIn, 
         setIsSignedIn
     } = useContext(Context);
@@ -86,7 +93,7 @@ const UserStories = () => {
                             className="storyTitlesList"
                             onClick={(e) => {
                             let storyId = element.story_id
-                            // console.log("storyId and element.title: ", storyId, element.title)
+                            console.log("wholeStory: ", wholeStory)
                             postToMyStoryTitlesList(storyId) 
                             }
                         }>
@@ -111,12 +118,12 @@ const UserStories = () => {
                                 >
                                     <Link 
                                         onMouseDown={(e) =>{
-                                            console.log("element.user_story_id", element.user_story_id)
                                             setUserStoryId(element.user_story_id)
                                         }}
                                         onClick={(e) => {
-                                            
-                                            console.log("userStoryId onClick myStoryTitles.map: ", userStoryId)
+                                            //go to readCompleteStory first
+                                            //b/c we only want to read the first story section
+                                            //if there is no story already saved
                                             readFirstStorySection(userStoryId)
 
                                         }}
