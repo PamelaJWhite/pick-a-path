@@ -48,3 +48,32 @@
 .storyTitlesList:hover {
   cursor: pointer;
 }
+
+.titleBox {
+  border: 1px solid brown;
+  margin-left: 40px;
+  margin-right: 40px;
+  display: flex;
+  /* width: 1000px; */
+  justify-content: "center";
+}
+
+.titlePaper {
+  width: 400px;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.paperBox {
+  border: solid 1px grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: honeydew */
+}
+
+.clickToAdd {
+  border: solid 1px rebeccapurple;
+  display: flex;
+  justify-content: center;
+}
