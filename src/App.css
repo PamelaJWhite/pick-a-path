@@ -44,6 +44,12 @@ main {
   align-items: center;
 }
 
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+}
+
 .readBox {
   border: 1px solid brown;
   margin-left: 40px;
@@ -62,12 +68,15 @@ main {
   cursor: pointer;
 }
 
+.storyTitlesList{
+  border: solid 1px violet;
+  display: flex;
+
+}
+
 .storyTitlesList:hover {
   cursor: pointer;
 }
-
-
-
 
 .titlePaper {
   width: 400px;
@@ -87,6 +96,7 @@ main {
   border: solid 1px rebeccapurple;
   display: flex;
   justify-content: center;
+  padding: 10px;
 }
 
 .insideMain {
@@ -102,6 +112,12 @@ main {
   overflow-y: scroll;
 }
 
+.readingText {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .choicesContainerBox {
   height: 290px;
   width: 760px;
@@ -112,6 +128,7 @@ main {
   flex-wrap: wrap;
   /* justify-content: "center"; */
 }
+
 
 .buttonJar {
   border: solid 1px plum;
@@ -126,4 +143,23 @@ main {
 .choicesButtons {
   padding-left: 10px;
   padding-right: 10px;
+}
+.seeChoicesButtonBox {
+  border: solid 1px, red;
+  background-color: sandybrown;
+  color: tomato;
+  /* height: 100px; */
+  margin: 10px;
+}
+.seeChoicesButton {
+  border: solid 1px, palegreen;
+  /* why can't I change anything about this button except it's size? */
+}
+
+
+/*----------- WholeStorySpecific */
+.readPaperWhole {
+  width: 760px;
+  height: 460px;
+  overflow-y: scroll;
 }

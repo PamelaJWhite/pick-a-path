@@ -44,7 +44,16 @@ window.history.go(1);
 const theme = createTheme({
     typography: {
         h1: {
-            fontSize: 20,
+            fontSize: 50,
+        },
+        h2: {
+            fontSize: 35,
+        },
+        h3: {
+            fontSize: 25,
+        },
+        h4: {
+            fontSize: 17,
         },
     },
 });
@@ -83,15 +92,15 @@ export default function UserStories (props) {
             </div>
                 <Box className = "readBox">
                     <div className = "paperBox">
-                        <Typography>
+                        <Typography variant="h2">
                             All Stories
                         </Typography>
                         <Paper elevation={2} className="titlePaper" style={{marginRight: "20px" }}>
                             <div className = "clickToAdd">
-                                <Typography>Click a Story to Add it to Your List</Typography>
+                                <Typography variant="h4">Click Story to Add</Typography>
                             </div>
                             {storyData && (
-                                <div variant="h3" component="div" sx={{ paddingBottom: 5 }}>
+                                <Typography variant="h3" component="div" sx={{ paddingBottom: 5 }}>
                                     {storyData.map((element, idx)=>(
                                         <ul>
                                             <li 
@@ -105,41 +114,46 @@ export default function UserStories (props) {
                                             </li>
                                         </ul>
                                     ))}
-                                </div>  
+                                </Typography>  
                             )} 
                         </Paper>
                     </div>
                     <div className = "paperBox">
-                        <Typography>
+                        <Typography variant="h2">
                             My Stories
                         </Typography>
                         <Paper elevation={2} className="titlePaper" style={{marginLeft: "20px"}}>
                             <div className="clickToAdd">
-                                <Typography>Click to Read a Story</Typography>
+                                <Typography variant="h4">Click Story To Read</Typography>
                             </div>
                                 {myStoryTitles && (
-                                    <div variant="h3" component="div" sx={{ paddingBottom: 5 }}>
+                                    <Typography variant="h3" component="div" sx={{ paddingBottom: 5 }}>
                                         {myStoryTitles.map((element, idx)=>(
                                             <ul>
                                                 <li className="storyTitlesList">
-                                                    <Link 
-                                                        onMouseDown={(e) =>{
-                                                            setUserStoryId(element.user_story_id)
-                                                        }}
-                                                        onClick={(e) => {
-                                                            //go to readCompleteStory first
-                                                            //b/c we only want to read the first story section
-                                                            //if there is no story already saved
-                                                            readFirstStorySection(userStoryId)
+                                                    <Grid container spacing={3 }style={{ display: "flex", justifyContent: "space-between"}}>
+                                                        <Grid item style={{display: "flex"}}>
+                                                            <Link style={{border: "solid 1px red"}}
+                                                                onMouseDown={(e) =>{
+                                                                    setUserStoryId(element.user_story_id)
+                                                                }}
+                                                                onClick={(e) => {
+                                                                    //go to readCompleteStory first
+                                                                    //b/c we only want to read the first story section
+                                                                    //if there is no story already saved
+                                                                    readFirstStorySection(userStoryId)
 
-                                                        }}
-                                                        to={"/readingPage"}
-                                                    >
-                                                        {element.title}
-                                                        
-                                                    </Link>
-                                                    <Grid container sx={{ color: 'text.primary' }}>
-                                                        <Grid item xs={8}>
+                                                                }}
+                                                                to={"/readingPage"}
+                                                            >
+                                                                {element.title}
+                                                            </Link>
+                                                            <Typography variant="h4" style={{alignSelf: "center", paddingLeft: "10px"}}>
+                                                                Date
+                                                            </Typography>
+                                                        </Grid>
+                                    
+                                                        <Grid  item sx={{ color: 'text.primary', border: "solid 1px green"}}>
                                                             <DeleteForeverIcon 
                                                                 className="deleteIcons"
                                                                 onClick={(e) => {
@@ -149,11 +163,12 @@ export default function UserStories (props) {
                                                                     }}
                                                             />
                                                         </Grid>
+                                                        
                                                     </Grid>
                                                 </li>
                                             </ul>
                                         ))}
-                                    </div>
+                                    </Typography>
                                 )}
                         </Paper>
                     </div>

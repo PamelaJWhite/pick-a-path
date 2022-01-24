@@ -14,10 +14,20 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme({
     typography: {
         h1: {
-            fontSize: 20,
+            fontSize: 50,
+        },
+        h2: {
+            fontSize: 35,
+        },
+        h3: {
+            fontSize: 25,
+        },
+        h4: {
+            fontSize: 17,
         },
     },
 });
+
 
 const ReadingPage = () => {
     const {
@@ -66,67 +76,71 @@ const ReadingPage = () => {
                 > 
                     <Paper elevation={2} className="readPaper">
                         <div>
-                            <p variant="h3" component="div" sx={{ paddingBottom: 5 }}>
+                            <Typography variant="h3" className="readingText" component="div">
+                            {/* Cupcake ipsum dolor sit amet caramels sugar plum bonbon candy. Oat cake jelly-o bear claw apple pie powder wafer. Lollipop gingerbread fruitcake oat cake marzipan chocolate bar lemon drops powder cheesecake. Tootsie roll cookie danish candy liquorice sweet tootsie roll. Gingerbread liquorice chupa chups cotton candy sesame snaps jelly beans cookie. Chocolate topping tart carrot cake pastry cake lollipop cake tiramisu. Chocolate bar gummi bears cake apple pie candy canes. Powder chupa chups cookie gummies jelly-o gummi bears cheesecake topping. Gummies wafer chupa chups chocolate macaroon cake. Lemon drops powder macaroon jelly gingerbread bonbon dessert. */}
                                 {storySection}
-                            </p>
+                            </Typography>
                         </div>
                     </Paper>
                 </Box>
                 {/* this is going to be an if/ else or ternary operator */}
                 {(!choicesTime)
-                    ?<Button
-                    onClick={(e)=>{
-                        // console.log("button clicked")
-                        setChoicesTime("true")
-                        seeOptions(storySectionId)
-                    }}
-                > 
-                    see choices</Button>
+                    ?<Box className="seeChoicesButtonBox">
+                        <Button
+                            variant="contained"
+                            className="seeChoicesButton"
+                            onClick={(e)=>{
+                                // console.log("button clicked")
+                                setChoicesTime("true")
+                                seeOptions(storySectionId)
+                        }}
+                        > 
+                            <Typography variant="h4">
+                            see choices
+                            </Typography>
+                        </Button>
+                    </Box> 
+                    
                 :<Box className="choicesContainerBox">
-                    <Box className="buttonJar">
-                        <Typography className="choicesButtons">
+                    {/* <Box className="buttonJar">
+                        <Typography variant="h3" className="choicesButtons">
                         1. Cupcake ipsum dolor sit amet fruitcake halvah dessert. Cheesecake jelly gummies dessert sesame snaps. 
                         </Typography>
                     </Box>
                     <Box className="buttonJar">
-                        <Typography className="choicesButtons">
+                        <Typography variant="h3" className="choicesButtons">
                         2. Cupcake ipsum dolor sit amet fruitcake halvah dessert. Cheesecake jelly gummies dessert sesame snaps. 2. Cupcake ipsum dolor sit amet fruitcake halvah dessert. Cheesecake jelly gummies dessert sesame snaps. 2. Cupcake ipsum dolor sit amet fruitcake halvah dessert. Cheesecake jelly gummies dessert sesame snaps. 
                         </Typography>
                     </Box>
-                    <Box className="buttonJar">
+                    <Box variant="h3" className="buttonJar">
                         <Typography className="choicesButtons">
                         1. Cupcake ipsum dolor sit amet fruitcake halvah dessert. Cheesecake jelly gummies dessert sesame snaps. 
                         </Typography>
-                    </Box>
-                    <Box className="buttonJar">
-                        <Typography className="choicesButtons">
-                        1. Cupcake ipsum dolor sit amet fruitcake halvah dessert. Cheesecake jelly gummies dessert sesame snaps. 
-                        </Typography>
-                    </Box>
+                    </Box> */}
                     
-                    
-                    {/* temporarily commented to hard code options to style */}
-                    {/* {options.map((option, index)=>
+                    {options.map((option, index)=>
                         // console.log("option, index: ", option, index)
-                        <Button
-                            onMouseDown={(e) =>{
-                                setOptionId(option.option_id)
-                                setResultingStorySectionId(option.resulting_story_section_id)
-                            }}
-                            onClick={(e) => {
+                        <Box variant="h3" className="buttonJar">
+                            <Typography className="choicesButtons"
+                                onMouseDown={(e) =>{
+                                    setOptionId(option.option_id)
+                                    setResultingStorySectionId(option.resulting_story_section_id)
+                                }}
+                                onClick={(e) => {
 
-                                //Actually, I think that passing userStoryId and resultingStorySEctionId is redundant
-                                //I think that the function in the Context file has access to them
-                                //but I'm tempted to leave it this way
-                                //just bc a) it makes it clear what the function needs
-                                //b) I feel more certain it will be right
-                                setChoicesTime(false)
-                                saveOption(userStoryId, storySectionId, optionId, resultingStorySectionId)
-                            }}
-                        >
-                            {option.option_content}
-                        </Button> 
-                    )}*/}
+                                    //Actually, I think that passing userStoryId and resultingStorySEctionId is redundant
+                                    //I think that the function in the Context file has access to them
+                                    //but I'm tempted to leave it this way
+                                    //just bc a) it makes it clear what the function needs
+                                    //b) I feel more certain it will be right
+                                    setChoicesTime(false)
+                                    saveOption(userStoryId, storySectionId, optionId, resultingStorySectionId)
+                                }}
+                            >
+                                {option.option_content}
+                            </Typography>
+                        </Box>
+                    )}
                     <Link
                             onClick={(e) => {
                                 readCompleteStory(userStoryId)
