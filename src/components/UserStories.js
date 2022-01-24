@@ -73,15 +73,15 @@ export default function UserStories (props) {
     
     return (
         <ThemeProvider theme={theme}>
-        <main style={{backgroundColor:"pink", display: "flex", flexDirection: "column", alignItems: "center"}} >
-            <div style={{ display:"flex", justifyContent: "center", border: "1px solid green"}}> 
+        <main  >
+            <div className="title"> 
                 <Box style={{ margin: "30px"}}>
                     <Typography variant="h1">
                         My Story Home
                     </Typography>
                 </Box>
             </div>
-                <Box className = "titleBox">
+                <Box className = "readBox">
                     <div className = "paperBox">
                         <Typography>
                             All Stories

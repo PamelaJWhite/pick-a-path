@@ -20,6 +20,8 @@ export default function ButtonAppBar() {
   const {
     isSignedIn,
     handleLogOut,
+    readCompleteStory,
+    userStoryId,
     setWholeStory,
     resetStoryState
 } = useContext(Context);
@@ -58,6 +60,14 @@ export default function ButtonAppBar() {
                 onClick={()=>{handleLogOut()}}>
                   Log Out
               </Button>
+              <Link
+                            onClick={(e) => {
+                                readCompleteStory(userStoryId)
+                            }}
+                            to="/wholeStory"
+                        >
+                            See your complete story
+                        </Link>
             </Typography>
           )}
         </Toolbar>

@@ -37,6 +37,23 @@
   }
 }
 
+main {
+  background-color:pink;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.readBox {
+  border: 1px solid brown;
+  margin-left: 40px;
+  margin-right: 40px;
+  display: flex;
+  /* width: 1000px; */
+  justify-content: "center";
+}
+
+/* UserStories specific */
 .deleteIcons {
   background-color:mediumspringgreen;
 }
@@ -49,14 +66,8 @@
   cursor: pointer;
 }
 
-.titleBox {
-  border: 1px solid brown;
-  margin-left: 40px;
-  margin-right: 40px;
-  display: flex;
-  /* width: 1000px; */
-  justify-content: "center";
-}
+
+
 
 .titlePaper {
   width: 400px;
@@ -76,4 +87,43 @@
   border: solid 1px rebeccapurple;
   display: flex;
   justify-content: center;
+}
+
+.insideMain {
+  display: flex; 
+  justify-content:center;
+  border: "1px solid green";
+}
+
+/* ReadingPage specific */
+.readPaper {
+  width: 760px;
+  height: 230px;
+  overflow-y: scroll;
+}
+
+.choicesContainerBox {
+  height: 290px;
+  width: 760px;
+  overflow-y: scroll;
+  border: solid 1px turquoise;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* justify-content: "center"; */
+}
+
+.buttonJar {
+  border: solid 1px plum;
+  height: 144px;
+  width: 375px;
+  overflow-y: scroll;
+  padding-top:12px;
+  display: flex;
+  color: green;
+}
+
+.choicesButtons {
+  padding-left: 10px;
+  padding-right: 10px;
 }
