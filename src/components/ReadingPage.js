@@ -25,6 +25,9 @@ const theme = createTheme({
         h4: {
             fontSize: 17,
         },
+        fontFamily: "Poppins"
+        
+
     },
 });
 
@@ -56,7 +59,7 @@ const ReadingPage = () => {
             <main>
                 <div className="title"> 
                     <Box style={{ margin: "30px"}}>
-                        <Typography variant="h1">
+                        <Typography variant="h1"> 
                             {/* !!Need to figure out how to get title! */}
                             Title Goes Here
                         </Typography>

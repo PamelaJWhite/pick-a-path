@@ -7,14 +7,18 @@ import { Provider } from './context/Context'
 
 import './App.css';
 
+
+
 function App() {
   return (
+    
     <Provider>
       <BrowserRouter>
         <Navigation/>
         <Router/> 
       </BrowserRouter>
     </Provider>
+    
   );
 }
 

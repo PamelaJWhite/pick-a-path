@@ -55,8 +55,10 @@ const theme = createTheme({
         h4: {
             fontSize: 17,
         },
+        fontFamily: "Poppins"
     },
 });
+
 
 export default function UserStories (props) {
         //destructure context for only the states and functions needed

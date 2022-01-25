@@ -25,6 +25,7 @@ const theme = createTheme({
         h4: {
             fontSize: 17,
         },
+        fontFamily: "Poppins"
     },
 });
 
