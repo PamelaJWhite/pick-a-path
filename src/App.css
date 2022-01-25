@@ -52,6 +52,12 @@ ul {
   padding: 10px;
 }
 
+/* List {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+} */
+
 .readBox {
   border: 1px solid brown;
   margin-left: 40px;

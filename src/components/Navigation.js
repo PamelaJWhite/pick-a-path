@@ -10,9 +10,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-
-// import MenuIcon from '@mui/icons-material/Menu';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import { Context } from "../context/Context";
 
@@ -41,7 +44,9 @@ export default function ButtonAppBar() {
     readCompleteStory,
     userStoryId,
     setWholeStory,
-    resetStoryState
+    resetStoryState,
+    isDrawerOpen,
+    setIsDrawerOpen
 } = useContext(Context);
 
   // console.log("isSignedIn: ", isSignedIn)
@@ -50,20 +55,62 @@ export default function ButtonAppBar() {
     <ThemeProvider theme={theme}>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
-          <Toolbar>
+          <Toolbar style={{ display: "flex", justifyContent:"flex-end"}}>
+          {isSignedIn && (
+            <Box style={{ display: "flex", justifyContent:"flex-end"}}>
             <IconButton
               size="large"
-              edge="start"
+              edge="end"
               color="inherit"
               aria-label="menu"
               sx={{ mr: 2 }}
+              
+              onClick={() => setIsDrawerOpen(true)}
             >
-              {/* <MenuIcon /> */}
+              <MenuIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Icon
-            </Typography>
-            {isSignedIn && (
+            <Drawer 
+              anchor="right"
+              open={isDrawerOpen} 
+              onClose={() => setIsDrawerOpen(false)
+            }>
+          <List>
+            <ListItem>
+              <ListItemButton
+                color="inherit"
+                onClick={()=>{resetStoryState()}}
+              >
+                <Link
+                      to="/userStories">
+                        Home
+                </Link>
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton
+                color="inherit"
+                onClick={()=>{handleLogOut()}}>
+                  <ListItemText primary="Log Out" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Drawer>
+        </Box>
+        )}
+
+            
+          </Toolbar>
+        </AppBar>
+      </Box> 
+    </ThemeProvider>
+    
+  );
+}
+
+
+
+
+{/* {isSignedIn && (
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 <Button 
                   color="inherit"
@@ -88,11 +135,4 @@ export default function ButtonAppBar() {
                               See your complete story
                           </Link>
               </Typography>
-            )}
-          </Toolbar>
-        </AppBar>
-      </Box>
-    </ThemeProvider>
-    
-  );
-}
+            )}*/}

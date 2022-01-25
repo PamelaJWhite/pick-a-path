@@ -11,6 +11,10 @@ import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
 import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Container from '@mui/material/Container';
@@ -83,7 +87,7 @@ export default function UserStories (props) {
     setIsSignedIn(true)
     
     return (
-        <ThemeProvider theme={theme}>
+        // <ThemeProvider theme={theme}>
         <main  >
             <div className="title"> 
                 <Box style={{ margin: "30px"}}>
@@ -94,7 +98,7 @@ export default function UserStories (props) {
             </div>
                 <Box className = "readBox">
                     <div className = "paperBox">
-                        <Typography variant="h2">
+                        <Typography variant="h2" style={{paddingBottom: "5px"}}>
                             All Stories
                         </Typography>
                         <Paper elevation={2} className="titlePaper" style={{marginRight: "20px" }}>
@@ -104,8 +108,8 @@ export default function UserStories (props) {
                             {storyData && (
                                 <Typography variant="h3" component="div" sx={{ paddingBottom: 5 }}>
                                     {storyData.map((element, idx)=>(
-                                        <ul>
-                                            <li 
+                                        <List>
+                                            <ListItem 
                                                 className="storyTitlesList"
                                                 onClick={(e) => {
                                                 let storyId = element.story_id
@@ -113,15 +117,15 @@ export default function UserStories (props) {
                                                 postToMyStoryTitlesList(storyId) 
                                                 }}>
                                                     {element.title}
-                                            </li>
-                                        </ul>
+                                            </ListItem>
+                                        </List>
                                     ))}
                                 </Typography>  
                             )} 
                         </Paper>
                     </div>
                     <div className = "paperBox">
-                        <Typography variant="h2">
+                        <Typography variant="h2" style={{paddingBottom: "5px"}}>
                             My Stories
                         </Typography>
                         <Paper elevation={2} className="titlePaper" style={{marginLeft: "20px"}}>
@@ -131,8 +135,8 @@ export default function UserStories (props) {
                                 {myStoryTitles && (
                                     <Typography variant="h3" component="div" sx={{ paddingBottom: 5 }}>
                                         {myStoryTitles.map((element, idx)=>(
-                                            <ul>
-                                                <li className="storyTitlesList">
+                                            <List>
+                                                <ListItem className="storyTitlesList">
                                                     <Grid container spacing={3 }style={{ display: "flex", justifyContent: "space-between"}}>
                                                         <Grid item style={{display: "flex"}}>
                                                             <Link style={{border: "solid 1px red"}}
@@ -167,8 +171,8 @@ export default function UserStories (props) {
                                                         </Grid>
                                                         
                                                     </Grid>
-                                                </li>
-                                            </ul>
+                                                </ListItem>
+                                            </List>
                                         ))}
                                     </Typography>
                                 )}
@@ -192,7 +196,7 @@ export default function UserStories (props) {
                     click me
                 </Button> 
         </main>
-        </ThemeProvider>
+        // </ThemeProvider>
     );
 }
 

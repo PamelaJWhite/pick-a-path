@@ -10,6 +10,9 @@ import SignUp from './components/SignUp'
 import ReadingPage from './components/ReadingPage'
 import WholeStory from './components/WholeStory'
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
 import { Context } from "./context/Context";
 
 // const ProtectedRoute = ({children}) => {
@@ -24,10 +27,27 @@ import { Context } from "./context/Context";
     
 //     return   (auth === true) ? children : <Navigate to="/"/>
 // }
-
+const theme = createTheme({
+    typography: {
+        h1: {
+            fontSize: 50,
+        },
+        h2: {
+            fontSize: 35,
+        },
+        h3: {
+            fontSize: 25,
+        },
+        h4: {
+            fontSize: 17,
+        },
+        fontFamily: "Poppins"
+    },
+});
 
 const Router = () => {
     return (
+        <ThemeProvider theme={theme}> 
         <Routes>
             <Route path='/' element={<Home/>}/>
             {/* Home actually is the login page, so I'm not sure I need a /login path */}
@@ -43,6 +63,7 @@ const Router = () => {
             maybe eventually a whole "I've learned" page */}
             <Route path='/wholeStory' element={<WholeStory/>}/>
         </Routes>
+        </ThemeProvider>
     )
 }
 export default Router

@@ -27,9 +27,11 @@ export const Provider = ({ children }) => {
     const [choicesTime, setChoicesTime] =useState(false)
     const [storySectionId, setStorySectionId] = useState("")
     const [options, setOptions] = useState([])
-    const [optionId, setOptionId] = useState("")
+    const [optionId, setOptionId] = useState("");
     const [resultingStorySectionId, setResultingStorySectionId] = useState("")
-    const [wholeStory, setWholeStory] = useState([])
+    const [wholeStory, setWholeStory] = useState([]);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
 
     //variable for MY base api url
     const url = "https://pjw1.herokuapp.com"
@@ -247,6 +249,8 @@ export const Provider = ({ children }) => {
         handleLogOut,
         saveOption,
         resetStoryState,
+        isDrawerOpen,
+        setIsDrawerOpen,
         checkAuth
     };
 
