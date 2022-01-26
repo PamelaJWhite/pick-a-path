@@ -61,6 +61,20 @@ const theme = createTheme({
         },
         fontFamily: "Poppins"
     },
+    palette: {
+        primary: {
+          // light: will be calculated from palette.primary.main,
+            main: '#577590',
+          // dark: will be calculated from palette.primary.main,
+          // contrastText: will be calculated to contrast with palette.primary.main
+        },
+        secondary: {
+            light: '#0066ff',
+            main: '#0044ff',
+          // dark: will be calculated from palette.secondary.main,
+            contrastText: '#ffcc00',
+        },
+    },
 });
 
 
@@ -124,7 +138,11 @@ export default function UserStories (props) {
                             )} 
                         </Paper>
                     </div>
-                    <div className = "paperBox">
+                    <Box 
+                        // style={{backgroundColor:"grey"}} 
+                        bgcolor="primary.main"
+                        className = "paperBox"
+                    >
                         <Typography variant="h2" style={{paddingBottom: "5px"}}>
                             My Stories
                         </Typography>
@@ -177,15 +195,15 @@ export default function UserStories (props) {
                                     </Typography>
                                 )}
                         </Paper>
-                    </div>
+                    </Box>
                 </Box>
                 {/* this is set up as a button
                 because I think it was making hundreds of calls
                 when i had the get request functions 
                 run on loading */}
                 <Button
+                    color="primary"
                     variant="contained"
-                    style={{backgroundColor:"pink"}}
                     onClick={() => {
                         // console.log("I'm clicked")
                         getAllStoryTitles()

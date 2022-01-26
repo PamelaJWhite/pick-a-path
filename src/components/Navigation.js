@@ -35,6 +35,20 @@ const theme = createTheme({
       },
       fontFamily: "Poppins"
   },
+  palette: {
+    primary: {
+      // light: will be calculated from palette.primary.main,
+        main: '#577590',
+      // dark: will be calculated from palette.primary.main,
+      // contrastText: will be calculated to contrast with palette.primary.main
+    },
+    secondary: {
+        light: '#0066ff',
+        main: '#0044ff',
+      // dark: will be calculated from palette.secondary.main,
+        contrastText: '#ffcc00',
+    },
+},
 });
 
 export default function ButtonAppBar() {
@@ -54,7 +68,7 @@ export default function ButtonAppBar() {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" color="primary">
           <Toolbar style={{ display: "flex", justifyContent:"flex-end"}}>
           {isSignedIn && (
             <Box style={{ display: "flex", justifyContent:"flex-end"}}>
