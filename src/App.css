@@ -39,12 +39,17 @@
   }
 }
 
+body {
+  background-color: #bda1a3;
+}
+
 main {
   /* background-color:pink; */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 
 ul {
   list-style-type: none;
@@ -58,6 +63,8 @@ ul {
   padding: 10px;
 } */
 
+
+
 .readBox {
   border: 1px solid brown;
   margin-left: 40px;
@@ -67,23 +74,23 @@ ul {
   justify-content: "center";
 }
 
-/* UserStories specific */
-.deleteIcons {
-  background-color:mediumspringgreen;
-}
+/*----------------UserStories specific */
+
 
 .deleteIcons:hover {
   cursor: pointer;
+  /* font-weight: bold; */
 }
 
 .storyTitlesList{
-  border: solid 1px violet;
+  /* border: solid 1px violet; */
   display: flex;
 
 }
 
 .storyTitlesList:hover {
   cursor: pointer;
+  /* font-weight: bold; */
 }
 
 .titlePaper {
@@ -93,7 +100,7 @@ ul {
 }
 
 .paperBox {
-  border: solid 1px grey;
+  /* border: solid 1px grey; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,7 +108,7 @@ ul {
 }
 
 .clickToAdd {
-  border: solid 1px rebeccapurple;
+  /* border: solid 1px rebeccapurple; */
   display: flex;
   justify-content: center;
   padding: 10px;
@@ -113,7 +120,17 @@ ul {
   border: "1px solid green";
 }
 
-/* ReadingPage specific */
+.list {
+  /* border: solid 1px darkcyan; */
+  padding-top: 50px
+}
+
+
+.list:hover {
+  background-color: red;
+}
+
+/*-------------------- ReadingPage specific */
 .readPaper {
   width: 760px;
   height: 230px;
@@ -130,7 +147,7 @@ ul {
   height: 290px;
   width: 760px;
   overflow-y: scroll;
-  border: solid 1px turquoise;
+  /* border: solid 1px turquoise; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -139,30 +156,33 @@ ul {
 
 
 .buttonJar {
-  border: solid 1px plum;
+  /* border: solid 1px plum; */
   height: 144px;
   width: 375px;
   overflow-y: scroll;
   padding-top:12px;
   display: flex;
-  color: green;
+  /* color: green; */
+  /* background-color: white; */
 }
 
 .choicesButtons {
   padding-left: 10px;
   padding-right: 10px;
 }
+
+.choicesButtons:hover{
+  cursor: pointer;
+  font-weight: bold;
+}
 .seeChoicesButtonBox {
-  border: solid 1px, red;
-  background-color: sandybrown;
-  color: tomato;
+  /* border: solid 1px, red; */
+  /* background-color: sandybrown; */
+  /* color: tomato; */
   /* height: 100px; */
   margin: 10px;
 }
-.seeChoicesButton {
-  border: solid 1px, palegreen;
-  /* why can't I change anything about this button except it's size? */
-}
+
 
 
 /*----------- WholeStorySpecific */

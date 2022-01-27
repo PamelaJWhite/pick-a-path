@@ -11,23 +11,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 //import context
 import { Context } from "../context/Context";
 
-const theme = createTheme({
-    typography: {
-        h1: {
-            fontSize: 50,
-        },
-        h2: {
-            fontSize: 35,
-        },
-        h3: {
-            fontSize: 25,
-        },
-        h4: {
-            fontSize: 17,
-        },
-        fontFamily: "Poppins"
-    },
-});
 
 const WholeStory = () => {
     //create variable name to access styles
@@ -55,8 +38,12 @@ const WholeStory = () => {
 
     
     return (
-        <ThemeProvider theme={theme}>
-            <main className="{classes.formContainer}" style={{backgroundColor:"pink"}}>
+    
+            <Box
+            component="main" 
+            bgcolor="primary.main"
+            className="{classes.formContainer}" 
+            style={{ marginBottom:"50px" }}>
                 <div className="title"> 
                         <Box style={{ margin: "30px"}}>
                             <Typography variant="h1">
@@ -65,16 +52,16 @@ const WholeStory = () => {
                             </Typography>
                         </Box>
                 </div>
-                <Paper className="readPaperWhole" elevation={3}>
+                <Paper 
+                className="readPaperWhole" 
+                style={{backgroundColor:"rgb(254, 240, 184)"}}
+                elevation={9}>
                     <Typography variant="h3" className="readingText">
                     {/* Cupcake ipsum dolor sit amet caramels sugar plum bonbon candy. Oat cake jelly-o bear claw apple pie powder wafer. Lollipop gingerbread fruitcake oat cake marzipan chocolate bar lemon drops powder cheesecake. Tootsie roll cookie danish candy liquorice sweet tootsie roll. Gingerbread liquorice chupa chups cotton candy sesame snaps jelly beans cookie. Chocolate topping tart carrot cake pastry cake lollipop cake tiramisu. Chocolate bar gummi bears cake apple pie candy canes. Powder chupa chups cookie gummies jelly-o gummi bears cheesecake topping. Gummies wafer chupa chups chocolate macaroon cake. Lemon drops powder macaroon jelly gingerbread bonbon dessert.Cupcake ipsum dolor sit amet caramels sugar plum bonbon candy. Oat cake jelly-o bear claw apple pie powder wafer. Lollipop gingerbread fruitcake oat cake marzipan chocolate bar lemon drops powder cheesecake. Tootsie roll cookie danish candy liquorice sweet tootsie roll. Gingerbread liquorice chupa chups cotton candy sesame snaps jelly beans cookie. Chocolate topping tart carrot cake pastry cake lollipop cake tiramisu. Chocolate bar gummi bears cake apple pie candy canes. Powder chupa chups cookie gummies jelly-o gummi bears cheesecake topping. Gummies wafer chupa chups chocolate macaroon cake. Lemon drops powder macaroon jelly gingerbread bonbon dessert.Cupcake ipsum dolor sit amet caramels sugar plum bonbon candy. Oat cake jelly-o bear claw apple pie powder wafer. Lollipop gingerbread fruitcake oat cake marzipan chocolate bar lemon drops powder cheesecake. Tootsie roll cookie danish candy liquorice sweet tootsie roll. Gingerbread liquorice chupa chups cotton candy sesame snaps jelly beans cookie. Chocolate topping tart carrot cake pastry cake lollipop cake tiramisu. Chocolate bar gummi bears cake apple pie candy canes. Powder chupa chups cookie gummies jelly-o gummi bears cheesecake topping. Gummies wafer chupa chups chocolate macaroon cake. Lemon drops powder macaroon jelly gingerbread bonbon dessert. */}
                         {wholeStory}
                     </Typography>
                 </Paper>
-                
-            </main>
-
-        </ThemeProvider>
+            </Box>
         
     );
 };

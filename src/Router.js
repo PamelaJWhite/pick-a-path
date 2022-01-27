@@ -27,41 +27,40 @@ import { Context } from "./context/Context";
     
 //     return   (auth === true) ? children : <Navigate to="/"/>
 // }
-const theme = createTheme({
-    typography: {
-        h1: {
-            fontSize: 50,
-        },
-        h2: {
-            fontSize: 35,
-        },
-        h3: {
-            fontSize: 25,
-        },
-        h4: {
-            fontSize: 17,
-        },
-        fontFamily: "Poppins"
-    },
-    palette: {
-        primary: {
-          // light: will be calculated from palette.primary.main,
-            main: '#577590',
-          // dark: will be calculated from palette.primary.main,
-          // contrastText: will be calculated to contrast with palette.primary.main
-        },
-        secondary: {
-            light: '#0066ff',
-            main: '#0044ff',
-          // dark: will be calculated from palette.secondary.main,
-            contrastText: '#ffcc00',
-        },
-    },
-});
+
+// const theme = createTheme({
+//     typography: {
+//         h1: {
+//             fontSize: 50,
+//         },
+//         h2: {
+//             fontSize: 35,
+//         },
+//         h3: {
+//             fontSize: 25,
+//         },
+//         h4: {
+//             fontSize: 17,
+//         },
+//         fontFamily: "Poppins"
+//     },
+//     palette: {
+//         primary: {
+//           // light: will be calculated from palette.primary.main,
+//             main: '#bda1a3',
+//           // dark: will be calculated from palette.primary.main,
+//             contrastText: '#ffffe1'
+//         },
+//         secondary: {
+//             main: '#feeda7',
+//           // dark: will be calculated from palette.secondary.main,
+//         },
+//     },
+// });
 
 const Router = () => {
     return (
-        <ThemeProvider theme={theme}> 
+        // <ThemeProvider theme={theme}> 
         <Routes>
             <Route path='/' element={<Home/>}/>
             {/* Home actually is the login page, so I'm not sure I need a /login path */}
@@ -77,7 +76,7 @@ const Router = () => {
             maybe eventually a whole "I've learned" page */}
             <Route path='/wholeStory' element={<WholeStory/>}/>
         </Routes>
-        </ThemeProvider>
+        // </ThemeProvider>
     )
 }
 export default Router

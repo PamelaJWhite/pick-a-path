@@ -19,38 +19,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import { Context } from "../context/Context";
 
-const theme = createTheme({
-  typography: {
-      h1: {
-          fontSize: 50,
-      },
-      h2: {
-          fontSize: 35,
-      },
-      h3: {
-          fontSize: 25,
-      },
-      h4: {
-          fontSize: 17,
-      },
-      fontFamily: "Poppins"
-  },
-  palette: {
-    primary: {
-      // light: will be calculated from palette.primary.main,
-        main: '#577590',
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
-    },
-    secondary: {
-        light: '#0066ff',
-        main: '#0044ff',
-      // dark: will be calculated from palette.secondary.main,
-        contrastText: '#ffcc00',
-    },
-},
-});
-
 export default function ButtonAppBar() {
   const {
     isSignedIn,
@@ -66,57 +34,72 @@ export default function ButtonAppBar() {
   // console.log("isSignedIn: ", isSignedIn)
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" color="primary">
-          <Toolbar style={{ display: "flex", justifyContent:"flex-end"}}>
-          {isSignedIn && (
-            <Box style={{ display: "flex", justifyContent:"flex-end"}}>
-            <IconButton
-              size="large"
-              edge="end"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              
-              onClick={() => setIsDrawerOpen(true)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Drawer 
-              anchor="right"
-              open={isDrawerOpen} 
-              onClose={() => setIsDrawerOpen(false)
-            }>
-          <List>
-            <ListItem>
-              <ListItemButton
-                color="inherit"
-                onClick={()=>{resetStoryState()}}
-              >
-                <Link
-                      to="/userStories">
-                        Home
-                </Link>
-              </ListItemButton>
-            </ListItem>
-            <ListItem>
-              <ListItemButton
-                color="inherit"
-                onClick={()=>{handleLogOut()}}>
-                  <ListItemText primary="Log Out" />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Drawer>
-        </Box>
-        )}
+    // <ThemeProvider theme={theme}>
+      <Box 
+        sx={{ flexGrow: 1 }}
+        bgcolor="primary.main"
 
-            
+
+      >
+        <AppBar 
+          position="static"
+          bgcolor="primary.main"
+        >
+          <Toolbar
+          style={{ display: "flex", justifyContent:"flex-end", marginBottom:"-10px"}}
+          >
           </Toolbar>
         </AppBar>
+          {isSignedIn && (
+            <Box 
+            style={{ display: "flex", justifyContent:"flex-end"}}>
+              <IconButton
+                size="large"
+                edge="end"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+                
+                onClick={() => setIsDrawerOpen(true)}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Drawer 
+                
+                style={{ display: "flex", justifySelf: "flex-end", position: "relative" }}
+                anchor="top"
+                open={isDrawerOpen} 
+                PaperProps={{ style: { height: "140px", width: "140px" }}}
+                onClose={() => setIsDrawerOpen(false)
+              }>
+            <List>
+              <ListItem>
+                <ListItemButton
+                  color="inherit"
+                  onClick={()=>{resetStoryState()}}
+                >
+                  <Link
+                        to="/userStories">
+                          Home
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton
+                  color="inherit"
+                  onClick={()=>{handleLogOut()}}>
+                    <ListItemText primary="Log Out" />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Drawer>
+          </Box>
+          )}
+
+            
+          
       </Box> 
-    </ThemeProvider>
+    // </ThemeProvider>
     
   );
 }

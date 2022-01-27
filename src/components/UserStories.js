@@ -39,44 +39,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 //import context
 import { Context } from "../context/Context";
 import { getDividerUtilityClass } from "@mui/material";
+import { AccountBoxSharp } from "@mui/icons-material";
 
 window.history.pushState(null, null, window.location.href);
 window.onpopstate = function () {
 window.history.go(1);
 };
-
-const theme = createTheme({
-    typography: {
-        h1: {
-            fontSize: 50,
-        },
-        h2: {
-            fontSize: 35,
-        },
-        h3: {
-            fontSize: 25,
-        },
-        h4: {
-            fontSize: 17,
-        },
-        fontFamily: "Poppins"
-    },
-    palette: {
-        primary: {
-          // light: will be calculated from palette.primary.main,
-            main: '#577590',
-          // dark: will be calculated from palette.primary.main,
-          // contrastText: will be calculated to contrast with palette.primary.main
-        },
-        secondary: {
-            light: '#0066ff',
-            main: '#0044ff',
-          // dark: will be calculated from palette.secondary.main,
-            contrastText: '#ffcc00',
-        },
-    },
-});
-
 
 export default function UserStories (props) {
         //destructure context for only the states and functions needed
@@ -93,7 +61,8 @@ export default function UserStories (props) {
         readCompleteStory,
         wholeStory,
         isSignedIn, 
-        setIsSignedIn
+        setIsSignedIn,
+        gateKeeper
     } = useContext(Context);
     
     //!this can't stay in here
@@ -102,32 +71,57 @@ export default function UserStories (props) {
     
     return (
         // <ThemeProvider theme={theme}>
-        <main  >
+        <Box  
+        component="main"
+        bgcolor="primary.main"
+        color="primary.contrastText" 
+
+        style={{ paddingBottom: "50px"}}
+        >
             <div className="title"> 
-                <Box style={{ margin: "30px"}}>
+                <Box 
+                style={{ marginBottom: "30px"}}
+                // color="primar.contrastText" 
+        >
                     <Typography variant="h1">
                         My Story Home
                     </Typography>
                 </Box>
             </div>
                 <Box className = "readBox">
-                    <div className = "paperBox">
+                    <Box 
+                    bgcolor="primary.main" 
+                    className = "paperBox"
+                    >
                         <Typography variant="h2" style={{paddingBottom: "5px"}}>
                             All Stories
                         </Typography>
-                        <Paper elevation={2} className="titlePaper" style={{marginRight: "20px" }}>
+                        <Paper 
+                            elevation={9} 
+                            className="titlePaper"
+                            style={{marginRight: "20px",   backgroundColor: "rgb(254, 240, 184)" }}>
                             <div className = "clickToAdd">
-                                <Typography variant="h4">Click Story to Add</Typography>
+                                <Typography 
+                                    variant="h4"
+                                    color="secondary.contrastText"
+                                >
+                                    Click Story to Add
+                                </Typography>
                             </div>
                             {storyData && (
-                                <Typography variant="h3" component="div" sx={{ paddingBottom: 5 }}>
+                                <Typography 
+                                    color="secondary.contrastText"
+                                    variant="h3" 
+                                    component="div" 
+                                    sx={{ paddingBottom: 5}}>
                                     {storyData.map((element, idx)=>(
-                                        <List>
+                                        <List style={{padding:0}} >
                                             <ListItem 
-                                                className="storyTitlesList"
+                                                style={{padding:"10px"}}
+                                                className="storyTitlesList list"
                                                 onClick={(e) => {
                                                 let storyId = element.story_id
-                                                console.log("wholeStory: ", wholeStory)
+                                                // console.log("wholeStory: ", wholeStory)
                                                 postToMyStoryTitlesList(storyId) 
                                                 }}>
                                                     {element.title}
@@ -137,47 +131,82 @@ export default function UserStories (props) {
                                 </Typography>  
                             )} 
                         </Paper>
-                    </div>
+                    </Box>
                     <Box 
                         // style={{backgroundColor:"grey"}} 
                         bgcolor="primary.main"
+                        // color="primary.contrastText" 
                         className = "paperBox"
                     >
-                        <Typography variant="h2" style={{paddingBottom: "5px"}}>
+                        <Typography
+                        variant="h2" 
+                        style={{paddingBottom: "5px"}}
+                        >
                             My Stories
                         </Typography>
-                        <Paper elevation={2} className="titlePaper" style={{marginLeft: "20px"}}>
-                            <div className="clickToAdd">
-                                <Typography variant="h4">Click Story To Read</Typography>
-                            </div>
+                        <Paper 
+                            // bgcolor="primary.main"
+                            elevation={9} 
+                            className="titlePaper" 
+                            style={{marginLeft: "20px", backgroundColor: "rgb(254, 240, 184)"}}
+                        >
+                            <Box 
+                                className="clickToAdd"
+                                color="secondary.contrastText"
+                                bgcolor="secondary.light"
+                            >
+                                <Typography 
+                                    variant="h4"
+    
+                                >
+                                    Click Story To Read
+                                </Typography>
+                            </Box> 
                                 {myStoryTitles && (
-                                    <Typography variant="h3" component="div" sx={{ paddingBottom: 5 }}>
+                                    <Typography 
+                                    color="secondary.contrastText"
+                                    variant="h3" 
+                                    component="div" 
+                                    sx={{ paddingBottom: 5 }}>
                                         {myStoryTitles.map((element, idx)=>(
-                                            <List>
-                                                <ListItem className="storyTitlesList">
-                                                    <Grid container spacing={3 }style={{ display: "flex", justifyContent: "space-between"}}>
-                                                        <Grid item style={{display: "flex"}}>
-                                                            <Link style={{border: "solid 1px red"}}
+                                            <List
+                                            style={{padding:0}} 
+                                            >
+                                                <ListItem 
+                                                style={{padding:"10px"}}
+                                                className="storyTitlesList list">
+                                                    <Grid 
+                                                    container spacing={3 }
+                                                    style={{ display: "flex", justifyContent: "space-between"}}>
+                                                        <Grid 
+                                                        item style={{display: "flex"}}>
+                                                            <Link 
+                                                                
+                                                                style={{ textDecoration: "none"}}
                                                                 onMouseDown={(e) =>{
                                                                     setUserStoryId(element.user_story_id)
                                                                 }}
                                                                 onClick={(e) => {
-                                                                    //go to readCompleteStory first
-                                                                    //b/c we only want to read the first story section
-                                                                    //if there is no story already saved
-                                                                    readFirstStorySection(userStoryId)
+                                                                    //gateKeeper
+                                                                    gateKeeper(userStoryId)
+                                                                    // //go to readCompleteStory first
+                                                                    // //b/c we only want to read the first story section
+                                                                    // //if there is no story already saved
+                                                                    // readFirstStorySection(userStoryId)
 
                                                                 }}
                                                                 to={"/readingPage"}
                                                             >
                                                                 {element.title}
                                                             </Link>
-                                                            <Typography variant="h4" style={{alignSelf: "center", paddingLeft: "10px"}}>
+                                                            <Typography 
+                                                            variant="h4" 
+                                                            style={{alignSelf: "center", paddingLeft: "10px"}}>
                                                                 Date
                                                             </Typography>
                                                         </Grid>
                                     
-                                                        <Grid  item sx={{ color: 'text.primary', border: "solid 1px green"}}>
+                                                        <Grid  item sx={{ color: 'text.primary'}}>
                                                             <DeleteForeverIcon 
                                                                 className="deleteIcons"
                                                                 onClick={(e) => {
@@ -213,7 +242,7 @@ export default function UserStories (props) {
                 >
                     click me
                 </Button> 
-        </main>
+        </Box>
         // </ThemeProvider>
     );
 }

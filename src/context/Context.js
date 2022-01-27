@@ -120,13 +120,40 @@ export const Provider = ({ children }) => {
         })
     }
 
+    const gateKeeper = async (userStoryId) =>{
+        await axios.get(url + `/myStories/completeStory/${userStoryId}`).
+        then((res) => {
+            console.log("gateKeeper res.data: ", res.data)
+            if(res.data.length == 0){
+                console.log("there's no data")
+                readFirstStorySection(userStoryId)
+            }else if(res.data.length== 1){
+                console.log("there's one row of data")
+                // console.log("res.data[0]story_section_content: ", res.data[0].story_section_content)
+                setStorySection(res.data[0].story_section_content)
+                console.log("storySection: ", storySection)
+                console.log('res.data[0].story_section_id', res.data[0].story_section_id)
+                setStorySectionId(res.data[0].story_section_id)
+                // console.log("storySectionId: ", storySectionId)
+            }else {
+                
+                //get the last row of data
+                let storyRowsArray = res.data
+                console.log("storyRowsArray[storyRowsArray.length-1]", storyRowsArray[storyRowsArray.length-1])
+                let currentStoryRow = storyRowsArray[storyRowsArray.length-1]
+                setStorySection(currentStoryRow.story_section_content)
+                setStorySectionId(currentStoryRow.story_section_id)
+            }
+        })
+    }
+
     //grab the first story section connected to the title from the DB
     const readFirstStorySection = async (userStoryId)=> {
         await axios.post(url + `/myStories/readFirst/${userStoryId}`).
         then((res) => {
             //set the state for storySection and storySectionId
             //to display them
-            
+            console.log("Got to readFirstStorySection")
             setStorySection(res.data.story_section_content)
             setStorySectionId(res.data.story_section_id)
         })
@@ -148,7 +175,9 @@ export const Provider = ({ children }) => {
             //set the array of option content text to Options
             //so we can view them later
             setOptions(optionArray)
-        })
+            console.log("optionArray: ", optionArray)
+            setChoicesTime("true") 
+            })
     } 
     
     //save an option to the DB
@@ -178,7 +207,7 @@ export const Provider = ({ children }) => {
         }).then(()=> {
             //Call function to see options
             console.log("storySectionId in readNextSectino(): ", storySectionId)
-            seeOptions(storySectionId)
+            // seeOptions(storySectionId)
         })
     }
 
@@ -203,12 +232,14 @@ export const Provider = ({ children }) => {
         })
     }
     const resetStoryState = () => {
-        setWholeStory([])
-        setStorySectionId("")
-        setUserStoryId('')
-        setStorySection("")
+        console.log("resetStoryState was called")
+        // setWholeStory([])
+        // setStorySectionId("")
+        // setUserStoryId('')
+        // setStorySection("")
         setOptions('')
         setOptionId('')
+        setChoicesTime(false)
     }
 
     //List of exported states and functions
@@ -251,6 +282,7 @@ export const Provider = ({ children }) => {
         resetStoryState,
         isDrawerOpen,
         setIsDrawerOpen,
+        gateKeeper,
         checkAuth
     };
 

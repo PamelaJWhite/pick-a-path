@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {Link} from "react-router-dom";
 
 import Button from "@mui/material/Button";
@@ -10,26 +10,6 @@ import Grid from '@mui/material/Grid';
 
 import { Context } from "../context/Context";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-const theme = createTheme({
-    typography: {
-        h1: {
-            fontSize: 50,
-        },
-        h2: {
-            fontSize: 35,
-        },
-        h3: {
-            fontSize: 25,
-        },
-        h4: {
-            fontSize: 17,
-        },
-        fontFamily: "Poppins"
-        
-
-    },
-});
 
 
 const ReadingPage = () => {
@@ -50,16 +30,29 @@ const ReadingPage = () => {
         saveOption
     } = useContext(Context);
 
+    useEffect(()=>{
+        console.log("options changed: ", options)
+    }, [options])
     
     
 // console.log("made it to reading rainbow. userStoryId: ", userStoryId)
 
     return (
-        <ThemeProvider theme={theme}>
-            <main>
+        // <ThemeProvider theme={theme}>
+            <Box
+            bgcolor="primary.main" 
+            color="primar.contrastText" 
+
+            component="main"
+            style={{paddingBottom: "50px"}}
+            >
                 <div className="title"> 
                     <Box style={{ margin: "30px"}}>
-                        <Typography variant="h1"> 
+                        <Typography 
+                        variant="h1"
+                        color="main.contrastText"
+                        > 
+
                             {/* !!Need to figure out how to get title! */}
                             Title Goes Here
                         </Typography>
@@ -77,7 +70,11 @@ const ReadingPage = () => {
                     //     },
                     // }}
                 > 
-                    <Paper elevation={2} className="readPaper">
+                    <Paper 
+                    elevation={9} 
+                    className="readPaper"
+                    style={{marginRight: "20px",   backgroundColor: "rgb(254, 240, 184)" }}
+                    >
                         <div>
                             <Typography variant="h3" className="readingText" component="div">
                             {/* Cupcake ipsum dolor sit amet caramels sugar plum bonbon candy. Oat cake jelly-o bear claw apple pie powder wafer. Lollipop gingerbread fruitcake oat cake marzipan chocolate bar lemon drops powder cheesecake. Tootsie roll cookie danish candy liquorice sweet tootsie roll. Gingerbread liquorice chupa chups cotton candy sesame snaps jelly beans cookie. Chocolate topping tart carrot cake pastry cake lollipop cake tiramisu. Chocolate bar gummi bears cake apple pie candy canes. Powder chupa chups cookie gummies jelly-o gummi bears cheesecake topping. Gummies wafer chupa chups chocolate macaroon cake. Lemon drops powder macaroon jelly gingerbread bonbon dessert. */}
@@ -93,8 +90,9 @@ const ReadingPage = () => {
                             variant="contained"
                             className="seeChoicesButton"
                             onClick={(e)=>{
-                                // console.log("button clicked")
-                                setChoicesTime("true")
+                                console.log("see choices clicked")
+                                console.log("storySectionId when see choices was clicked: ", storySectionId)
+    
                                 seeOptions(storySectionId)
                         }}
                         > 
@@ -123,8 +121,13 @@ const ReadingPage = () => {
                     
                     {options.map((option, index)=>
                         // console.log("option, index: ", option, index)
-                        <Box variant="h3" className="buttonJar">
-                            <Typography className="choicesButtons"
+                        <Box 
+                        variant="h3" 
+                        className="buttonJar"
+                        >
+                            <Typography
+                                className="choicesButtons"
+                                color="secondary"
                                 onMouseDown={(e) =>{
                                     setOptionId(option.option_id)
                                     setResultingStorySectionId(option.resulting_story_section_id)
@@ -141,6 +144,7 @@ const ReadingPage = () => {
                                 }}
                             >
                                 {option.option_content}
+                        
                             </Typography>
                         </Box>
                     )}
@@ -156,8 +160,8 @@ const ReadingPage = () => {
                 </Box>
                 }           
                 
-            </main>
-        </ThemeProvider>
+            </Box>
+        // </ThemeProvider>
         
     )
 }
