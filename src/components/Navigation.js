@@ -35,25 +35,21 @@ export default function ButtonAppBar() {
 
   return (
     // <ThemeProvider theme={theme}>
+    isSignedIn && (
       <Box 
         sx={{ flexGrow: 1 }}
-        bgcolor="primary.main"
+        // bgcolor="primary.main"
 
 
       >
         <AppBar 
           position="static"
-          bgcolor="primary.main"
+          // bgcolor="primary.main"
         >
           <Toolbar
           style={{ display: "flex", justifyContent:"flex-end", marginBottom:"-10px"}}
           >
-          </Toolbar>
-        </AppBar>
-          {isSignedIn && (
-            <Box 
-            style={{ display: "flex", justifyContent:"flex-end"}}>
-              <IconButton
+            <IconButton
                 size="large"
                 edge="end"
                 color="inherit"
@@ -64,10 +60,15 @@ export default function ButtonAppBar() {
               >
                 <MenuIcon />
               </IconButton>
+          </Toolbar>
+        </AppBar>
+          
+            <Box 
+            style={{ display: "flex", justifyContent:"flex-end"}}>
               <Drawer 
                 
                 style={{ display: "flex", justifySelf: "flex-end", position: "relative" }}
-                anchor="top"
+                anchor="right"
                 open={isDrawerOpen} 
                 PaperProps={{ style: { height: "140px", width: "140px" }}}
                 onClose={() => setIsDrawerOpen(false)
@@ -94,11 +95,12 @@ export default function ButtonAppBar() {
             </List>
           </Drawer>
           </Box>
-          )}
+          
 
             
-          
+        
       </Box> 
+      )
     // </ThemeProvider>
     
   );

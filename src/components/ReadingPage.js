@@ -40,14 +40,15 @@ const ReadingPage = () => {
     return (
         // <ThemeProvider theme={theme}>
             <Box
-            bgcolor="primary.main" 
-            color="primar.contrastText" 
+            // bgcolor="primary.main" 
+
+            color="primary.contrastText" 
 
             component="main"
             style={{paddingBottom: "50px"}}
             >
                 <div className="title"> 
-                    <Box style={{ margin: "30px"}}>
+                    <Box style={{ margin: "15px"}}>
                         <Typography 
                         variant="h1"
                         color="main.contrastText"
@@ -71,16 +72,19 @@ const ReadingPage = () => {
                     // }}
                 > 
                     <Paper 
-                    elevation={9} 
+                    elevation={9}
                     className="readPaper"
-                    style={{marginRight: "20px",   backgroundColor: "rgb(254, 240, 184)" }}
+                    style={{marginRight: "20px" }}
                     >
-                        <div>
-                            <Typography variant="h3" className="readingText" component="div">
+                        <Box>
+                            <Typography 
+                            variant="h3"
+                            className="readingText" 
+                            component="div">
                             {/* Cupcake ipsum dolor sit amet caramels sugar plum bonbon candy. Oat cake jelly-o bear claw apple pie powder wafer. Lollipop gingerbread fruitcake oat cake marzipan chocolate bar lemon drops powder cheesecake. Tootsie roll cookie danish candy liquorice sweet tootsie roll. Gingerbread liquorice chupa chups cotton candy sesame snaps jelly beans cookie. Chocolate topping tart carrot cake pastry cake lollipop cake tiramisu. Chocolate bar gummi bears cake apple pie candy canes. Powder chupa chups cookie gummies jelly-o gummi bears cheesecake topping. Gummies wafer chupa chups chocolate macaroon cake. Lemon drops powder macaroon jelly gingerbread bonbon dessert. */}
                                 {storySection}
                             </Typography>
-                        </div>
+                        </Box>
                     </Paper>
                 </Box>
                 {/* this is going to be an if/ else or ternary operator */}
@@ -127,7 +131,8 @@ const ReadingPage = () => {
                         >
                             <Typography
                                 className="choicesButtons"
-                                color="secondary"
+                                //bold did not work with class
+                                // style={{ fontWeight: "bold" }}
                                 onMouseDown={(e) =>{
                                     setOptionId(option.option_id)
                                     setResultingStorySectionId(option.resulting_story_section_id)

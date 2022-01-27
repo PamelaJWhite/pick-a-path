@@ -73,14 +73,14 @@ export default function UserStories (props) {
         // <ThemeProvider theme={theme}>
         <Box  
         component="main"
-        bgcolor="primary.main"
+        // bgcolor="primary.main"
         color="primary.contrastText" 
 
         style={{ paddingBottom: "50px"}}
         >
             <div className="title"> 
                 <Box 
-                style={{ marginBottom: "30px"}}
+                style={{ margin: "15px"}}
                 // color="primar.contrastText" 
         >
                     <Typography variant="h1">
@@ -90,27 +90,30 @@ export default function UserStories (props) {
             </div>
                 <Box className = "readBox">
                     <Box 
-                    bgcolor="primary.main" 
+                    // bgcolor="primary.main" 
                     className = "paperBox"
                     >
-                        <Typography variant="h2" style={{paddingBottom: "5px"}}>
+                        <Typography 
+                        variant="h2" 
+                        color="secondary.contrastText"
+                        style={{paddingBottom: "5px"}}>
                             All Stories
                         </Typography>
                         <Paper 
                             elevation={9} 
                             className="titlePaper"
-                            style={{marginRight: "20px",   backgroundColor: "rgb(254, 240, 184)" }}>
+                            style={{marginRight: "20px" }}
+                            >
                             <div className = "clickToAdd">
                                 <Typography 
-                                    variant="h4"
-                                    color="secondary.contrastText"
+                                    variant="h4" 
                                 >
                                     Click Story to Add
                                 </Typography>
                             </div>
                             {storyData && (
                                 <Typography 
-                                    color="secondary.contrastText"
+                                    color="primary.contrastText"
                                     variant="h3" 
                                     component="div" 
                                     sx={{ paddingBottom: 5}}>
@@ -134,12 +137,13 @@ export default function UserStories (props) {
                     </Box>
                     <Box 
                         // style={{backgroundColor:"grey"}} 
-                        bgcolor="primary.main"
+                        // bgcolor="primary.main"
                         // color="primary.contrastText" 
                         className = "paperBox"
                     >
                         <Typography
                         variant="h2" 
+                        color="secondary.contrastText"
                         style={{paddingBottom: "5px"}}
                         >
                             My Stories
@@ -148,23 +152,22 @@ export default function UserStories (props) {
                             // bgcolor="primary.main"
                             elevation={9} 
                             className="titlePaper" 
-                            style={{marginLeft: "20px", backgroundColor: "rgb(254, 240, 184)"}}
+                            style={{marginLeft: "20px"}}
                         >
                             <Box 
                                 className="clickToAdd"
-                                color="secondary.contrastText"
-                                bgcolor="secondary.light"
+                                
+                                // bgcolor="secondary.light"
                             >
                                 <Typography 
                                     variant="h4"
-    
                                 >
                                     Click Story To Read
                                 </Typography>
                             </Box> 
                                 {myStoryTitles && (
                                     <Typography 
-                                    color="secondary.contrastText"
+                                    color="primary.contrastText"
                                     variant="h3" 
                                     component="div" 
                                     sx={{ paddingBottom: 5 }}>
@@ -181,8 +184,8 @@ export default function UserStories (props) {
                                                         <Grid 
                                                         item style={{display: "flex"}}>
                                                             <Link 
-                                                                
-                                                                style={{ textDecoration: "none"}}
+                                                                className="myStoriesListLinks"
+                                                                style={{ textDecoration: "none", color:"#5866D6"}}
                                                                 onMouseDown={(e) =>{
                                                                     setUserStoryId(element.user_story_id)
                                                                 }}
@@ -197,7 +200,17 @@ export default function UserStories (props) {
                                                                 }}
                                                                 to={"/readingPage"}
                                                             >
+                                                                <Typography 
+                                                                className="myStoriesListLinks"
+                                                                color="primary.contrastText"
+                                                                variant="h3" 
+                                                                component="div" 
+                                                                >
                                                                 {element.title}
+                                                                </Typography>
+
+                                                                
+                                                                
                                                             </Link>
                                                             <Typography 
                                                             variant="h4" 
@@ -206,7 +219,9 @@ export default function UserStories (props) {
                                                             </Typography>
                                                         </Grid>
                                     
-                                                        <Grid  item sx={{ color: 'text.primary'}}>
+                                                        <Grid  
+                                                        item 
+                                                        >
                                                             <DeleteForeverIcon 
                                                                 className="deleteIcons"
                                                                 onClick={(e) => {

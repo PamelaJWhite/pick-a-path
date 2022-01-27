@@ -39,15 +39,42 @@
   }
 }
 
-body {
-  background-color: #bda1a3;
-}
+/* body { */
+  /* background-color: #bda1a3; */
+/* } */
 
 main {
   /* background-color:pink; */
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.login {
+  border: 1px solid navy;
+  height: 230px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 75px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: 20px solid #feeda7; /* want boarder to be secondar.main */
+  border-radius: 15px;
+  
+}
+
+.textField {
+  width: 300px;
+  /* background-color: yellow; */
+}
+
+.signUpButton{
+  /* border: 1px solid teal; */
+  /* want color to be secondar.main */
+  color: #feeda7; 
 }
 
 
@@ -66,7 +93,7 @@ ul {
 
 
 .readBox {
-  border: 1px solid brown;
+  /* border: 1px solid brown; */
   margin-left: 40px;
   margin-right: 40px;
   display: flex;
@@ -95,7 +122,8 @@ ul {
 
 .titlePaper {
   width: 400px;
-  height: 500px;
+  height: 450px;
+  border: 20px solid #F8D430;
   overflow-y: scroll;
 }
 
@@ -117,23 +145,28 @@ ul {
 .insideMain {
   display: flex; 
   justify-content:center;
-  border: "1px solid green";
+  /* border: "1px solid green"; */
 }
 
 .list {
-  /* border: solid 1px darkcyan; */
+  border: solid 5px white;
   padding-top: 50px
 }
 
 
 .list:hover {
-  background-color: red;
+  /* background-color: #F59F50; */
+  border: 5px solid #F59F50;
+  border-radius: .5em;
 }
+
+
 
 /*-------------------- ReadingPage specific */
 .readPaper {
   width: 760px;
   height: 230px;
+  border: 20px solid #F8D430;
   overflow-y: scroll;
 }
 
@@ -141,6 +174,7 @@ ul {
   padding-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
+  color: #26349C;
 }
 
 .choicesContainerBox {
@@ -151,6 +185,7 @@ ul {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-top: 15px;
   /* justify-content: "center"; */
 }
 
@@ -162,6 +197,8 @@ ul {
   overflow-y: scroll;
   padding-top:12px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   /* color: green; */
   /* background-color: white; */
 }
@@ -169,11 +206,15 @@ ul {
 .choicesButtons {
   padding-left: 10px;
   padding-right: 10px;
+  font-weight: bold;
+  color: #076364;
+  border: 5px solid white;
 }
 
 .choicesButtons:hover{
   cursor: pointer;
-  font-weight: bold;
+  border: 5px solid #F59F50;
+  border-radius: .5em;
 }
 .seeChoicesButtonBox {
   /* border: solid 1px, red; */
@@ -189,5 +230,6 @@ ul {
 .readPaperWhole {
   width: 760px;
   height: 460px;
+  border: 20px solid #F8D430;
   overflow-y: scroll;
 }

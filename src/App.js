@@ -23,18 +23,22 @@ const theme = createTheme({
       h4: {
           fontSize: 17,
       },
-      fontFamily: "Poppins"
+      fontFamily: "Poppins",
+      // color: "#fb6107"
   },
   palette: {
       primary: {
-        // light: will be calculated from palette.primary.main,
-          main: '#bda1a3',
-        // dark: will be calculated from palette.primary.main,
-          contrastText: '#ffffe1'
-      },
+        //light yellow
+          main: '#F8D430',
+
+          //dark blue
+          contrastText: '#26349C'
+        },
       secondary: {
-          main: '#feeda7',
-          contrastText: '#5e6e7d'
+        //light greeen
+          main: '#F59F50',
+          //dark red
+          contrastText: '#076364'
         // dark: will be calculated from palette.secondary.main,
       },
   },

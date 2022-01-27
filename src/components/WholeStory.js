@@ -41,12 +41,13 @@ const WholeStory = () => {
     
             <Box
             component="main" 
-            bgcolor="primary.main"
-            className="{classes.formContainer}" 
             style={{ marginBottom:"50px" }}>
                 <div className="title"> 
-                        <Box style={{ margin: "30px"}}>
-                            <Typography variant="h1">
+                        <Box style={{ margin: "15px"}}>
+                            <Typography 
+                            variant="h1"
+                            color="#26349C"
+                            >
                                 {/* !!Need to figure out how to get title! */}
                                 Title Goes Here
                             </Typography>
@@ -54,9 +55,10 @@ const WholeStory = () => {
                 </div>
                 <Paper 
                 className="readPaperWhole" 
-                style={{backgroundColor:"rgb(254, 240, 184)"}}
                 elevation={9}>
-                    <Typography variant="h3" className="readingText">
+                    <Typography variant="h3"
+                    color="#26349C" 
+                    className="readingText">
                     {/* Cupcake ipsum dolor sit amet caramels sugar plum bonbon candy. Oat cake jelly-o bear claw apple pie powder wafer. Lollipop gingerbread fruitcake oat cake marzipan chocolate bar lemon drops powder cheesecake. Tootsie roll cookie danish candy liquorice sweet tootsie roll. Gingerbread liquorice chupa chups cotton candy sesame snaps jelly beans cookie. Chocolate topping tart carrot cake pastry cake lollipop cake tiramisu. Chocolate bar gummi bears cake apple pie candy canes. Powder chupa chups cookie gummies jelly-o gummi bears cheesecake topping. Gummies wafer chupa chups chocolate macaroon cake. Lemon drops powder macaroon jelly gingerbread bonbon dessert.Cupcake ipsum dolor sit amet caramels sugar plum bonbon candy. Oat cake jelly-o bear claw apple pie powder wafer. Lollipop gingerbread fruitcake oat cake marzipan chocolate bar lemon drops powder cheesecake. Tootsie roll cookie danish candy liquorice sweet tootsie roll. Gingerbread liquorice chupa chups cotton candy sesame snaps jelly beans cookie. Chocolate topping tart carrot cake pastry cake lollipop cake tiramisu. Chocolate bar gummi bears cake apple pie candy canes. Powder chupa chups cookie gummies jelly-o gummi bears cheesecake topping. Gummies wafer chupa chups chocolate macaroon cake. Lemon drops powder macaroon jelly gingerbread bonbon dessert.Cupcake ipsum dolor sit amet caramels sugar plum bonbon candy. Oat cake jelly-o bear claw apple pie powder wafer. Lollipop gingerbread fruitcake oat cake marzipan chocolate bar lemon drops powder cheesecake. Tootsie roll cookie danish candy liquorice sweet tootsie roll. Gingerbread liquorice chupa chups cotton candy sesame snaps jelly beans cookie. Chocolate topping tart carrot cake pastry cake lollipop cake tiramisu. Chocolate bar gummi bears cake apple pie candy canes. Powder chupa chups cookie gummies jelly-o gummi bears cheesecake topping. Gummies wafer chupa chups chocolate macaroon cake. Lemon drops powder macaroon jelly gingerbread bonbon dessert. */}
                         {wholeStory}
                     </Typography>
