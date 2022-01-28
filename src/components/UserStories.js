@@ -62,6 +62,8 @@ export default function UserStories (props) {
         wholeStory,
         isSignedIn, 
         setIsSignedIn,
+        createDate,
+        date,
         gateKeeper
     } = useContext(Context);
     
@@ -124,7 +126,8 @@ export default function UserStories (props) {
                                                 onClick={(e) => {
                                                 let storyId = element.story_id
                                                 // console.log("wholeStory: ", wholeStory)
-                                                postToMyStoryTitlesList(storyId) 
+                                                postToMyStoryTitlesList(storyId)
+                                                createDate() 
                                                 }}>
                                                     {element.title}
                                             </ListItem>
@@ -200,6 +203,7 @@ export default function UserStories (props) {
                                                                     // //b/c we only want to read the first story section
                                                                     // //if there is no story already saved
                                                                     // readFirstStorySection(userStoryId)
+                                                        
 
                                                                 }}
                                                                 to={"/readingPage"}
@@ -216,7 +220,7 @@ export default function UserStories (props) {
                                                             <Typography 
                                                             variant="h4" 
                                                             style={{alignSelf: "center", paddingLeft: "10px"}}>
-                                                                Date
+                                                                {date}
                                                             </Typography>
                                                         </Box>
                                                         </ListItem>

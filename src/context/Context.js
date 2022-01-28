@@ -31,6 +31,7 @@ export const Provider = ({ children }) => {
     const [resultingStorySectionId, setResultingStorySectionId] = useState("")
     const [wholeStory, setWholeStory] = useState([]);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [date, setDate] = useState('')
 
 
     //variable for MY base api url
@@ -242,6 +243,17 @@ export const Provider = ({ children }) => {
         setChoicesTime(false)
     }
 
+    const createDate = () => {
+        let showDate = new Date();
+        let displayDate = showDate.getDate()+'/'+(showDate.getMonth()+1)+'/'+showDate.getFullYear();
+        setDate(displayDate)
+        // return (
+        
+        //     <input type="text" value={displayDate} readOnly='true'/>
+            
+        // )
+    }
+
     //List of exported states and functions
     //These only need to be export if they are used on other components
     const value = {
@@ -283,6 +295,8 @@ export const Provider = ({ children }) => {
         isDrawerOpen,
         setIsDrawerOpen,
         gateKeeper,
+        date,
+        createDate,
         checkAuth
     };
 
