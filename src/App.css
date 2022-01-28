@@ -39,19 +39,15 @@
   }
 }
 
-/* body { */
-  /* background-color: #bda1a3; */
-/* } */
-
 main {
   /* background-color:pink; */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
+/* ----------------LOGIN---------------- */
 .login {
-  border: 1px solid navy;
+  /* border: 1px solid navy; */
   height: 230px;
   width: 350px;
   display: flex;
@@ -61,7 +57,7 @@ main {
   margin-top: 75px;
   padding-top: 20px;
   padding-bottom: 20px;
-  border: 20px solid #feeda7; /* want boarder to be secondar.main */
+  border: 20px solid #F8D430; 
   border-radius: 15px;
   
 }
@@ -73,8 +69,11 @@ main {
 
 .signUpButton{
   /* border: 1px solid teal; */
-  /* want color to be secondar.main */
-  color: #feeda7; 
+  color:  #26349C;
+}
+
+.signUpButton:visited {
+  color: #076364;
 }
 
 
@@ -83,14 +82,6 @@ ul {
   margin: 0;
   padding: 10px;
 }
-
-/* List {
-  list-style-type: none;
-  margin: 0;
-  padding: 10px;
-} */
-
-
 
 .readBox {
   /* border: 1px solid brown; */
@@ -102,7 +93,6 @@ ul {
 }
 
 /*----------------UserStories specific */
-
 
 .deleteIcons:hover {
   cursor: pointer;
@@ -148,9 +138,22 @@ ul {
   /* border: "1px solid green"; */
 }
 
+.outerGrid {
+  padding-left: 8px;
+}
+
+.innerGridOne {
+  display: flex;
+  justify-content: space-between;
+}
+
+.myStoriesListLinks {
+  text-decoration: none;
+}
+
 .list {
   border: solid 5px white;
-  padding-top: 50px
+  padding-top: 50px;
 }
 
 
@@ -158,6 +161,10 @@ ul {
   /* background-color: #F59F50; */
   border: 5px solid #F59F50;
   border-radius: .5em;
+}
+
+.myStoriesListLinks {
+  width: 250px;
 }
 
 

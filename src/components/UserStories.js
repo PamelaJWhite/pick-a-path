@@ -90,7 +90,6 @@ export default function UserStories (props) {
             </div>
                 <Box className = "readBox">
                     <Box 
-                    // bgcolor="primary.main" 
                     className = "paperBox"
                     >
                         <Typography 
@@ -173,19 +172,24 @@ export default function UserStories (props) {
                                     sx={{ paddingBottom: 5 }}>
                                         {myStoryTitles.map((element, idx)=>(
                                             <List
-                                            style={{padding:0}} 
+                                        
+                                            style={{padding:0, display: "flex", justifywidth:"100%"}} 
                                             >
                                                 <ListItem 
                                                 style={{padding:"10px"}}
                                                 className="storyTitlesList list">
-                                                    <Grid 
+                                                    {/* <Box  
+                                                    className="outerGrid"
                                                     container spacing={3 }
-                                                    style={{ display: "flex", justifyContent: "space-between"}}>
-                                                        <Grid 
-                                                        item style={{display: "flex"}}>
+                                                    style={{ display: "flex", justifyContent: "space-between"}}> */}
+                                                        <Box 
+                                                        item 
+                                                        // style={{display: "flex"}}
+                                                        className="innerGridOne"
+                                                        component="div"
+                                                        >
                                                             <Link 
                                                                 className="myStoriesListLinks"
-                                                                style={{ textDecoration: "none", color:"#5866D6"}}
                                                                 onMouseDown={(e) =>{
                                                                     setUserStoryId(element.user_story_id)
                                                                 }}
@@ -208,20 +212,16 @@ export default function UserStories (props) {
                                                                 >
                                                                 {element.title}
                                                                 </Typography>
-
-                                                                
-                                                                
                                                             </Link>
                                                             <Typography 
                                                             variant="h4" 
                                                             style={{alignSelf: "center", paddingLeft: "10px"}}>
                                                                 Date
                                                             </Typography>
-                                                        </Grid>
-                                    
-                                                        <Grid  
-                                                        item 
-                                                        >
+                                                        </Box>
+                                                        </ListItem>
+                                                        <ListItem>
+                                                        <Box>
                                                             <DeleteForeverIcon 
                                                                 className="deleteIcons"
                                                                 onClick={(e) => {
@@ -230,10 +230,9 @@ export default function UserStories (props) {
                                                                     deleteTitle(userStoryId)
                                                                     }}
                                                             />
-                                                        </Grid>
-                                                        
-                                                    </Grid>
-                                                </ListItem>
+                                                        </Box>
+                                                        </ListItem>
+                                                    {/* </Box> */}
                                             </List>
                                         ))}
                                     </Typography>

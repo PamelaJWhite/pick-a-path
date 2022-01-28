@@ -3,53 +3,12 @@ import { Link } from 'react-router-dom'
 
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-
-import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 
 //Import Context
 import { Context } from "../context/Context";
 
-// const theme = createTheme({
-//     typography: {
-//         h1: {
-//             fontSize: 50,
-//         },
-//         h2: {
-//             fontSize: 35,
-//         },
-//         h3: {
-//             fontSize: 25,
-//         },
-//         h4: {
-//             fontSize: 17,
-//         },
-//         fontFamily: "Poppins"
-//     },
-//   });
-//create styles for this component
-// const useStyles = makeStyles({
-//     login: {
-//         height: 200,
-//         display: "flex",
-//         flexDirection: "column",
-//         alignItems: "center",
-//         justifyContent: "center",
-//     },
-//     textField: {
-//         width: 300,
-//     },
-//     spacer: {
-//         height: 15,
-//     },
-//     });
-
     const Login = () => {
-    //create variable name to access styles
-    //?? do I need this? I think I can do them directly
-    // const classes = useStyles();
 
     //destructure context for only the states and functions needed
     const {
@@ -61,7 +20,6 @@ import { Context } from "../context/Context";
         handleLogIn,
         setIsSignedIn
     } = useContext(Context);
-
 
     return (
         // <ThemeProvider theme={theme}>
@@ -113,3 +71,41 @@ import { Context } from "../context/Context";
 };
 
 export default Login
+// const theme = createTheme({
+//     typography: {
+//         h1: {
+//             fontSize: 50,
+//         },
+//         h2: {
+//             fontSize: 35,
+//         },
+//         h3: {
+//             fontSize: 25,
+//         },
+//         h4: {
+//             fontSize: 17,
+//         },
+//         fontFamily: "Poppins"
+//     },
+//   });
+//create styles for this component
+// const useStyles = makeStyles({
+//     login: {
+//         height: 200,
+//         display: "flex",
+//         flexDirection: "column",
+//         alignItems: "center",
+//         justifyContent: "center",
+//     },
+//     textField: {
+//         width: 300,
+//     },
+//     spacer: {
+//         height: 15,
+//     },
+//     });
+
+ //create variable name to access styles
+    //?? do I need this? I think I can do them directly
+    // const classes = useStyles();
+
