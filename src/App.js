@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
 import Navigation from './components/Navigation'
 import Router from './Router'
 import { Provider } from './context/Context'
+// import { Context } from "./context/Context";
+
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -47,6 +49,14 @@ const theme = createTheme({
 
 
 function App() {
+//   const {
+//     userName
+// } = useContext(Context);
+//   useEffect(() => {
+//     // Update the document title using the browser API
+//     console.log("will useEffect work?")
+//     // console.log("userName", userName)
+//   }, [userName]);
   return (
     
     <Provider>

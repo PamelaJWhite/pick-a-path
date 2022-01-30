@@ -99,6 +99,10 @@ ul {
   /* font-weight: bold; */
 }
 
+/* .deleteIcons {
+  border: 1px solid forestgreen;
+} */
+
 .storyTitlesList{
   /* border: solid 1px violet; */
   display: flex;
@@ -143,12 +147,14 @@ ul {
 }
 
 .innerGridOne {
+  /* border: 1px solid darkcyan; */
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .myStoriesListLinks {
   text-decoration: none;
+  /* border: 1px solid purple; */
 }
 
 .list {
@@ -166,6 +172,7 @@ ul {
 .myStoriesListLinks {
   width: 250px;
 }
+
 
 
 

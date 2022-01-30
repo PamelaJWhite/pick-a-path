@@ -27,11 +27,12 @@ const ReadingPage = () => {
         readNextSection,
         options,
         readCompleteStory,
+        end,
         saveOption
     } = useContext(Context);
 
     useEffect(()=>{
-        console.log("options changed: ", options)
+        // console.log("options changed: ", options)
     }, [options])
     
     
@@ -94,15 +95,24 @@ const ReadingPage = () => {
                             variant="contained"
                             className="seeChoicesButton"
                             onClick={(e)=>{
-                                console.log("see choices clicked")
+                                // console.log("see choices clicked")
                                 console.log("storySectionId when see choices was clicked: ", storySectionId)
     
                                 seeOptions(storySectionId)
                         }}
-                        > 
-                            <Typography variant="h4">
-                            see choices
+                        > {(end == false)
+                            ?<Typography variant="h4">
+                            What's next?
                             </Typography>
+                            : <Link 
+                            onClick={(e) => {
+                                readCompleteStory(userStoryId)
+                            }}
+                            to="/wholeStory"
+                        >
+                            Read My Story
+                        </Link>
+                        }
                         </Button>
                     </Box> 
                     
@@ -153,13 +163,14 @@ const ReadingPage = () => {
                             </Typography>
                         </Box>
                     )}
-                    <Link
+                    <Link 
+
                             onClick={(e) => {
                                 readCompleteStory(userStoryId)
                             }}
                             to="/wholeStory"
                         >
-                            See your complete story
+                            Read My Story
                         </Link>
                         
                 </Box>

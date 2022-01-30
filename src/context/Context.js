@@ -32,6 +32,8 @@ export const Provider = ({ children }) => {
     const [wholeStory, setWholeStory] = useState([]);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [date, setDate] = useState('')
+    const [end, setEnd] = useState(false)
+    const [token, setToken] = useState('')
 
 
     //variable for MY base api url
@@ -39,23 +41,39 @@ export const Provider = ({ children }) => {
 
     let userId = "15"
     let storyId;
+    // let testToken = ""
+    // axios.defaults.headers.common['Authorization'] = token
     //----------------------LOG IN AND OUT-----------------
 
     //Function to handle when user clicks login button
     //User name and Password only needs to be present to pass log in
-    const handleLogIn = (e) => {
-        e.preventDefault()
-        //make request to backend /login
-        //to get current user
-        // fetch("https://pjw1.herokuapp.com/login")
-        // console.log("username and password in handleLogin: ", userName, password)
-            if (userName && password) {
-            window.location.assign(`/userStories`)
-            setIsSignedIn(true);
-            } else {
-            alert("Please enter any username and password");
-            }
-    };
+    // const handleLogIn = (e) => {
+    //     e.preventDefault()
+    //     //make request to backend /login
+    //     //to get current user
+    //     // fetch("https://pjw1.herokuapp.com/login")
+    //     // console.log("username and password in handleLogin: ", userName, password)
+    //         if (userName && password) {
+    //         window.location.assign(`/userStories`)
+    //         setIsSignedIn(true);
+    //         } else {
+    //         alert("Please enter any username and password");
+    //         }
+    // };
+
+    //function to actually log in
+    const handleLogIn = () => {
+
+        axios.post(url + `/login`, {
+            username: userName,
+            password: password
+        }).
+        then((res)=> {
+            console.log("handleLogIn() res.data: ", res.data)
+            setIsSignedIn(true)
+            setToken(res.data)
+        })
+    }
 
     const checkAuth = () => {
         // const cookies = cookie.parse(document.cookie)
@@ -77,9 +95,9 @@ export const Provider = ({ children }) => {
     //------------------ ACCESS STORIES -----------------
 
     //get all story titles from DB
-    const getAllStoryTitles = async () => {
+    const getAllStoryTitles = () => {
 
-        await axios.get(url + `/stories/read`).
+        axios.get(url + `/stories/read`, {headers:{authorization: token}}).
         then((res)=> {
             //set state for story data - which is titles, only
             //!!change this variable name? it's misleading
@@ -87,33 +105,54 @@ export const Provider = ({ children }) => {
         })
     }
 
-    //get story titles associated with specific user
-    const getMyStoryTitles = async () => {
 
-        await axios.get(url + `/myStories/list/${userId}`).
+    //get story titles associated with specific user
+    const getMyStoryTitles = () => {
+        axios.get(url + `/myStories/list/${userId}`, {headers:{authorization: token}}).
         then((res)=> {
+            console.log("getMyStoryTitles res.data", res.data)
             //set state for this user's story titles
             setMyStoryTitles(res.data);
         })
     }
 
     //post a selected title to the DB for that user
-    const postToMyStoryTitlesList = async (storyId) => {
-        await axios.post(url + `/stories/${storyId}/myStories/${userId}`, ).
-        then((res)=> {
+    //this first one works. don't fucking touch it!!!
+    const postToMyStoryTitlesList = (storyId) => {
+    axios({
+        method: 'POST',
+        url: `https://pjw1.herokuapp.com/stories/${storyId}/myStories/${userId}`,
+        data: {
+            start_date: date
+        },
+        headers: {"Authorization": token}
+    
+        }).then((res)=> {
+            console.log("postToMyStoryTitlesList() res.data: ", res.data)
             //retrieve titles again so this title
             //displays on the list
             getMyStoryTitles()
         })
     }
+    // const postToMyStoryTitlesList = (storyId) => {
+    //     axios.post(`https://pjw1.herokuapp.com/stories/${storyId}/myStories/${userId}`, 
+    //     {start_date: date}, 
+    //     {headers:{authorization: token}}
+    //     ).then((res)=> {
+    //         console.log("postToMyStoryTitlesList() res.data: ", res.data)
+    //         //retrieve titles again so this title
+    //         //displays on the list
+    //         getMyStoryTitles()
+    //     })
+    // }
     
     //delete a title from the user's list of titles from the DB
     //!! I'd like to change the backend to delete everything
     //b/c right now there's a bunch of completed/ partially completed stories
     //in the DB
     //Would do this by user_story_id; delete from userStory table
-    const deleteTitle = async (userStoryId) => {
-        await axios.delete(url + `/myStories/delete/${userStoryId}`).
+    const deleteTitle = (userStoryId) => {
+        axios.delete(url + `/myStories/delete/${userStoryId}`, {headers:{authorization: token}}).
         then((res)=> {
             //retrieve titles again so this title
             //displays on the list
@@ -124,9 +163,9 @@ export const Provider = ({ children }) => {
     const gateKeeper = async (userStoryId) =>{
         await axios.get(url + `/myStories/completeStory/${userStoryId}`).
         then((res) => {
-            console.log("gateKeeper res.data: ", res.data)
+            console.log("gateKeeper() res.data: ", res.data)
             if(res.data.length == 0){
-                console.log("there's no data")
+                // console.log("there's no data")
                 readFirstStorySection(userStoryId)
             }else if(res.data.length== 1){
                 console.log("there's one row of data")
@@ -154,7 +193,7 @@ export const Provider = ({ children }) => {
         then((res) => {
             //set the state for storySection and storySectionId
             //to display them
-            console.log("Got to readFirstStorySection")
+            console.log("readFirstStorySection() called")
             setStorySection(res.data.story_section_content)
             setStorySectionId(res.data.story_section_id)
         })
@@ -165,6 +204,7 @@ export const Provider = ({ children }) => {
     const seeOptions = async () => {
         await axios.post(url + `/myStories/options/${storySectionId}`).
         then((res) => {
+            console.log("seeOptions() called")
             //map over the data
             //to create an array of options
             //the option text, option id, and resulting story section id
@@ -175,10 +215,16 @@ export const Provider = ({ children }) => {
             })
             //set the array of option content text to Options
             //so we can view them later
-            setOptions(optionArray)
-            console.log("optionArray: ", optionArray)
-            setChoicesTime("true") 
-            })
+            if(optionArray.length == 0){
+                console.log("no options left; this is the end")
+                setEnd(true)
+            }else{
+                setOptions(optionArray)
+                console.log("optionArray: ", optionArray)
+                setChoicesTime("true") 
+
+            }
+        })
     } 
     
     //save an option to the DB
@@ -188,6 +234,7 @@ export const Provider = ({ children }) => {
     const saveOption = async (userStoryId, storySectionId, optionId, resultingStorySectionId)=>  {
         await axios.post(url + `/myStories/options/${userStoryId}/${storySectionId}/${optionId}`).
         then((res) => {
+            console.log("saveOption() called")
             //call function to read the next section
             readNextSection(userStoryId, resultingStorySectionId)
         })
@@ -202,13 +249,9 @@ export const Provider = ({ children }) => {
         await axios.post(url + `/myStories/readNext/${userStoryId}/${resultingStorySectionId}`).
         then((res) => {
             //reset the storySection and StorySectionId in state
-            console.log(res.data)
+            console.log("readNextStorySection() res.data", res.data)
             setStorySection(res.data.story_section_content)
             setStorySectionId(res.data.story_section_id)
-        }).then(()=> {
-            //Call function to see options
-            console.log("storySectionId in readNextSectino(): ", storySectionId)
-            // seeOptions(storySectionId)
         })
     }
 
@@ -217,7 +260,7 @@ export const Provider = ({ children }) => {
     const readCompleteStory = async (userStoryId) =>{
         await axios.get(url + `/myStories/completeStory/${userStoryId}`).
         then((res) => {
-            console.log("completeStory res.data: ", res.data)
+            console.log("completeStory() res.data: ", res.data)
             //map over the data
             //creates an element with the story section content and option content
             //and adds that to the completeStory array
@@ -241,17 +284,13 @@ export const Provider = ({ children }) => {
         setOptions('')
         setOptionId('')
         setChoicesTime(false)
+        setEnd(false)
     }
 
     const createDate = () => {
         let showDate = new Date();
-        let displayDate = showDate.getDate()+'/'+(showDate.getMonth()+1)+'/'+showDate.getFullYear();
+        let displayDate = (showDate.getMonth()+1)+'/'+showDate.getDate()+'/'+showDate.getFullYear().toString().substr(-2);
         setDate(displayDate)
-        // return (
-        
-        //     <input type="text" value={displayDate} readOnly='true'/>
-            
-        // )
     }
 
     //List of exported states and functions
@@ -297,7 +336,9 @@ export const Provider = ({ children }) => {
         gateKeeper,
         date,
         createDate,
-        checkAuth
+        end,
+        checkAuth,
+        token
     };
 
     //Return statement that will wrap any child elements with the exported context states and functions

@@ -64,12 +64,14 @@ export default function UserStories (props) {
         setIsSignedIn,
         createDate,
         date,
-        gateKeeper
+        gateKeeper,
+        userName,
+        token
     } = useContext(Context);
     
     //!this can't stay in here
     //it's here bc I couldn't
-    setIsSignedIn(true)
+    // setIsSignedIn(true)
     
     return (
         // <ThemeProvider theme={theme}>
@@ -86,7 +88,7 @@ export default function UserStories (props) {
                 // color="primar.contrastText" 
         >
                     <Typography variant="h1">
-                        My Story Home
+                        {userName}'s Story Home
                     </Typography>
                 </Box>
             </div>
@@ -125,9 +127,8 @@ export default function UserStories (props) {
                                                 className="storyTitlesList list"
                                                 onClick={(e) => {
                                                 let storyId = element.story_id
-                                                // console.log("wholeStory: ", wholeStory)
-                                                postToMyStoryTitlesList(storyId)
                                                 createDate() 
+                                                postToMyStoryTitlesList(storyId)
                                                 }}>
                                                     {element.title}
                                             </ListItem>
@@ -172,11 +173,12 @@ export default function UserStories (props) {
                                     color="primary.contrastText"
                                     variant="h3" 
                                     component="div" 
-                                    sx={{ paddingBottom: 5 }}>
+                                    sx={{ paddingBottom: 5}}>
                                         {myStoryTitles.map((element, idx)=>(
                                             <List
                                         
-                                            style={{padding:0, display: "flex", justifywidth:"100%"}} 
+                                            sx={{padding:0, display: "flex",  justifyContent:"space-between"}}
+                                    
                                             >
                                                 <ListItem 
                                                 style={{padding:"10px"}}
@@ -185,57 +187,62 @@ export default function UserStories (props) {
                                                     className="outerGrid"
                                                     container spacing={3 }
                                                     style={{ display: "flex", justifyContent: "space-between"}}> */}
-                                                        <Box 
+                                                    <Box 
                                                         item 
                                                         // style={{display: "flex"}}
                                                         className="innerGridOne"
                                                         component="div"
-                                                        >
-                                                            <Link 
-                                                                className="myStoriesListLinks"
-                                                                onMouseDown={(e) =>{
-                                                                    setUserStoryId(element.user_story_id)
-                                                                }}
-                                                                onClick={(e) => {
-                                                                    //gateKeeper
-                                                                    gateKeeper(userStoryId)
-                                                                    // //go to readCompleteStory first
-                                                                    // //b/c we only want to read the first story section
-                                                                    // //if there is no story already saved
-                                                                    // readFirstStorySection(userStoryId)
-                                                        
+                                                    >
+                                                        <Link 
+                                                            className="myStoriesListLinks"
+                                                            style={{width: "218px"}}
 
-                                                                }}
-                                                                to={"/readingPage"}
-                                                            >
-                                                                <Typography 
-                                                                className="myStoriesListLinks"
-                                                                color="primary.contrastText"
-                                                                variant="h3" 
-                                                                component="div" 
-                                                                >
-                                                                {element.title}
-                                                                </Typography>
-                                                            </Link>
+                                                            onMouseDown={(e) =>{
+                                                                setUserStoryId(element.user_story_id)
+                                                            }}
+                                                            onClick={(e) => {
+                                                                //gateKeeper
+                                                                gateKeeper(userStoryId)
+                                                                // //go to readCompleteStory first
+                                                                // //b/c we only want to read the first story section
+                                                                // //if there is no story already saved
+                                                                // readFirstStorySection(userStoryId)
+                                                    
+
+                                                            }}
+                                                            to={"/readingPage"}
+                                                        >
                                                             <Typography 
+                                                            // className="myStoriesListLinks"
+                                                            color="primary.contrastText"
+                                                            variant="h3" 
+                                                            component="div" 
+                                                            >
+                                                            {element.title}
+                                                            </Typography>
+                                                        </Link>
+                                                        <Typography 
                                                             variant="h4" 
                                                             style={{alignSelf: "center", paddingLeft: "10px"}}>
-                                                                {date}
-                                                            </Typography>
-                                                        </Box>
-                                                        </ListItem>
-                                                        <ListItem>
-                                                        <Box>
-                                                            <DeleteForeverIcon 
-                                                                className="deleteIcons"
-                                                                onClick={(e) => {
-                                                                    let userStoryId = element.user_story_id
-                                                                    // console.log("deleteTitle element.user_story_id and element.title: ", element.user_story_id, element.title)
-                                                                    deleteTitle(userStoryId)
-                                                                    }}
-                                                            />
-                                                        </Box>
-                                                        </ListItem>
+                                                                {element.start_date}
+                                                        </Typography>
+                                                    </Box>
+                                                </ListItem>
+                                                <ListItem
+                                                style={{display: "flex", justifyContent:"flex-end"}}
+                                                >
+                                                    <Box
+                                                    >
+                                                        <DeleteForeverIcon 
+                                                            className="deleteIcons"
+                                                            onClick={(e) => {
+                                                                let userStoryId = element.user_story_id
+                                                                // console.log("deleteTitle element.user_story_id and element.title: ", element.user_story_id, element.title)
+                                                                deleteTitle(userStoryId)
+                                                                }}
+                                                        />
+                                                    </Box>
+                                                </ListItem>
                                                     {/* </Box> */}
                                             </List>
                                         ))}
@@ -252,7 +259,7 @@ export default function UserStories (props) {
                     color="primary"
                     variant="contained"
                     onClick={() => {
-                        // console.log("I'm clicked")
+                        console.log("token: ", token)
                         getAllStoryTitles()
                         getMyStoryTitles()
                         }

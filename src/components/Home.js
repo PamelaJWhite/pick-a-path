@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 // //Import components that are rendered from Home page
 import Login from "./Login";
-import { UserStories } from "./UserStories";
+import UserStories from "./UserStories";
 import Navigation from '../components/Navigation'
 
 //Import Context
@@ -20,7 +20,8 @@ const Home = () => {
             {/* Dynamically Render home page from isSignedIn state from context */}
             {/* This will need to change to something like (`/details/${listing.id}`)}>
             adding the path parameter for a specific user */}
-            {<Login /> }
+            {!isSignedIn ? <Login /> : <UserStories />}
+
         </div>
     )
 }
