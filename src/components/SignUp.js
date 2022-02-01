@@ -2,30 +2,17 @@ import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
+
 
 //Import Context
 import { Context } from "../context/Context";
 
-//create styles for this component
-const useStyles = makeStyles({
-    login: {
-        height: 200,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    textField: {
-        width: 300,
-    },
-    spacer: {
-        height: 15,
-    },
-});
+import Login from "./Login";
 
 const SignUp = () => {
     //create variable name to access styles
-    const classes = useStyles();
+    
 
     //destructure context for only the states and functions needed
     const {
@@ -35,47 +22,55 @@ const SignUp = () => {
         password,
         setPassword,
         handleLogIn,
+        confirmPassword,
+        setConfirmPassword,
+        handleSignup,
+        justSignedUp
     } = useContext(Context);
 
     return (
         <div>
-
-            <form className={classes.login}>
-            <TextField
-                className={classes.textField}
-                id="userName_field"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                variant="outlined"
-                placeholder="User Name"
-            />
-            <div className={classes.spacer}></div>
-            <TextField
-                className={classes.textField}
-                id="password_field"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                variant="outlined"
-                placeholder="Password"
-                type="password"
-            />
-            <TextField
-                className={classes.textField}
-                id="password_field"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                variant="outlined"
-                placeholder="Password"
-                type="password"
-            />
-            <div className={classes.spacer}></div>
-            <Button 
-                variant="contained" 
-                // onClick={() => handleLogIn()}
-                onClick={console.log("I wanna sign up!")}
+            <form 
+                style={{ display: "flex", justifyContent: "center"}}
             >
-                Sign Up
-            </Button>
+                <Paper
+                    className="signup"
+                >
+                    <TextField
+                        className="textField"
+                        id="newu=UserName_field"
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
+                        variant="outlined"
+                        placeholder="User Name"
+                    />
+    
+                    <TextField
+                        className="textField"
+                        id="newPassword_field"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        variant="outlined"
+                        placeholder="Password"
+                        type="password"
+                    />
+                    <TextField
+                        className="textField"
+                        id="confirmPassword_field"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        variant="outlined"
+                        placeholder="Confirm Password"
+                        type="password"
+                    />
+            
+                    <Button 
+                        variant="contained" 
+                        onClick={(e)=> handleSignup()}
+                    >
+                        Sign Up
+                    </Button>
+                </Paper>
             </form> 
         </div>
     );

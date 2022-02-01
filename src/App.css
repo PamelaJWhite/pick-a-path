@@ -45,7 +45,24 @@ main {
   flex-direction: column;
   align-items: center;
 }
-/* ----------------LOGIN---------------- */
+
+/* ------------- SIGNUP----------- */
+.signup{
+  height: 280px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 75px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: 20px solid #F8D430; 
+  border-radius: 15px;
+
+}
+/* ----------------LOGIN ---------------- */
+
 .login {
   /* border: 1px solid navy; */
   height: 230px;

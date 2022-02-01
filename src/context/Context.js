@@ -18,8 +18,11 @@ export const Provider = ({ children }) => {
     
     //Various states that are being exported
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const [justSignedUp, setJustSignedUp] = useState(false)
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState ('')
+    const [userId, setUserId] = useState('')
     const [storyData,setStoryData] =useState("");
     const [myStoryTitles, setMyStoryTitles] = useState("")
     const [userStoryId, setUserStoryId] = useState("")
@@ -38,10 +41,27 @@ export const Provider = ({ children }) => {
 
     //variable for MY base api url
     const url = "https://pjw1.herokuapp.com"
+    // let userId = "15"
 
-    let userId = "15"
-    let storyId;
-    // let testToken = ""
+    // ------------- SIGNUP ----------
+    const handleSignup = () => {
+
+        axios.post(url + `/createUser`, {
+            //send username, password, confirmPassword, email, and role
+            //until  admin side is set up, role and email will be fixed
+
+            username: userName,
+            password: password,
+            confirmPassword: confirmPassword,
+            email: "generic@fakemail.com",
+            role: "user",
+        }).
+        then((res)=> {
+            console.log("handleSignup() res.data: ", res.data)
+            window.location.assign('/')
+    
+        })
+    }
     // axios.defaults.headers.common['Authorization'] = token
     //----------------------LOG IN AND OUT-----------------
 
@@ -71,7 +91,11 @@ export const Provider = ({ children }) => {
         then((res)=> {
             console.log("handleLogIn() res.data: ", res.data)
             setIsSignedIn(true)
-            setToken(res.data)
+            // setJustSignedUp(false)
+            console.log(res.data.userId)
+            let userIdAgain = res.data.userId
+            setToken(res.data.accessToken)
+            setUserId(res.data.userId)
         })
     }
 
@@ -118,6 +142,7 @@ export const Provider = ({ children }) => {
 
     //post a selected title to the DB for that user
     //this first one works. don't fucking touch it!!!
+    //This works as longhand; I could not get it to work as shorthand
     const postToMyStoryTitlesList = (storyId) => {
     axios({
         method: 'POST',
@@ -160,8 +185,9 @@ export const Provider = ({ children }) => {
         })
     }
 
-    const gateKeeper = async (userStoryId) =>{
-        await axios.get(url + `/myStories/completeStory/${userStoryId}`).
+    const gateKeeper = (userStoryId) =>{
+        console.log("token in gateKeeper:", token)
+        axios.get(url + `/myStories/completeStory/${userStoryId}`, {headers:{authorization: token}}).
         then((res) => {
             console.log("gateKeeper() res.data: ", res.data)
             if(res.data.length == 0){
@@ -188,8 +214,10 @@ export const Provider = ({ children }) => {
     }
 
     //grab the first story section connected to the title from the DB
-    const readFirstStorySection = async (userStoryId)=> {
-        await axios.post(url + `/myStories/readFirst/${userStoryId}`).
+    const readFirstStorySection = (userStoryId)=> {
+        console.log("token in readFirstStorySection:", token)
+
+        axios.post(url + `/myStories/readFirst/${userStoryId}`, {}, {headers:{authorization: token}}).
         then((res) => {
             //set the state for storySection and storySectionId
             //to display them
@@ -201,8 +229,8 @@ export const Provider = ({ children }) => {
     }
 
     //grab the options related to the a story section
-    const seeOptions = async () => {
-        await axios.post(url + `/myStories/options/${storySectionId}`).
+    const seeOptions = () => {
+        axios.post(url + `/myStories/options/${storySectionId}`, {}, {headers:{authorization: token}}).
         then((res) => {
             console.log("seeOptions() called")
             //map over the data
@@ -231,8 +259,8 @@ export const Provider = ({ children }) => {
     //storySectionId and optionId will be saved to the DB
     //userStoryId and resultingStorySection will be used to read the next section
     //!! Do these need to be parameters? Aren't they held in state so they can be accessed directly?
-    const saveOption = async (userStoryId, storySectionId, optionId, resultingStorySectionId)=>  {
-        await axios.post(url + `/myStories/options/${userStoryId}/${storySectionId}/${optionId}`).
+    const saveOption = (userStoryId, storySectionId, optionId, resultingStorySectionId)=>  {
+        axios.post(url + `/myStories/options/${userStoryId}/${storySectionId}/${optionId}`, {}, {headers:{authorization: token}}).
         then((res) => {
             console.log("saveOption() called")
             //call function to read the next section
@@ -245,8 +273,8 @@ export const Provider = ({ children }) => {
     //resultingStorySectionId
     //!!Again, do I even need to pass userStoryId and resultingStorySectionId?
     //or should those have been/ are they saved in state?
-    const readNextSection =  async (userStoryId, resultingStorySection)=> {
-        await axios.post(url + `/myStories/readNext/${userStoryId}/${resultingStorySectionId}`).
+    const readNextSection =  (userStoryId, resultingStorySection)=> {
+        axios.post(url + `/myStories/readNext/${userStoryId}/${resultingStorySectionId}`, {}, {headers:{authorization: token}}).
         then((res) => {
             //reset the storySection and StorySectionId in state
             console.log("readNextStorySection() res.data", res.data)
@@ -257,8 +285,8 @@ export const Provider = ({ children }) => {
 
     //gather all the data from the DB for a specific instance of the story
     //i.e., based on the userStoryId
-    const readCompleteStory = async (userStoryId) =>{
-        await axios.get(url + `/myStories/completeStory/${userStoryId}`).
+    const readCompleteStory = (userStoryId) =>{
+        axios.get(url + `/myStories/completeStory/${userStoryId}`, {headers:{authorization: token}}).
         then((res) => {
             console.log("completeStory() res.data: ", res.data)
             //map over the data
@@ -302,6 +330,9 @@ export const Provider = ({ children }) => {
         setUserName,
         password,
         setPassword,
+        confirmPassword,
+        setConfirmPassword,
+        handleSignup,
         handleLogIn,
         getAllStoryTitles,
         storyData,
@@ -337,7 +368,8 @@ export const Provider = ({ children }) => {
         date,
         createDate,
         end,
-        checkAuth,
+        // checkAuth,
+        justSignedUp,
         token
     };
 

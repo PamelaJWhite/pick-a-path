@@ -23,14 +23,13 @@ import { Context } from "../context/Context";
 
     return (
         // <ThemeProvider theme={theme}>
-            <div style={{ display: "flex", justifyContent: "center"}}>
+            <form 
+                style={{ display: "flex", justifyContent: "center"}}
+            >
             {/* Dynamicaly render content based on isSignedIn state from context  */}
                 {!isSignedIn && (
-                    // <div className={classes.login}>
-                    // <div sx={{ height:"200px", display:"flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                     <Paper className="login">
                     <TextField
-                        // className={classes.textField}
                         className="textField"
                         id="userName_field"
                         value={userName}
@@ -40,7 +39,6 @@ import { Context } from "../context/Context";
                     />
                     {/* <div className={classes.spacer}></div> */}
                     <TextField
-                        // className={classes.textField}
                         className="textField"
                         id="password_field"
                         value={password}
@@ -64,7 +62,7 @@ import { Context } from "../context/Context";
                     </Link>
                     </Paper> 
                 )} 
-            </div>
+            </form>
         // </ThemeProvider>
         
     );

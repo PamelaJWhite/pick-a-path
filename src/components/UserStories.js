@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext, useEffect} from "react";
 import {Link} from "react-router-dom";
 
 import Button from "@mui/material/Button";
@@ -66,12 +66,10 @@ export default function UserStories (props) {
         date,
         gateKeeper,
         userName,
+        userId,
         token
     } = useContext(Context);
-    
-    //!this can't stay in here
-    //it's here bc I couldn't
-    // setIsSignedIn(true)
+
     
     return (
         // <ThemeProvider theme={theme}>
@@ -123,11 +121,16 @@ export default function UserStories (props) {
                                     {storyData.map((element, idx)=>(
                                         <List style={{padding:0}} >
                                             <ListItem 
+                                                key={userStoryId} 
                                                 style={{padding:"10px"}}
                                                 className="storyTitlesList list"
+                                                onMouseDown={((e)=> {
+                                                    createDate() 
+                                                    }
+                                                )}
                                                 onClick={(e) => {
                                                 let storyId = element.story_id
-                                                createDate() 
+                                                
                                                 postToMyStoryTitlesList(storyId)
                                                 }}>
                                                     {element.title}
