@@ -163,7 +163,7 @@ const ReadingPage = () => {
                             </Typography>
                         </Box>
                     )}
-                    <Link 
+                    {/* <Link 
 
                             onClick={(e) => {
                                 readCompleteStory(userStoryId)
@@ -171,7 +171,7 @@ const ReadingPage = () => {
                             to="/wholeStory"
                         >
                             Read My Story
-                        </Link>
+                        </Link> */}
                         
                 </Box>
                 }           
