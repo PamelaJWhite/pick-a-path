@@ -29,7 +29,8 @@ const WholeStory = () => {
         setUserStoryId,
         readFirstStorySection,
         isSignedIn, 
-        setIsSignedIn
+        setIsSignedIn, 
+        isTitle
     } = useContext(Context);
 
     //!this can't stay in here
@@ -48,8 +49,7 @@ const WholeStory = () => {
                             variant="h1"
                             color="#26349C"
                             >
-                                {/* !!Need to figure out how to get title! */}
-                                Title Goes Here
+                              {isTitle}
                             </Typography>
                         </Box>
                 </div>

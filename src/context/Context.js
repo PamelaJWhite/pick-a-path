@@ -37,6 +37,7 @@ export const Provider = ({ children }) => {
     const [date, setDate] = useState('')
     const [end, setEnd] = useState(false)
     const [token, setToken] = useState('')
+    const [isTitle, setIsTitle] = useState('')
 
 
     //variable for MY base api url
@@ -81,7 +82,7 @@ export const Provider = ({ children }) => {
     //         }
     // };
 
-    //function to actually log in
+    //function to log in
     const handleLogIn = () => {
 
         axios.post(url + `/login`, {
@@ -98,7 +99,7 @@ export const Provider = ({ children }) => {
             setUserId(res.data.userId)
         })
     }
-
+    //I don't think I need this
     const checkAuth = () => {
         // const cookies = cookie.parse(document.cookie)
         // console.log("cookies in checkAuth: ", cookies)
@@ -159,17 +160,7 @@ export const Provider = ({ children }) => {
             getMyStoryTitles()
         })
     }
-    // const postToMyStoryTitlesList = (storyId) => {
-    //     axios.post(`https://pjw1.herokuapp.com/stories/${storyId}/myStories/${userId}`, 
-    //     {start_date: date}, 
-    //     {headers:{authorization: token}}
-    //     ).then((res)=> {
-    //         console.log("postToMyStoryTitlesList() res.data: ", res.data)
-    //         //retrieve titles again so this title
-    //         //displays on the list
-    //         getMyStoryTitles()
-    //     })
-    // }
+   
     
     //delete a title from the user's list of titles from the DB
     //!! I'd like to change the backend to delete everything
@@ -191,24 +182,27 @@ export const Provider = ({ children }) => {
         then((res) => {
             console.log("gateKeeper() res.data: ", res.data)
             if(res.data.length == 0){
-                // console.log("there's no data")
-                readFirstStorySection(userStoryId)
+              // console.log("there's no data")
+              readFirstStorySection(userStoryId)
             }else if(res.data.length== 1){
-                console.log("there's one row of data")
-                // console.log("res.data[0]story_section_content: ", res.data[0].story_section_content)
-                setStorySection(res.data[0].story_section_content)
-                console.log("storySection: ", storySection)
-                console.log('res.data[0].story_section_id', res.data[0].story_section_id)
-                setStorySectionId(res.data[0].story_section_id)
-                // console.log("storySectionId: ", storySectionId)
-            }else {
+              //set the title here:
+              console.log("gateKeeper() res.data[0].title: ", res.data[0].title )
+              //!!!!
+              setStorySection(res.data[0].story_section_content)
+              console.log("storySection: ", storySection)
+              console.log('res.data[0].story_section_id', res.data[0].story_section_id)
+              setStorySectionId(res.data[0].story_section_id)
                 
-                //get the last row of data
-                let storyRowsArray = res.data
-                console.log("storyRowsArray[storyRowsArray.length-1]", storyRowsArray[storyRowsArray.length-1])
-                let currentStoryRow = storyRowsArray[storyRowsArray.length-1]
-                setStorySection(currentStoryRow.story_section_content)
-                setStorySectionId(currentStoryRow.story_section_id)
+            }else {
+              //set the title here:
+              //!!!!
+              //get the last row of data
+              let storyRowsArray = res.data
+              console.log("gateKeeper: storyRowsArray: ", storyRowsArray)
+              console.log("storyRowsArray[storyRowsArray.length-1]", storyRowsArray[storyRowsArray.length-1])
+              let currentStoryRow = storyRowsArray[storyRowsArray.length-1]
+              setStorySection(currentStoryRow.story_section_content)
+              setStorySectionId(currentStoryRow.story_section_id)
             }
         })
     }
@@ -219,11 +213,15 @@ export const Provider = ({ children }) => {
 
         axios.post(url + `/myStories/readFirst/${userStoryId}`, {}, {headers:{authorization: token}}).
         then((res) => {
-            //set the state for storySection and storySectionId
-            //to display them
-            console.log("readFirstStorySection() called")
-            setStorySection(res.data.story_section_content)
-            setStorySectionId(res.data.story_section_id)
+          //set the title here:
+          console.log("readFirstStorySection res.data.title: ", res.data.title)
+          setIsTitle(res.data.title)
+          
+          //set the state for storySection and storySectionId
+          //to display them
+          console.log("readFirstStorySection() called")
+          setStorySection(res.data.story_section_content)
+          setStorySectionId(res.data.story_section_id)
         })
 
     }
@@ -370,7 +368,8 @@ export const Provider = ({ children }) => {
         end,
         // checkAuth,
         justSignedUp,
-        token
+        token, 
+        isTitle
     };
 
     //Return statement that will wrap any child elements with the exported context states and functions
@@ -378,6 +377,17 @@ export const Provider = ({ children }) => {
     };
 
 
+     // const postToMyStoryTitlesList = (storyId) => {
+    //     axios.post(`https://pjw1.herokuapp.com/stories/${storyId}/myStories/${userId}`, 
+    //     {start_date: date}, 
+    //     {headers:{authorization: token}}
+    //     ).then((res)=> {
+    //         console.log("postToMyStoryTitlesList() res.data: ", res.data)
+    //         //retrieve titles again so this title
+    //         //displays on the list
+    //         getMyStoryTitles()
+    //     })
+    // }
     //---Attempt to start where you left off---
     //this code was in readCompleteStory()
     //the problem is if you start a story, don't make any choices, and then hit home, it won't work on restart

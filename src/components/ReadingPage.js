@@ -28,7 +28,8 @@ const ReadingPage = () => {
         options,
         readCompleteStory,
         end,
-        saveOption
+        saveOption,
+        isTitle
     } = useContext(Context);
 
     useEffect(()=>{
@@ -54,9 +55,7 @@ const ReadingPage = () => {
                         variant="h1"
                         color="main.contrastText"
                         > 
-
-                            {/* !!Need to figure out how to get title! */}
-                            Title Goes Here
+                          {isTitle}
                         </Typography>
                     </Box>
                 </div>
