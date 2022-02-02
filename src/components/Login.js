@@ -50,6 +50,7 @@ const Login = () => {
           >
             Log In
           </Button>
+          {/*link to signup route */}
           <Link 
             className="signUpButton"
             to={`/signUp`}>
