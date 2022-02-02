@@ -257,7 +257,7 @@ export const Provider = ({ children }) => {
     //storySectionId and optionId will be saved to the DB
     //userStoryId and resultingStorySection will be used to read the next section
     //!! Do these need to be parameters? Aren't they held in state so they can be accessed directly?
-    const saveOption = (userStoryId, storySectionId, optionId, resultingStorySectionId)=>  {
+    const saveOption = ()=>  {
         axios.post(url + `/myStories/options/${userStoryId}/${storySectionId}/${optionId}`, {}, {headers:{authorization: token}}).
         then((res) => {
             console.log("saveOption() called")
