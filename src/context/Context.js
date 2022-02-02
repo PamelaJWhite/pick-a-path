@@ -1,6 +1,5 @@
 //Import React and hooks needed for context
-import React, { createContext, useState, useEffect } from "react";
-
+import React, { createContext, useState} from "react";
 
 //Import axios for api call
 import axios from "axios";
@@ -9,512 +8,315 @@ import axios from "axios";
 export const Context = createContext();
 
 //Create Provider for context
-//Provider will contain and export all needed states and functions
-//It can be writen like a component including useEffect hooks
-//{ children } are props that come from any components that are wrapped with the provider
-//The provider is imported and used in App.js to wrap the whole application
-//This can also be localized if needed and only wrap specific components
+//Provider contains and exports all needed states and functions
 export const Provider = ({ children }) => {
     
-    //Various states that are being exported
-    const [isSignedIn, setIsSignedIn] = useState(false);
-    const [justSignedUp, setJustSignedUp] = useState(false)
-    const [userName, setUserName] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState ('')
-    const [userId, setUserId] = useState('')
-    const [storyData,setStoryData] =useState("");
-    const [myStoryTitles, setMyStoryTitles] = useState("")
-    const [userStoryId, setUserStoryId] = useState("")
-    const [storySection, setStorySection] = useState("")
-    const [choicesTime, setChoicesTime] =useState(false)
-    const [storySectionId, setStorySectionId] = useState("")
-    const [options, setOptions] = useState([])
-    const [optionId, setOptionId] = useState("");
-    const [resultingStorySectionId, setResultingStorySectionId] = useState("")
-    const [wholeStory, setWholeStory] = useState([]);
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [date, setDate] = useState('')
-    const [end, setEnd] = useState(false)
-    const [token, setToken] = useState('')
-    const [isTitle, setIsTitle] = useState('')
+  //Various states that are being exported
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [justSignedUp, setJustSignedUp] = useState(false)
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState ('')
+  const [userId, setUserId] = useState('')
+  const [storyData,setStoryData] =useState("");
+  const [myStoryTitles, setMyStoryTitles] = useState("")
+  const [userStoryId, setUserStoryId] = useState("")
+  const [storySection, setStorySection] = useState("")
+  const [choicesTime, setChoicesTime] =useState(false)
+  const [storySectionId, setStorySectionId] = useState("")
+  const [options, setOptions] = useState([])
+  const [optionId, setOptionId] = useState("");
+  const [resultingStorySectionId, setResultingStorySectionId] = useState("")
+  const [wholeStory, setWholeStory] = useState([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [date, setDate] = useState('')
+  const [end, setEnd] = useState(false)
+  const [token, setToken] = useState('')
+  const [isTitle, setIsTitle] = useState('')
 
+  //variable for my base api url
+  const url = "https://pjw1.herokuapp.com"
+  
+  // ------------- SIGNUP ----------
+  const handleSignup = () => {
+    //axios post call to create a new user
+    axios.post(url + `/createUser`, {
+      //send username, password, confirmPassword, email, and role
+      //until  admin side is set up, role and email are fixed
+      username: userName,
+      password: password,
+      confirmPassword: confirmPassword,
+      email: "generic@fakemail.com",
+      role: "user",
+    })
+    .then((res)=> {
+      //go back to home route
+      window.location.assign('/')
+    })
+  }
+  
+  //----------------------LOG IN AND OUT-----------------
 
-    //variable for MY base api url
-    const url = "https://pjw1.herokuapp.com"
-    // let userId = "15"
-
-    // ------------- SIGNUP ----------
-    const handleSignup = () => {
-
-        axios.post(url + `/createUser`, {
-            //send username, password, confirmPassword, email, and role
-            //until  admin side is set up, role and email will be fixed
-
-            username: userName,
-            password: password,
-            confirmPassword: confirmPassword,
-            email: "generic@fakemail.com",
-            role: "user",
-        }).
-        then((res)=> {
-            console.log("handleSignup() res.data: ", res.data)
-            window.location.assign('/')
-    
-        })
-    }
-    // axios.defaults.headers.common['Authorization'] = token
-    //----------------------LOG IN AND OUT-----------------
-
-    //Function to handle when user clicks login button
-    //User name and Password only needs to be present to pass log in
-    // const handleLogIn = (e) => {
-    //     e.preventDefault()
-    //     //make request to backend /login
-    //     //to get current user
-    //     // fetch("https://pjw1.herokuapp.com/login")
-    //     // console.log("username and password in handleLogin: ", userName, password)
-    //         if (userName && password) {
-    //         window.location.assign(`/userStories`)
-    //         setIsSignedIn(true);
-    //         } else {
-    //         alert("Please enter any username and password");
-    //         }
-    // };
-
-    //function to log in
-    const handleLogIn = () => {
-        console.log("hit handleLogIn")
-
-        axios.post(url + `/login`, {
-            username: userName,
-            password: password
-        }).
-        then((res)=> {
-            console.log("handleLogIn() res.data: ", res.data)
-            setIsSignedIn(true)
-            // setJustSignedUp(false)
-            console.log(res.data.userId)
-            setToken(res.data.accessToken)
-            setUserId(res.data.userId)
-        })
-    }
-    //I don't think I need this
-    const checkAuth = () => {
-        // const cookies = cookie.parse(document.cookie)
-        // console.log("cookies in checkAuth: ", cookies)
-        // return cookies.loggedIn === 'true' ? true : false
-        return isSignedIn === "true" ? true: false
-    }
+  //function to log in
+  const handleLogIn = () => {
+    //axios post call including user name and password
+    //to be checked by backend and return token
+    axios.post(url + `/login`, {
+      username: userName,
+      password: password
+    })
+    .then((res)=> {
+      //set isSignedIn to true so components rendered on login will render
+      setIsSignedIn(true)
+      //set token so other axios calls can use it to access data
+      setToken(res.data.accessToken)
+      // set userId so correct data are gathered in axios calls
+      setUserId(res.data.userId)
+    })
+  }
 
     //Function to handle Log Out reset states
-    const handleLogOut = () => {
-        setIsSignedIn(false);
-        setUserName("");
-        setPassword("");
-        setStoryData(null);
-        window.location.assign('/')
+  const handleLogOut = () => {
+    //reset all state and go to home route
+    window.location.assign('/')
+  };
 
-    };
 
-    //------------------ ACCESS STORIES -----------------
+  //------------------ ACCESS STORIES -----------------
 
-    //get all story titles from DB
-    const getAllStoryTitles = () => {
-
-        axios.get(url + `/stories/read`, {headers:{authorization: token}}).
-        then((res)=> {
-            //set state for story data - which is titles, only
-            //!!change this variable name? it's misleading
-            setStoryData(res.data);
-        })
-    }
-
+  //get all story titles from DB
+  const getAllStoryTitles = () => {
+    //axios get call for all titles, including token in header for authorization
+    axios.get(url + `/stories/read`, {headers:{authorization: token}})
+    .then((res)=> {
+        //set state for story data - which is titles, date
+        setStoryData(res.data);
+    })
+  }
 
     //get story titles associated with specific user
-    const getMyStoryTitles = () => {
-        axios.get(url + `/myStories/list/${userId}`, {headers:{authorization: token}}).
-        then((res)=> {
-            console.log("getMyStoryTitles res.data", res.data)
-            //set state for this user's story titles
-            setMyStoryTitles(res.data);
-        })
-    }
+  const getMyStoryTitles = () => {
+    //axios get call for user's stories, sending token in header for authorization
+    axios.get(url + `/myStories/list/${userId}`, {headers:{authorization: token}})
+    .then((res)=> {
+      console.log("getMyStoryTitles res.data", res.data)
+      //set state for this user's story titles
+      setMyStoryTitles(res.data);
+    })
+  }
 
-    //post a selected title to the DB for that user
-    //this first one works. don't fucking touch it!!!
-    //This works as longhand; I could not get it to work as shorthand
-    const postToMyStoryTitlesList = (storyId) => {
-    axios({
-        method: 'POST',
-        url: `https://pjw1.herokuapp.com/stories/${storyId}/myStories/${userId}`,
-        data: {
-            start_date: date
-        },
-        headers: {"Authorization": token}
+  //post a selected title to the DB for that user
+  const postToMyStoryTitlesList = (storyId) => {
+  //axios post call, longhand, including header and body data
+  axios({
+    method: 'POST',
+    url: `https://pjw1.herokuapp.com/stories/${storyId}/myStories/${userId}`,
+    data: {
+        start_date: date
+    },
+    headers: {"Authorization": token}
+    })
+    .then((res)=> {
+      //retrieve titles again so this title
+      //displays on the list
+      getMyStoryTitles()
+    })
+  }
     
-        }).then((res)=> {
-            console.log("postToMyStoryTitlesList() res.data: ", res.data)
-            //retrieve titles again so this title
-            //displays on the list
-            getMyStoryTitles()
-        })
-    }
+  //delete a title from the user's list of titles from the DB
+  const deleteTitle = (userStoryId) => {
+    //axios delete call, with token in header for authorization
+    axios.delete(url + `/myStories/delete/${userStoryId}`, {headers:{authorization: token}})
+    .then((res)=> {
+      //retrieve titles again so this title
+      //display the list without removed title
+      getMyStoryTitles()
+    })
+  }
+
+  //function to identify where the user is 
+  //in this particular iteration of the story, via userStoryId
+  //so user can start where they left off
+  //really, it's more of a bookmark than a gatekeeper and now I wish I had labeled it that
+  const gateKeeper = (userStoryId) =>{
+    //axios call to get the completeStory data
+    axios.get(url + `/myStories/completeStory/${userStoryId}`, {headers:{authorization: token}})
+    .then((res) => {
+      //if there is no complete story with that userStoryId yet
+      if(res.data.length === 0){
+        //readFirstStorySection()
+        readFirstStorySection(userStoryId)
+      //if more than one row has been stored, then the first choice has already been made
+      //and thus the first section and choice have been stored
+      }else {
+        //store all data in variable storyRowsArray
+        let storyRowsArray = res.data
+        //set the title from the first row 
+        setIsTitle(storyRowsArray[0].title)
+        //store the current row
+        let currentStoryRow = storyRowsArray[storyRowsArray.length-1]
+        //set the storySection so it can be read
+        setStorySection(currentStoryRow.story_section_content)
+        //set the storySectionId so options can be found
+        setStorySectionId(currentStoryRow.story_section_id)
+      }
+    })
+  }
+
+  //grab the first story section connected to the title from the DB
+  const readFirstStorySection = (userStoryId)=> {
+    //axios post call to read first section; headers with token for authorization
+    axios.post(url + `/myStories/readFirst/${userStoryId}`, {}, {headers:{authorization: token}})
+    .then((res) => {
+      //set the title here
+      setIsTitle(res.data.title)
+      //set the state for storySection to be displayed
+      setStorySection(res.data.story_section_content)
+      //set the storySectionId to be used to get options
+      setStorySectionId(res.data.story_section_id)
+    })
+  }
+
+  //grab the options related to a story section
+  const seeOptions = () => {
+    //axios post call;  nothing is posted in this call
+    axios.post(url + `/myStories/options/${storySectionId}`, {}, {headers:{authorization: token}})
+    .then((res) => {
+      //map over the data
+      //to create an array of options
+      //the option text, option id, and resulting story section id
+      //are included in this element
+      let optionArray = []
+      res.data.map((element, index)=> {
+          optionArray.push(element)
+      })
+      //if there are no options, it is the end of the story
+      if(optionArray.length == 0){
+          //set end to true to render See My Story button
+          setEnd(true)
+      }else{
+        //set the array of option content text to Options state
+        //so we can view them later
+        setOptions(optionArray)
+        //set choicesTime to true so choices will render
+        setChoicesTime("true") 
+
+      }
+    })
+  } 
     
-    //delete a title from the user's list of titles from the DB
-    //!! I'd like to change the backend to delete everything
-    //b/c right now there's a bunch of completed/ partially completed stories
-    //in the DB
-    //Would do this by user_story_id; delete from userStory table
-    const deleteTitle = (userStoryId) => {
-        axios.delete(url + `/myStories/delete/${userStoryId}`, {headers:{authorization: token}}).
-        then((res)=> {
-            //retrieve titles again so this title
-            //displays on the list
-            getMyStoryTitles()
-        })
-    }
+  //storySectionId and optionId will be saved to the DB
+  const saveOption = ()=>  {
+      //axios call to post section and option ids
+      axios.post(url + `/myStories/options/${userStoryId}/${storySectionId}/${optionId}`, {}, {headers:{authorization: token}})
+      .then((res) => {
+        //call function to read the next section
+        readNextSection(userStoryId, resultingStorySectionId)
+      })
+  }
 
-    const gateKeeper = (userStoryId) =>{
-        console.log("token in gateKeeper:", token)
-        axios.get(url + `/myStories/completeStory/${userStoryId}`, {headers:{authorization: token}}).
-        then((res) => {
-            if(res.data.length == 0){
-              // console.log("there's no data")
-              readFirstStorySection(userStoryId)
-            }else if(res.data.length== 1){
-              //set the title here:
-              console.log("gateKeeper() res.data[0].title: ", res.data[0].title )
-              setIsTitle(res.data[0].title)
-              setStorySection(res.data[0].story_section_content)
-              console.log("storySection: ", storySection)
-              console.log('res.data[0].story_section_id', res.data[0].story_section_id)
-              setStorySectionId(res.data[0].story_section_id)
-                
-            }else {
-        
-              //store all data in variable storyRowsArray
-              let storyRowsArray = res.data
-              //set the title from the first row 
-              setIsTitle(storyRowsArray[0].title)
-              console.log("gateKeeper: storyRowsArray: ", storyRowsArray)
-              console.log("storyRowsArray[storyRowsArray.length-1]", storyRowsArray[storyRowsArray.length-1])
-              //get the last row of data, the current row
-              let currentStoryRow = storyRowsArray[storyRowsArray.length-1]
-              setStorySection(currentStoryRow.story_section_content)
-              setStorySectionId(currentStoryRow.story_section_id)
-            }
-        })
-    }
+  //similar to read first section
+  //reads subsequent session based on resultingStorySectionId
+  const readNextSection =  ()=> {
+    //axios post call, gets next section and adds it to DB for this iteration of the story
+    axios.post(url + `/myStories/readNext/${userStoryId}/${resultingStorySectionId}`, {}, {headers:{authorization: token}})
+    .then((res) => {
+      //reset the storySection and StorySectionId in state
+      setStorySection(res.data.story_section_content)
+      setStorySectionId(res.data.story_section_id)
+    })
+  }
 
-    //grab the first story section connected to the title from the DB
-    const readFirstStorySection = (userStoryId)=> {
-        console.log("token in readFirstStorySection:", token)
+  //gather all the data from the DB for a specific instance of the story
+  //i.e., based on the userStoryId
+  const readCompleteStory = (userStoryId) =>{
+    axios.get(url + `/myStories/completeStory/${userStoryId}`, {headers:{authorization: token}})
+    .then((res) => {
+      // variable to hold array of story sections and chosen options
+      let completeStory = []
+      //map over the data from the call
+      res.data.map((element, index)=> {
+        // add the story sections and options to the completeStory array
+        completeStory.push(element.story_section_content)
+        completeStory.push(element.option_content)
+      })
+      //completeStory array is saved to state
+      //to be accessed elsewhere
+      setWholeStory(completeStory)
+    })
+  }
 
-        axios.post(url + `/myStories/readFirst/${userStoryId}`, {}, {headers:{authorization: token}}).
-        then((res) => {
-          //set the title here:
-          console.log("readFirstStorySection res.data.title: ", res.data.title)
-          setIsTitle(res.data.title)
-          
-          //set the state for storySection and storySectionId
-          //to display them
-          console.log("readFirstStorySection() called")
-          setStorySection(res.data.story_section_content)
-          setStorySectionId(res.data.story_section_id)
-        })
+//-------------------  Misc -------------------------
+  //reset the pieces of state that will allow a user to 
+  //go to their story home at any point
+  //and start a new story or open a previous story
+  const resetStoryState = () => {
+    setOptions('')
+    setOptionId('')
+    setChoicesTime(false)
+    setEnd(false)
+  }
 
-    }
+  // when called, makes a date
+  const createDate = () => {
+    //varaible to create the new date
+    let showDate = new Date();
+    //variable to hold pieces of the date that we want to display
+    let displayDate = (showDate.getMonth()+1)+'/'+showDate.getDate()+'/'+showDate.getFullYear().toString().substr(-2);
+    //set state so date can be displayed
+    setDate(displayDate)
+  }
 
-    //grab the options related to the a story section
-    const seeOptions = () => {
-        axios.post(url + `/myStories/options/${storySectionId}`, {}, {headers:{authorization: token}}).
-        then((res) => {
-            console.log("seeOptions() called")
-            //map over the data
-            //to create an array of options
-            //the option text, option id, and resulting story section id
-            //are included in this element
-            let optionArray = []
-            res.data.map((element, index)=> {
-                optionArray.push(element)
-            })
-            //set the array of option content text to Options
-            //so we can view them later
-            if(optionArray.length == 0){
-                console.log("no options left; this is the end")
-                setEnd(true)
-            }else{
-                setOptions(optionArray)
-                console.log("optionArray: ", optionArray)
-                setChoicesTime("true") 
+  //List of exported states and functions
+  const value = {
+      isSignedIn,
+      setIsSignedIn,
+      userName,
+      setUserName,
+      password,
+      setPassword,
+      confirmPassword,
+      setConfirmPassword,
+      handleSignup,
+      handleLogIn,
+      getAllStoryTitles,
+      storyData,
+      setStoryData,
+      getMyStoryTitles,
+      myStoryTitles,
+      postToMyStoryTitlesList,
+      deleteTitle,
+      userStoryId,
+      setUserStoryId,
+      readFirstStorySection,
+      readNextSection,
+      storySection, 
+      setStorySection,
+      choicesTime, 
+      setChoicesTime,
+      storySectionId,
+      seeOptions,
+      options,
+      optionId, 
+      setOptionId,
+      resultingStorySectionId, 
+      setResultingStorySectionId,
+      readCompleteStory,
+      wholeStory,
+      setWholeStory,
+      handleLogOut,
+      saveOption,
+      resetStoryState,
+      isDrawerOpen,
+      setIsDrawerOpen,
+      gateKeeper,
+      date,
+      createDate,
+      end,
+      token, 
+      isTitle
+  };
 
-            }
-        })
-    } 
-    
-    //save an option to the DB
-    //storySectionId and optionId will be saved to the DB
-    const saveOption = ()=>  {
-        axios.post(url + `/myStories/options/${userStoryId}/${storySectionId}/${optionId}`, {}, {headers:{authorization: token}}).
-        then((res) => {
-            console.log("saveOption() called")
-            //call function to read the next section
-            readNextSection(userStoryId, resultingStorySectionId)
-        })
-    }
-
-    //similar to read first section
-    //reads subsequent session based on 
-    //resultingStorySectionId
-    //!!Again, do I even need to pass userStoryId and resultingStorySectionId?
-    //or should those have been/ are they saved in state?
-    const readNextSection =  (userStoryId, resultingStorySection)=> {
-        axios.post(url + `/myStories/readNext/${userStoryId}/${resultingStorySectionId}`, {}, {headers:{authorization: token}}).
-        then((res) => {
-            //reset the storySection and StorySectionId in state
-            console.log("readNextStorySection() res.data", res.data)
-            setStorySection(res.data.story_section_content)
-            setStorySectionId(res.data.story_section_id)
-        })
-    }
-
-    //gather all the data from the DB for a specific instance of the story
-    //i.e., based on the userStoryId
-    const readCompleteStory = (userStoryId) =>{
-        axios.get(url + `/myStories/completeStory/${userStoryId}`, {headers:{authorization: token}}).
-        then((res) => {
-            console.log("completeStory() res.data: ", res.data)
-            //map over the data
-            //creates an element with the story section content and option content
-            //and adds that to the completeStory array
-            let completeStory = []
-            res.data.map((element, index)=> {
-                completeStory.push(element.story_section_content)
-                completeStory.push(element.option_content)
-                
-                //completeStory array is saved to state
-                //to be accessed elsewhere
-            })
-            setWholeStory(completeStory)
-        })
-    }
-    const resetStoryState = () => {
-        console.log("resetStoryState was called")
-        // setWholeStory([])
-        // setStorySectionId("")
-        // setUserStoryId('')
-        // setStorySection("")
-        setOptions('')
-        setOptionId('')
-        setChoicesTime(false)
-        setEnd(false)
-    }
-
-    const createDate = () => {
-        let showDate = new Date();
-        let displayDate = (showDate.getMonth()+1)+'/'+showDate.getDate()+'/'+showDate.getFullYear().toString().substr(-2);
-        setDate(displayDate)
-    }
-
-    //List of exported states and functions
-    //These only need to be export if they are used on other components
-    const value = {
-        isSignedIn,
-        setIsSignedIn,
-        userName,
-        setUserName,
-        password,
-        setPassword,
-        confirmPassword,
-        setConfirmPassword,
-        handleSignup,
-        handleLogIn,
-        getAllStoryTitles,
-        storyData,
-        setStoryData,
-        getMyStoryTitles,
-        myStoryTitles,
-        postToMyStoryTitlesList,
-        deleteTitle,
-        userStoryId,
-        setUserStoryId,
-        readFirstStorySection,
-        readNextSection,
-        storySection, 
-        setStorySection,
-        choicesTime, 
-        setChoicesTime,
-        storySectionId,
-        seeOptions,
-        options,
-        optionId, 
-        setOptionId,
-        resultingStorySectionId, 
-        setResultingStorySectionId,
-        readCompleteStory,
-        wholeStory,
-        setWholeStory,
-        handleLogOut,
-        saveOption,
-        resetStoryState,
-        isDrawerOpen,
-        setIsDrawerOpen,
-        gateKeeper,
-        date,
-        createDate,
-        end,
-        // checkAuth,
-        justSignedUp,
-        token, 
-        isTitle
-    };
-
-    //Return statement that will wrap any child elements with the exported context states and functions
-    return <Context.Provider value={value}>{children}</Context.Provider>;
-    };
-
-
-     // const postToMyStoryTitlesList = (storyId) => {
-    //     axios.post(`https://pjw1.herokuapp.com/stories/${storyId}/myStories/${userId}`, 
-    //     {start_date: date}, 
-    //     {headers:{authorization: token}}
-    //     ).then((res)=> {
-    //         console.log("postToMyStoryTitlesList() res.data: ", res.data)
-    //         //retrieve titles again so this title
-    //         //displays on the list
-    //         getMyStoryTitles()
-    //     })
-    // }
-    //---Attempt to start where you left off---
-    //this code was in readCompleteStory()
-    //the problem is if you start a story, don't make any choices, and then hit home, it won't work on restart
-    //this DID work for when you had made a few choices, at least at one time
-    //if instead of "readFirstStorySEction", that button directed to "readCompleteStory"
-      // if (completeStory.length === 0){
-            //     console.log("completeStory.length is: ", completeStory.length)
-            //     readFirstStorySection(userStoryId)
-            // }
-            // else{
-            //     //grab the last element in the res.data optionArray
-            //     //it will be the most recent story section, et al.
-            //     console.log("completeStory.length is: ", completeStory.length)
-            //     let last = res.data.pop(-1)
-            //     console.log("last: ", last)
-            //     console.log("last.story_section_id:", last.story_section_id)
-            //     //let's try just going to the next story section
-            //     //nope, I'm going to have to set both of those, I think
-            //     console.log("userStoryId: ", userStoryId)
-            //     //set resulting story section id 
-            //     //to the last story section id of the res.data array
-            //     //to use in readNextSection()
-            //     setStorySectionId(last.story_section_id)
-            //     setResultingStorySectionId(last.story_section_id)
-            //     readNextSection()
-            // }
-
-
-
-
-            
-    //Function to set appropriate states to collect inputs for different api endpoints
-    // const handleRandomNumber = () => {
-    //     switch (randomNumber) {
-    //     case 1:
-    //         setNeedsFrom(true);
-    //         break;
-    //     case 2:
-    //         setNeedsName(true);
-    //         setNeedsFrom(true);
-    //         break;
-    //     case 3:
-    //         setNeedsFrom(true);
-    //         setNeedsThing(true);
-    //         break;
-    //     case 4:
-    //         setNeedsFrom(true);
-    //         break;
-    //     default:
-    //         break;
-    //     }
-    // };
-
-    //Function to complete api url and pass GET request through Axios
-    // const handleFOAAS = async () => {
-    //     let urlParams;
-    //     switch (randomNumber) {
-    //     case 1:
-    //         urlParams = `cup/${from}`;
-    //         break;
-    //     case 2:
-    //         urlParams = `rockstar/${name}/${from}`;
-    //         break;
-    //     case 3:
-    //         urlParams = `particular/${thing}/${from}`;
-    //         break;
-    //     case 4:
-    //         urlParams = `sake/${from}`;
-    //         break;
-    //     default:
-    //         urlParams = `awesome/Nick`;
-    //         break;
-    //     }
-
-    // if (urlParams) {
-    //     await axios.get(baseUrl + urlParams).then((response) => {
-    //         // console.log(response.data);
-    //         //Sets state with data the comes back from api call
-    //         setFoaas(response.data);
-    //     });
-    //     }
-    // };
-
-    //useEffect hook to change input states when the randomNumber state changes
-    // useEffect(() => {
-    //     if (randomNumber) {
-    //     handleRandomNumber();
-    //     }
-    // }, [randomNumber]);
-
-    // const [randomNumber, setRandomNumber] = useState(null);
-    // const [needsName, setNeedsName] = useState(false);
-    // const [needsFrom, setNeedsFrom] = useState(false);
-    // const [needsThing, setNeedsThing] = useState(false);
-
-// const [name, setName] = useState("");
-    // const [from, setFrom] = useState("");
-    // const [thing, setThing] = useState("");
-    // const [foaas, setFoaas] = useState(null);
-
-
-    // setRandomNumber(null);
-        // setName("");
-        // setThing("");
-        // setFrom("");
-        // setNeedsThing(false);
-        // setNeedsName(false);
-        // setNeedsFrom(false);
-
-        // needsName,
-        // setNeedsName,
-        // needsFrom,
-        // setNeedsFrom,
-        // needsThing,
-        // setNeedsThing,
-        // name,
-        // setName,
-        // from,
-        // setFrom,
-        // thing,
-        // setThing,
-        // foaas,
-        // setFoaas,
-        // handleFOAAS,
-        // setRandomNumber,
-
-
-    //variable for api url
-    // const baseUrl = "https://www.foaas.com/awesome/Nick";
-
-   //url for all story titles
-    // const url = "https://pjw1.herokuapp.com/stories/read"
+  //Return statement that will wrap any child elements with the exported context states and functions
+  return <Context.Provider value={value}>{children}</Context.Provider>;
+};
