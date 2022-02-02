@@ -84,6 +84,7 @@ export const Provider = ({ children }) => {
 
     //function to log in
     const handleLogIn = () => {
+        console.log("hit handleLogIn")
 
         axios.post(url + `/login`, {
             username: userName,
@@ -94,7 +95,6 @@ export const Provider = ({ children }) => {
             setIsSignedIn(true)
             // setJustSignedUp(false)
             console.log(res.data.userId)
-            let userIdAgain = res.data.userId
             setToken(res.data.accessToken)
             setUserId(res.data.userId)
         })
@@ -160,7 +160,6 @@ export const Provider = ({ children }) => {
             getMyStoryTitles()
         })
     }
-   
     
     //delete a title from the user's list of titles from the DB
     //!! I'd like to change the backend to delete everything
@@ -180,26 +179,27 @@ export const Provider = ({ children }) => {
         console.log("token in gateKeeper:", token)
         axios.get(url + `/myStories/completeStory/${userStoryId}`, {headers:{authorization: token}}).
         then((res) => {
-            console.log("gateKeeper() res.data: ", res.data)
             if(res.data.length == 0){
               // console.log("there's no data")
               readFirstStorySection(userStoryId)
             }else if(res.data.length== 1){
               //set the title here:
               console.log("gateKeeper() res.data[0].title: ", res.data[0].title )
-              //!!!!
+              setIsTitle(res.data[0].title)
               setStorySection(res.data[0].story_section_content)
               console.log("storySection: ", storySection)
               console.log('res.data[0].story_section_id', res.data[0].story_section_id)
               setStorySectionId(res.data[0].story_section_id)
                 
             }else {
-              //set the title here:
-              //!!!!
-              //get the last row of data
+        
+              //store all data in variable storyRowsArray
               let storyRowsArray = res.data
+              //set the title from the first row 
+              setIsTitle(storyRowsArray[0].title)
               console.log("gateKeeper: storyRowsArray: ", storyRowsArray)
               console.log("storyRowsArray[storyRowsArray.length-1]", storyRowsArray[storyRowsArray.length-1])
+              //get the last row of data, the current row
               let currentStoryRow = storyRowsArray[storyRowsArray.length-1]
               setStorySection(currentStoryRow.story_section_content)
               setStorySectionId(currentStoryRow.story_section_id)
@@ -255,8 +255,6 @@ export const Provider = ({ children }) => {
     
     //save an option to the DB
     //storySectionId and optionId will be saved to the DB
-    //userStoryId and resultingStorySection will be used to read the next section
-    //!! Do these need to be parameters? Aren't they held in state so they can be accessed directly?
     const saveOption = ()=>  {
         axios.post(url + `/myStories/options/${userStoryId}/${storySectionId}/${optionId}`, {}, {headers:{authorization: token}}).
         then((res) => {

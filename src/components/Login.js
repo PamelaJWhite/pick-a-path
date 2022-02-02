@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext} from "react";
 import { Link } from 'react-router-dom'
 
 import Button from "@mui/material/Button";
@@ -25,16 +25,19 @@ const Login = () => {
     >
       {/* Dynamicaly render login component if not signed in*/}
       {!isSignedIn && (
+        
         <Paper className="login">
+          {/*username field */}
           <TextField
             className="textField"
             id="userName_field"
             //set the value of userName to whatever is being tped
-            onChange={(e) => setUserName(e.target.value)}
             value={userName}
+            onChange={(e) => setUserName(e.target.value)}
             variant="outlined"
             placeholder="User Name"
           />
+          {/* password field */}
           <TextField
               className="textField"
               id="password_field"
@@ -44,6 +47,7 @@ const Login = () => {
               placeholder="Password"
               type="password"
           />
+          {/* button to login, calls handleLogIn() onclick */}
           <Button 
             variant="contained" 
             onClick={(e) => handleLogIn(e)}
