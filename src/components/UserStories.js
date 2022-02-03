@@ -36,6 +36,11 @@ export default function UserStories (props) {
     token
   } = useContext(Context);
 
+
+  // getAllStoryTitles()
+  // getMyStoryTitles()
+  // console.log("how many times i this running?")
+
   return (
     <Box  
       component="main"
