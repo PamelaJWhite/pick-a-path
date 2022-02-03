@@ -104,7 +104,7 @@ const ReadingPage = () => {
               variant="h3" 
               className="buttonJar"
               > 
-                <Typography
+                <Box
                   className="choicesButtons"
                   onMouseDown={(e) =>{
                     // set the chosen option to be saved to the complete story
@@ -120,8 +120,8 @@ const ReadingPage = () => {
                     saveOption()
                   }}
                 >
-                  {option.option_content}
-                </Typography>
+                    {option.option_content}
+                </Box>
               </Box>
             )}
           </Box>

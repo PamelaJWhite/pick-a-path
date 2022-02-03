@@ -230,16 +230,16 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* color: green; */
-  /* background-color: white; */
 }
 
 .choicesButtons {
   padding-left: 10px;
   padding-right: 10px;
-  font-weight: bold;
   color: #076364;
   border: 5px solid white;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .choicesButtons:hover{
