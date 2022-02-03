@@ -13,7 +13,6 @@ export const Provider = ({ children }) => {
     
   //Various states that are being exported
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [justSignedUp, setJustSignedUp] = useState(false)
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState ('')
@@ -99,7 +98,6 @@ export const Provider = ({ children }) => {
     //axios get call for user's stories, sending token in header for authorization
     axios.get(url + `/myStories/list/${userId}`, {headers:{authorization: token}})
     .then((res)=> {
-      console.log("getMyStoryTitles res.data", res.data)
       //set state for this user's story titles
       setMyStoryTitles(res.data);
     })
@@ -200,7 +198,6 @@ export const Provider = ({ children }) => {
         setOptions(optionArray)
         //set choicesTime to true so choices will render
         setChoicesTime("true") 
-
       }
     })
   } 

@@ -1,278 +1,233 @@
-import React, { useContext, useEffect} from "react";
+import React, { useContext} from "react";
 import {Link} from "react-router-dom";
 
 import Button from "@mui/material/Button";
-import { makeStyles } from "@mui/styles";
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
-import CssBaseline from '@mui/material/CssBaseline';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import Container from '@mui/material/Container';
-import Fab from '@mui/material/Fab';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Zoom from '@mui/material/Zoom';
-import IconButton from '@mui/material/IconButton';
-import HomeIcon from '@mui/icons-material/Home';
-import {
-    DataGridPro,
-    useGridApiRef,
-    gridVisibleRowCountSelector,
-    visibleGridColumnsLengthSelector,
-    visibleGridColumnsSelector,
-    gridVisibleSortedRowIdsSelector,
-} from '@mui/x-data-grid-pro';
-import { useDemoData } from '@mui/x-data-grid-generator';
-import Slide from '@mui/material/Slide';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 
 //import context
 import { Context } from "../context/Context";
-import { getDividerUtilityClass } from "@mui/material";
-import { AccountBoxSharp } from "@mui/icons-material";
 
+//prevent user from using back button
+//which would mess up their story, as it saves along the way
 window.history.pushState(null, null, window.location.href);
 window.onpopstate = function () {
 window.history.go(1);
 };
 
 export default function UserStories (props) {
-        //destructure context for only the states and functions needed
-    const {
-        getAllStoryTitles,
-        storyData,
-        getMyStoryTitles,
-        myStoryTitles,
-        postToMyStoryTitlesList,
-        deleteTitle,
-        userStoryId,
-        setUserStoryId,
-        readFirstStorySection,
-        readCompleteStory,
-        wholeStory,
-        isSignedIn, 
-        setIsSignedIn,
-        createDate,
-        date,
-        gateKeeper,
-        userName,
-        userId,
-        token
-    } = useContext(Context);
+  //destructure context for only the states and functions needed
+  const {
+    getAllStoryTitles,
+    storyData,
+    getMyStoryTitles,
+    myStoryTitles,
+    postToMyStoryTitlesList,
+    deleteTitle,
+    userStoryId,
+    setUserStoryId,
+    createDate,
+    gateKeeper,
+    userName,
+    token
+  } = useContext(Context);
 
-    
-    return (
-        // <ThemeProvider theme={theme}>
-        <Box  
-        component="main"
-        // bgcolor="primary.main"
-        color="primary.contrastText" 
-
-        style={{ paddingBottom: "50px"}}
+  return (
+    <Box  
+      component="main"
+      color="primary.contrastText" 
+      style={{ paddingBottom: "50px"}}
+    >
+      {/* User's Story Home title */}
+      <Box className="title"> 
+        <Box 
+          style={{ margin: "15px"}}    
         >
-            <div className="title"> 
-                <Box 
-                style={{ margin: "15px"}}
-                // color="primar.contrastText" 
-        >
-                    <Typography variant="h1">
-                        {userName}'s Story Home
-                    </Typography>
-                </Box>
-            </div>
-                <Box className = "readBox">
-                    <Box 
-                    className = "paperBox"
-                    >
-                        <Typography 
-                        variant="h2" 
-                        color="secondary.contrastText"
-                        style={{paddingBottom: "5px"}}>
-                            All Stories
-                        </Typography>
-                        <Paper 
-                            elevation={9} 
-                            className="titlePaper"
-                            style={{marginRight: "20px" }}
-                            >
-                            <div className = "clickToAdd">
-                                <Typography 
-                                    variant="h4" 
-                                >
-                                    Click Story to Add
-                                </Typography>
-                            </div>
-                            {storyData && (
-                                <Typography 
-                                    color="primary.contrastText"
-                                    variant="h3" 
-                                    component="div" 
-                                    sx={{ paddingBottom: 5}}>
-                                    {storyData.map((element, idx)=>(
-                                        <List style={{padding:0}} >
-                                            <ListItem 
-                                                key={userStoryId} 
-                                                style={{padding:"10px"}}
-                                                className="storyTitlesList list"
-                                                onMouseDown={((e)=> {
-                                                    createDate() 
-                                                    }
-                                                )}
-                                                onClick={(e) => {
-                                                let storyId = element.story_id
-                                                
-                                                postToMyStoryTitlesList(storyId)
-                                                }}>
-                                                    {element.title}
-                                            </ListItem>
-                                        </List>
-                                    ))}
-                                </Typography>  
-                            )} 
-                        </Paper>
-                    </Box>
-                    <Box 
-                        // style={{backgroundColor:"grey"}} 
-                        // bgcolor="primary.main"
-                        // color="primary.contrastText" 
-                        className = "paperBox"
-                    >
-                        <Typography
-                        variant="h2" 
-                        color="secondary.contrastText"
-                        style={{paddingBottom: "5px"}}
-                        >
-                            My Stories
-                        </Typography>
-                        <Paper 
-                            // bgcolor="primary.main"
-                            elevation={9} 
-                            className="titlePaper" 
-                            style={{marginLeft: "20px"}}
-                        >
-                            <Box 
-                                className="clickToAdd"
-                                
-                                // bgcolor="secondary.light"
-                            >
-                                <Typography 
-                                    variant="h4"
-                                >
-                                    Click Story To Read
-                                </Typography>
-                            </Box> 
-                                {myStoryTitles && (
-                                    <Typography 
-                                    color="primary.contrastText"
-                                    variant="h3" 
-                                    component="div" 
-                                    sx={{ paddingBottom: 5}}>
-                                        {myStoryTitles.map((element, idx)=>(
-                                            <List
-                                        
-                                            sx={{padding:0, display: "flex",  justifyContent:"space-between"}}
-                                    
-                                            >
-                                                <ListItem 
-                                                style={{padding:"10px"}}
-                                                className="storyTitlesList list">
-                                                    {/* <Box  
-                                                    className="outerGrid"
-                                                    container spacing={3 }
-                                                    style={{ display: "flex", justifyContent: "space-between"}}> */}
-                                                    <Box 
-                                                        item 
-                                                        // style={{display: "flex"}}
-                                                        className="innerGridOne"
-                                                        component="div"
-                                                    >
-                                                        <Link 
-                                                            className="myStoriesListLinks"
-                                                            style={{width: "218px"}}
-
-                                                            onMouseDown={(e) =>{
-                                                                setUserStoryId(element.user_story_id)
-                                                            }}
-                                                            onClick={(e) => {
-                                                                //gateKeeper
-                                                                gateKeeper(userStoryId)
-                                                                // //go to readCompleteStory first
-                                                                // //b/c we only want to read the first story section
-                                                                // //if there is no story already saved
-                                                                // readFirstStorySection(userStoryId)
-                                                    
-
-                                                            }}
-                                                            to={"/readingPage"}
-                                                        >
-                                                            <Typography 
-                                                            // className="myStoriesListLinks"
-                                                            color="primary.contrastText"
-                                                            variant="h3" 
-                                                            component="div" 
-                                                            >
-                                                            {element.title}
-                                                            </Typography>
-                                                        </Link>
-                                                        <Typography 
-                                                            variant="h4" 
-                                                            style={{alignSelf: "center", paddingLeft: "10px"}}>
-                                                                {element.start_date}
-                                                        </Typography>
-                                                    </Box>
-                                                </ListItem>
-                                                <ListItem
-                                                style={{display: "flex", justifyContent:"flex-end"}}
-                                                >
-                                                    <Box
-                                                    >
-                                                        <DeleteForeverIcon 
-                                                            className="deleteIcons"
-                                                            onClick={(e) => {
-                                                                let userStoryId = element.user_story_id
-                                                                // console.log("deleteTitle element.user_story_id and element.title: ", element.user_story_id, element.title)
-                                                                deleteTitle(userStoryId)
-                                                                }}
-                                                        />
-                                                    </Box>
-                                                </ListItem>
-                                                    {/* </Box> */}
-                                            </List>
-                                        ))}
-                                    </Typography>
-                                )}
-                        </Paper>
-                    </Box>
-                </Box>
-                {/* this is set up as a button
-                because I think it was making hundreds of calls
-                when i had the get request functions 
-                run on loading */}
-                <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={() => {
-                        console.log("token: ", token)
-                        getAllStoryTitles()
-                        getMyStoryTitles()
-                        }
-                    }
-                >
-                    click me
-                </Button> 
+          <Typography variant="h1">
+            {/* uses login userName to display name */}
+            {userName}'s Story Home
+          </Typography>
         </Box>
-        // </ThemeProvider>
-    );
+      </Box>
+      {/* Box containing two boxes with title lists */}
+      <Box className = "readBox">
+        {/* Left box, list of All Story Titles */}
+        <Box 
+          className = "paperBox"
+        >
+          <Typography 
+            variant="h2" 
+            color="secondary.contrastText"
+            style={{paddingBottom: "5px"}}
+          >
+            All Stories
+          </Typography>
+          <Paper 
+            elevation={9} 
+            className="titlePaper"
+            style={{marginRight: "20px" }}
+          >
+            <div className = "clickToAdd">
+                <Typography 
+                    variant="h4" 
+                >
+                    Click Story to Add
+                </Typography>
+            </div>
+            {/* When storyData are present, display All titles */}
+            {storyData && (
+              <Typography 
+                color="primary.contrastText"
+                variant="h3" 
+                component="div" 
+                sx={{ paddingBottom: 5}}>
+                {/* Map over the story data, which are titles of All Stories */}
+                {storyData.map((element, idx)=>(
+                  <List 
+                    style={{padding:0}} 
+                  >
+                    {/* When a title is clicked, create a date for it
+                    and add it to the User's stories list */}
+                    <ListItem 
+                        key={userStoryId} 
+                        style={{padding:"10px"}}
+                        className="storyTitlesList list"
+                        onMouseDown={((e)=> {
+                          createDate() 
+                          }
+                        )}
+                        onClick={(e) => {
+                          let storyId = element.story_id
+                          postToMyStoryTitlesList(storyId)
+                        }}>
+                          {element.title}
+                    </ListItem>
+                  </List>
+                ))}
+              </Typography>  
+            )} 
+        </Paper>
+      </Box>
+      {/* Right box, list of User's titles */}
+      <Box
+        className = "paperBox"
+      >
+        <Typography
+          variant="h2" 
+          color="secondary.contrastText"
+          style={{paddingBottom: "5px"}}
+        >
+          My Stories
+        </Typography>
+        <Paper 
+            elevation={9} 
+            className="titlePaper" 
+            style={{marginLeft: "20px"}}
+        >
+          <Box 
+            className="clickToAdd"
+          >
+            <Typography 
+              variant="h4"
+            >
+              Click Story To Read
+            </Typography>
+          </Box> 
+            {/* When myStoryTitles data are available, display them */}
+            {myStoryTitles && (
+              <Typography 
+                color="primary.contrastText"
+                variant="h3" 
+                component="div" 
+                sx={{ paddingBottom: 5}}
+              >
+                {/* Map over user's story titles */}
+                {myStoryTitles.map((element, idx)=>(
+                  <List
+                    sx={{padding:0, display: "flex",  justifyContent:"space-between"}}
+                  >
+                    <ListItem 
+                      style={{padding:"10px"}}
+                      className="storyTitlesList list"
+                      key={userStoryId}
+                    >
+                      <Box 
+                          item 
+                          className="innerGridOne"
+                          component="div"
+                      >
+                        {/* Each list item is a link to that story's ReadingPage */}
+                        <Link 
+                          className="myStoriesListLinks"
+                          style={{width: "218px"}}
+                          onMouseDown={(e) =>{
+                            setUserStoryId(element.user_story_id)
+                          }}
+                          // Goes through the gateKeeper() to know where to start the story
+                          onClick={(e) => {
+                            gateKeeper(userStoryId)
+                            }}
+                          to={"/readingPage"}
+                        >
+                          <Typography
+                            color="primary.contrastText"
+                            variant="h3" 
+                            component="div" 
+                          >
+                            {element.title}
+                          </Typography>
+                        </Link>
+                        {/* Start dates are rendered next to the titles */}
+                        <Typography 
+                            variant="h4" 
+                            style={{alignSelf: "center", paddingLeft: "10px"}}>
+                              {element.start_date}
+                        </Typography>
+                      </Box>
+                    </ListItem>
+                    {/* delete icons are rendered next to the date */}
+                    <ListItem
+                      style={{display: "flex", justifyContent:"flex-end"}}
+                    >
+                      <Box>
+                        <DeleteForeverIcon 
+                          className="deleteIcons"
+                          onClick={(e) => {
+                            let userStoryId = element.user_story_id
+                            deleteTitle(userStoryId)
+                          }}
+                        />
+                      </Box>
+                    </ListItem>
+                  </List>
+                ))}
+              </Typography>
+            )}
+        </Paper>
+      </Box>
+      </Box>
+            {/* this is set up as a button
+            because I think it was making hundreds of calls
+            when i had the get request functions 
+            run at the top of the page, bc i have this set up 
+            to automatically re-render as I make changes */}
+            <Button
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                    getAllStoryTitles()
+                    getMyStoryTitles()
+                    }
+                }
+            >
+                click me
+            </Button> 
+    </Box>
+  );
 }
 
 
