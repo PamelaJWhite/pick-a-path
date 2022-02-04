@@ -32,8 +32,7 @@ export default function UserStories (props) {
     setUserStoryId,
     createDate,
     gateKeeper,
-    userName,
-    token
+    userName
   } = useContext(Context);
 
 

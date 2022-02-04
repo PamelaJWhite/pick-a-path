@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 //importing local files and components
-import Navigation from './components/Navigation'
+import Navigation from './userComponents/Navigation'
 import Router from './Router'
 import { Provider } from './context/Context'
 import './App.css';

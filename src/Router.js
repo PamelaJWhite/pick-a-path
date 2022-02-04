@@ -1,66 +1,16 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router'
+import { Routes, Route} from 'react-router'
 
 
-import Home from './components/Home'
-//is this needed?
-import Login from './components/Login'
-import UserStories from './components/UserStories'
-import SignUp from './components/SignUp'
-import ReadingPage from './components/ReadingPage'
-import WholeStory from './components/WholeStory'
-
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-
-import { Context } from "./context/Context";
-
-// const ProtectedRoute = ({children}) => {
-//     const {
-//         checkAuth
-//     } = useContext(Context);
-//     // set the function equal to variable setAuth
-//     //b/c can't use the function in the first part of the ternary operator in the return statement
-//     const auth = checkAuth() 
-//     console.log("checkAuth() in ProtecedRoute: ", checkAuth())
-//     console.log("auth in ProtectedRoute: ", auth)
-    
-//     return   (auth === true) ? children : <Navigate to="/"/>
-// }
-
-// const theme = createTheme({
-//     typography: {
-//         h1: {
-//             fontSize: 50,
-//         },
-//         h2: {
-//             fontSize: 35,
-//         },
-//         h3: {
-//             fontSize: 25,
-//         },
-//         h4: {
-//             fontSize: 17,
-//         },
-//         fontFamily: "Poppins"
-//     },
-//     palette: {
-//         primary: {
-//           // light: will be calculated from palette.primary.main,
-//             main: '#bda1a3',
-//           // dark: will be calculated from palette.primary.main,
-//             contrastText: '#ffffe1'
-//         },
-//         secondary: {
-//             main: '#feeda7',
-//           // dark: will be calculated from palette.secondary.main,
-//         },
-//     },
-// });
+import Home from './userComponents/Home'
+import Login from './userComponents/Login'
+import UserStories from './userComponents/UserStories'
+import SignUp from './userComponents/SignUp'
+import ReadingPage from './userComponents/ReadingPage'
+import WholeStory from './userComponents/WholeStory'
 
 const Router = () => {
     return (
-        // <ThemeProvider theme={theme}> 
         <Routes>
             <Route path='/' element={<Home/>}/>
             {/* Home actually is the login page, so I'm not sure I need a /login path */}
