@@ -32,6 +32,9 @@ export const Provider = ({ children }) => {
   const [end, setEnd] = useState(false)
   const [token, setToken] = useState('')
   const [isTitle, setIsTitle] = useState('')
+  //editing-specific context
+  const [editTitle, setEditTitle] = useState("Title")
+  const [isEditing, setIsEditing] = useState (false)
 
   //variable for my base api url
   const url = "https://pjw1.herokuapp.com"
@@ -311,7 +314,10 @@ export const Provider = ({ children }) => {
       createDate,
       end,
       token, 
-      isTitle
+      isTitle, 
+      editTitle, 
+      isEditing,
+      setIsEditing
   };
 
   //Return statement that will wrap any child elements with the exported context states and functions

@@ -60,6 +60,11 @@ const Login = () => {
             to={`/signUp`}>
               Sign Up!
           </Link>
+          <Link 
+            className="signUpButton"
+            to={`/adminEdit`}>
+              Login Admin
+          </Link>
         </Paper> 
       )} 
     </form>
