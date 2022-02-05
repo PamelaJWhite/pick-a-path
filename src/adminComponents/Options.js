@@ -8,24 +8,24 @@ import Button from '@mui/material/Button';
 
 import { Context } from '../context/Context'
 import EditingButtons from './EditingButtons'
-import Options from './Options'
-
-const StorySection = () => {
+const Options = () => {
   const {
     setIsSignedIn, 
     editTitle,
     isEditing,
-    editStorySection
+    editOption
 
   } = useContext(Context);
 
-  return (
-    <div>
-      <Box 
-      component="main"
+
+  return(
+    <Box 
+      // component="main"
+      sx={{display: "flex", flexDirection:"center", border:"1px solid green"}}
       color="primary.contrastText"  
     > 
       <Box 
+        className="title"
         component="form"
         sx={{
           '& .MuiTextField-root': { m: 1, width: '25ch' },
@@ -34,11 +34,11 @@ const StorySection = () => {
         autoComplete="off"
         style={{ margin: "15px"}}    
       >
-        {/* This box will have either Title with edit button
+        {/* This box will have either Option with edit button
         or text field with save button
         both will have add story section button */}
         <Box>
-          {/* if not editing, show title */}
+          {/* if not editing, show Option */}
           
           <Box
             sx={{display:"flex", justifyContent:"space-between", width:"450px", height: "100px", alignItems: "center"}}
@@ -51,7 +51,7 @@ const StorySection = () => {
               variant="h4"
               >
               {/* uses login userName to display name */}
-              {editStorySection}
+              {editOption}
               </Typography>
             </Box>
             // if editing, show text field
@@ -59,7 +59,7 @@ const StorySection = () => {
               id="outlined-multiline-static"
               multiline
               rows={2}
-              defaultValue="Write your story section"
+              defaultValue="Write your option"
             />
             }
             {/* button box for the three editing buttons */}
@@ -67,17 +67,9 @@ const StorySection = () => {
           </Box>
         </Box>
       </Box>
-      <Box
-        sx={{display:"flex", flexWrap: "wrap", justifyContent:"center", border:"1px solid red"}}
-      >
-        {<Options/>}
-        {<Options/>}
-        {<Options/>}
-        {<Options/>}
-      </Box>
     </Box>
-  </div>
   )
+  
 }
 
-export default StorySection
+export default Options

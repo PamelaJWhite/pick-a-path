@@ -264,3 +264,15 @@ ul {
   border: 20px solid #F8D430;
   overflow-y: scroll;
 }
+
+/* ------------ADMIN-----------
+---------------------------- */
+
+/* ------- EditingButtons ------- */
+
+.editingButtons{
+  /* this works */
+  /* width: 50px;  */
+  /* this doesn't work */
+  margin: 2px;
+}

@@ -9,7 +9,9 @@ import SignUp from './userComponents/SignUp'
 import ReadingPage from './userComponents/ReadingPage'
 import WholeStory from './userComponents/WholeStory'
 
+
 import Title from './adminComponents/Title'
+import AdminHome from './adminComponents/Home'
 
 const Router = () => {
     return (
@@ -27,7 +29,7 @@ const Router = () => {
             {/* page to see a whole story
             maybe eventually a whole "I've learned" page */}
             <Route path='/wholeStory' element={<WholeStory/>}/>
-            <Route path='/adminEdit' element={<Title/>}/>
+            <Route path='/adminEdit' element={<AdminHome/>}/>
         </Routes>
     )
 }

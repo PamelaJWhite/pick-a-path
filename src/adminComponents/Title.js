@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 
 
 import { Context } from '../context/Context'
+import EditingButtons from './EditingButtons'
 
 const Title = () => {
   //destructure context for only the states and functions needed
@@ -41,38 +42,35 @@ const Title = () => {
           both will have add story section button */}
           <Box>
             {/* if not editing, show title */}
-            {!isEditing ? 
+            
             <Box
-              sx={{display:"flex"}}
+              sx={{display:"flex", justifyContent:"space-between", width:"450px", height: "100px", alignItems: "center"}}
             >
-              <Typography variant="h1">
+              {!isEditing ? 
+              <Box
+                sx={{ display:"flex", justifyContent:"center", alignItems:"center", width:"275px"}}
+              >
+                <Typography 
+                variant="h1"
+                >
                 {/* uses login userName to display name */}
                 {editTitle}
-              </Typography>
-              <Button
-                variant="contained" 
-                onClick={(e) => {
-                  console.log("clicked edit button")
-                  setIsEditing(true)
-                  }
-                }
-              >
-                Edit
-              </Button>
+                </Typography>
+              </Box>
+              // if editing, show text field
+              :<TextField
+                id="outlined-multiline-static"
+                multiline
+                rows={2}
+                defaultValue="Title"
+              />
+              }
+              {/* button box for the three editing buttons */}
+              { <EditingButtons /> }
             </Box>
-            // if editing, show text field
-            :<TextField
-            required
-            id="outlined-required"
-            label="Required"
-            defaultValue="Title"
-          />
-            }
           </Box>
         </Box>
       </Box>
-    <h1> ANYTHING </h1>
-    <button>don't press my buttons</button>
     </div>
   )
 };
