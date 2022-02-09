@@ -274,5 +274,9 @@ ul {
   /* this works */
   /* width: 50px;  */
   /* this doesn't work */
-  margin: 2px;
+  /* margin: 2px; */
+}
+
+.editingButtonsText{
+  width:160px;
 }

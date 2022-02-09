@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 
 
 import { Context } from '../context/Context'
-import EditingButtons from './EditingButtons'
+import {EditingButtonsOption } from './EditingButtons'
 const Options = () => {
   const {
     setIsSignedIn, 
@@ -63,7 +63,7 @@ const Options = () => {
             />
             }
             {/* button box for the three editing buttons */}
-            { <EditingButtons /> }
+            { <EditingButtonsOption /> }
           </Box>
         </Box>
       </Box>

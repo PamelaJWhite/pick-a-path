@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 
 
 import { Context } from '../context/Context'
-import EditingButtons from './EditingButtons'
+import { EditingButtonsTitle } from './EditingButtons'
 
 const Title = () => {
   //destructure context for only the states and functions needed
@@ -66,7 +66,7 @@ const Title = () => {
               />
               }
               {/* button box for the three editing buttons */}
-              { <EditingButtons /> }
+              { <EditingButtonsTitle /> }
             </Box>
           </Box>
         </Box>

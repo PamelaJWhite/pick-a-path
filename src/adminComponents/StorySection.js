@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 
 
 import { Context } from '../context/Context'
-import EditingButtons from './EditingButtons'
+import { EditingButtonsSection } from './EditingButtons'
 import Options from './Options'
 
 const StorySection = () => {
@@ -15,67 +15,72 @@ const StorySection = () => {
     setIsSignedIn, 
     editTitle,
     isEditing,
-    editStorySection
+    editStorySection,
+    setisEditingStorySection,
+    isEditingStorySection
 
   } = useContext(Context);
 
   return (
     <div>
-      <Box 
-      component="main"
-      color="primary.contrastText"  
-    > 
-      <Box 
-        component="form"
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
-        style={{ margin: "15px"}}    
-      >
-        {/* This box will have either Title with edit button
-        or text field with save button
-        both will have add story section button */}
-        <Box>
-          {/* if not editing, show title */}
-          
-          <Box
-            sx={{display:"flex", justifyContent:"space-between", width:"450px", height: "100px", alignItems: "center"}}
+        {editStorySection.map((element, idx) => (
+          <Box 
+          component="main"
+          color="primary.contrastText"  
+        > 
+          <Box 
+            component="form"
+            sx={{
+              '& .MuiTextField-root': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+            style={{ margin: "15px"}}    
           >
-            {!isEditing ? 
-            <Box
-              sx={{ display:"flex", justifyContent:"center", alignItems:"center", width:"275px"}}
-            >
-              <Typography 
-              variant="h4"
+            {/* This box will have either Title with edit button
+            or text field with save button
+            both will have add story section button */}
+            <Box>
+              {/* if not editing, show title */}
+              
+              <Box
+                sx={{display:"flex", justifyContent:"space-between", width:"450px", height: "100px", alignItems: "center"}}
               >
-              {/* uses login userName to display name */}
-              {editStorySection}
-              </Typography>
+                {!isEditing ? 
+                <Box
+                  sx={{ display:"flex", justifyContent:"center", alignItems:"center", width:"275px"}}
+                >
+                  <Typography 
+                  variant="h4"
+                  >
+      
+                  {element.section}
+                  </Typography>
+                </Box>
+                // if editing, show text field
+                :<TextField
+                  id="outlined-multiline-static"
+                  multiline
+                  rows={2}
+                  defaultValue="Write your story section"
+                />
+                }
+                {/* button box for the three editing buttons */}
+                { <EditingButtonsSection /> }
+              </Box>
             </Box>
-            // if editing, show text field
-            :<TextField
-              id="outlined-multiline-static"
-              multiline
-              rows={2}
-              defaultValue="Write your story section"
-            />
-            }
-            {/* button box for the three editing buttons */}
-            { <EditingButtons /> }
+          </Box>
+          <Box
+            sx={{display:"flex", flexWrap: "wrap", justifyContent:"center", border:"1px solid red"}}
+          >
+            {/* {<Options/>}
+            {<Options/>}
+            {<Options/>}
+            {<Options/>} */}
           </Box>
         </Box>
-      </Box>
-      <Box
-        sx={{display:"flex", flexWrap: "wrap", justifyContent:"center", border:"1px solid red"}}
-      >
-        {<Options/>}
-        {<Options/>}
-        {<Options/>}
-        {<Options/>}
-      </Box>
-    </Box>
+        ))}
+      
   </div>
   )
 }

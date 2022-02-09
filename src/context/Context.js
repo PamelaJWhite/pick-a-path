@@ -34,8 +34,9 @@ export const Provider = ({ children }) => {
   const [isTitle, setIsTitle] = useState('')
   //editing-specific context
   const [editTitle, setEditTitle] = useState("Title")
-  const [isEditing, setIsEditing] = useState (false)
-  const [editStorySection, setEditStorySection] = useState ("StorySection")
+  const [isEditing, setIsEditing] = useState ()
+  const [isEditingStorySection, setIsEditingStorySection] = useState (true)
+  const [editStorySection, setEditStorySection] = useState ([{section:"first story section", id:1},  {section:"second story section", id:2, options:["opt 1", "opt 2", "opt 3"]}])
   const [editOption, setEditOption] = useState ("Option")
 
   //variable for my base api url
@@ -321,7 +322,8 @@ export const Provider = ({ children }) => {
       isEditing,
       setIsEditing,
       editStorySection, 
-      editOption
+      editOption,
+      isEditingStorySection
   };
 
   //Return statement that will wrap any child elements with the exported context states and functions
