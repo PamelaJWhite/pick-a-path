@@ -14,6 +14,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Typography from '@mui/material/Typography';
 
 import { Context } from "../context/Context";
 
@@ -29,20 +30,28 @@ export default function ButtonAppBar() {
 } = useContext(Context);
 
   return (
+    
+    
     //dynamically rendered to show once a user is signed in
     //I chose to do this for now, since there is no brand icon to show in the nav bar
     //nor does the menu do anything before login, since it only has Home and Logout
     isSignedIn && (
       <Box 
         sx={{ flexGrow: 1 }}
-      >
+      > 
         <AppBar 
           position="static"
         >
           <Toolbar
-          style={{ display: "flex", justifyContent:"flex-end", marginBottom:"-10px"}}
+          style={{ display: "flex", justifyContent:"space-between", marginBottom:"-10px"}}
           >
             {/* menu icon is clicked to set isDrawerOpen to true */}
+            <Typography >
+              <img
+                style={{height:"38px"}}
+                src="/12400355581586788052-64.png"
+              ></img>
+            </Typography>
             <IconButton
                 size="large"
                 edge="end"

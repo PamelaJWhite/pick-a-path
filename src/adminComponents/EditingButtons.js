@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 
 
 import { Context } from '../context/Context'
+import  StorySection  from './StorySection'
 
 const EditingButtonsTitle = () => {
   const {
@@ -48,6 +49,7 @@ const EditingButtonsTitle = () => {
         onClick={(e) => {
           console.log("clicked Add Story Section button")
           //!!going to be func to open story section editing box
+          {<StorySection/>}
           }
         }
       >
@@ -113,21 +115,23 @@ const EditingButtonsSection = () => {
         onClick={(e) => {
           console.log("clicked Add Story Section button")
           //!!going to be func to open story section editing box
+    
           }
         }
       >
-        {isEditingStorySection? 
+        {/* {isEditingStorySection? 
         <Typography
         className="editingButtonsText"
         >
         Add Story Section
-        </Typography>
-        : <Typography
+        </Typography> */}
+        {/* : */}
+         <Typography
         className="editingButtonsText"
         >
         Add Option
         </Typography>
-        }
+        {/* } */}
         
       </Button>
     </Box>

@@ -21,6 +21,7 @@ const StorySection = () => {
 
   } = useContext(Context);
 
+
   return (
     <div>
         {editStorySection.map((element, idx) => (
@@ -55,6 +56,7 @@ const StorySection = () => {
                   >
       
                   {element.section}
+                 
                   </Typography>
                 </Box>
                 // if editing, show text field
@@ -71,12 +73,12 @@ const StorySection = () => {
             </Box>
           </Box>
           <Box
-            sx={{display:"flex", flexWrap: "wrap", justifyContent:"center", border:"1px solid red"}}
+            sx={{display:"flex", flexWrap: "wrap", justifyContent:"center"}}
           >
-            {/* {<Options/>}
             {<Options/>}
             {<Options/>}
-            {<Options/>} */}
+            {<Options/>}
+            {/* {<Options/>} */}
           </Box>
         </Box>
         ))}

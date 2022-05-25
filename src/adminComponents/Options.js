@@ -21,7 +21,7 @@ const Options = () => {
   return(
     <Box 
       // component="main"
-      sx={{display: "flex", flexDirection:"center", border:"1px solid green"}}
+      sx={{display: "flex", flexDirection:"center"}}
       color="primary.contrastText"  
     > 
       <Box 

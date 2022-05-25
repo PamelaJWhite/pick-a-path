@@ -36,7 +36,7 @@ export const Provider = ({ children }) => {
   const [editTitle, setEditTitle] = useState("Title")
   const [isEditing, setIsEditing] = useState ()
   const [isEditingStorySection, setIsEditingStorySection] = useState (true)
-  const [editStorySection, setEditStorySection] = useState ([{section:"first story section", id:1},  {section:"second story section", id:2, options:["opt 1", "opt 2", "opt 3"]}])
+  const [editStorySection, setEditStorySection] = useState ([{section:"first story section", id:1}])
   const [editOption, setEditOption] = useState ("Option")
 
   //variable for my base api url

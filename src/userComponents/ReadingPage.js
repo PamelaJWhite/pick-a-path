@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {Link} from "react-router-dom";
 
 import Button from "@mui/material/Button";
@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Context } from "../context/Context";
+//funciton to find notice word and create a span for it
 
 //component to read story and options
 const ReadingPage = () => {
@@ -27,7 +28,31 @@ const ReadingPage = () => {
         saveOption,
         isTitle
     } = useContext(Context);
-
+    
+    // const [isFormattedString, setIsFormattedString] = useState("")
+    // useEffect(() => {
+    //   const replaceAt = (indexArray, storySection) => {
+    //     const replaceValue = i =>
+    //       (storySection[i] = (
+    //         <span className="font-bold text-red-500" key={i}>
+    //           {storySection[i]}
+    //         </span>
+    //       ));
+    //     indexArray.forEach(replaceValue);
+    //     return storySection;
+    //   };
+  
+    //   const array = [15]
+    // setIsFormattedString(replaceAt(array, storySection));
+    // }, storySection)
+    const [storyAsArray, setStoryAsArray] = useState([])
+    useEffect(() => {
+      
+        let array =  storySection.split(" ")
+        console.log(array)
+        setStoryAsArray(array)
+      
+    }, [storySection])
     return (
       //box in which story is read; always rendered
       <Box
@@ -62,11 +87,27 @@ const ReadingPage = () => {
               className="readingText" 
               component="div">
                 {/* story section pulled from state */}
+                {/* {isFormattedString} */}
+                {/* {storySection.split(" ")}
+                {storySection.map((element, index)=>{
+                  <Box>{element}</Box>
+                })} */}
+                {/* {storyAsArray.map((element, index)=> {
+                  return <Box> {element} </Box>
+                })} */}
                 {storySection}
               </Typography>
             </Box>
           </Paper>
         </Box>
+        {/* button added to test finding notice words */}
+        {/* <Button
+          onClick={(e)=> {
+            findWait()
+          }}
+        >
+          notice
+        </Button> */}
           {/* dynamically render the choices based on when the choices button is clicked
           this was also "clinical" decision, as I wanted to encourage users to read the story before scanning down to read the options*/}
           {(!choicesTime)

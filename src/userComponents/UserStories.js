@@ -219,7 +219,9 @@ export default function UserStories (props) {
             when i had the get request functions 
             run at the top of the page, bc i have this set up 
             to automatically re-render as I make changes */}
+        
             <Button
+                style={{ margin:"100px"}}
                 color="primary"
                 variant="contained"
                 onClick={() => {
@@ -230,6 +232,7 @@ export default function UserStories (props) {
             >
                 click me
             </Button> 
+            
     </Box>
   );
 }
