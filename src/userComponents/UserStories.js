@@ -36,9 +36,9 @@ export default function UserStories (props) {
   } = useContext(Context);
 
 
-  // getAllStoryTitles()
-  // getMyStoryTitles()
-  // console.log("how many times i this running?")
+  getAllStoryTitles()
+  getMyStoryTitles()
+  console.log("how many times i this running?")
 
   return (
     <Box  
